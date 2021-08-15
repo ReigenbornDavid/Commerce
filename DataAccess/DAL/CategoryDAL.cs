@@ -26,5 +26,82 @@ namespace DataAccess
             }
         }
 
+        public List<Category> GetAll()
+        {
+            List<Category> categories = new List<Category>();
+
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlQuery = "SELECT * FROM Category ORDER BY idCategory ASC";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        Category category = new Category
+                        {
+                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
+                            name = Convert.ToString(dataReader["name"])
+                        };
+                        categories.Add(category);
+                    }
+                }
+            }
+            return categories;
+        }
+
+        public Category GetByid(int idCategory)
+        {
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlGetById = "SELECT * FROM Category WHERE idCategory = @idCategory";
+                using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
+                {
+                    command.Parameters.AddWithValue("@idCategory", idCategory);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.Read())
+                    {
+                        Category category = new Category
+                        {
+                            idCategory = Convert.ToInt32(dataReader["idProduct"]),
+                            name = Convert.ToString(dataReader["description"])
+                        };
+                        return category;
+                    }
+                }
+            }
+            return null;
+        }
+        public void Update(Category category)
+        {
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlQuery =
+                    "UPDATE Category SET name = @name WHERE idCategory = @idCategory";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@name", category.name);
+                    command.Parameters.AddWithValue("@idCategory", category.idCategory);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Delete(int idCategory)
+        {
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlQuery = "DELETE FROM Category WHERE idCategory = @idCategory";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@idCategory", idCategory);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

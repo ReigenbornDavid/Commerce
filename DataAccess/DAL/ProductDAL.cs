@@ -10,9 +10,6 @@ namespace DataAccess
 {
     public class ProductoDal:ConnectionToSql
     {
-        //Primero y siguiendo el orden de las acciones CRUD
-        //Crearemos un Método que se encarga de insertar un nuevo Producto es nuestra 
-        //tabla Producto
         public void Insert(Product product)
         {
             using (MySqlConnection connection = GetConnection())
@@ -30,131 +27,93 @@ namespace DataAccess
                 }
             }
         }
-        /*
-        /// <summary>
-        /// Devuelve una lista de Productos ordenados por el campo Id de manera Ascendente
-        /// </summary>
-        /// <returns>Lista de productos</returns>
-        /// <autor>José Luis García Bautista</autor>
-        public List<EProducto> GetAll()
+        
+        public List<Product> GetAll()
         {
-            //Declaramos una lista del objeto EProducto la cual será la encargada de
-            //regresar una colección de los elementos que se obtengan de la BD
-            //
-            //La lista substituye a DataTable utilizado en el proyecto de ejemplo
-            List<EProducto> productos = new List<EProducto>();
+            List<Product> products = new List<Product>();
 
-            using (SqlCeConnection cnx = new SqlCeConnection(ConfigurationManager.ConnectionStrings["cnnString"].ToString()))
+            using (MySqlConnection connection = GetConnection())
             {
-                cnx.Open();
-
-                const string sqlQuery = "SELECT * FROM Producto ORDER BY Id ASC";
-                using (SqlCeCommand cmd = new SqlCeCommand(sqlQuery, cnx))
+                connection.Open();
+                const string sqlQuery = "SELECT * FROM Product ORDER BY idProduct ASC";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    SqlCeDataReader dataReader = cmd.ExecuteReader();
-                    //
-                    //Preguntamos si el DataReader fue devuelto con datos
+                    MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
-                        //
-                        //Instanciamos al objeto Eproducto para llenar sus propiedades
-                        EProducto producto = new EProducto
+                        Product product = new Product
                         {
-                            Id = Convert.ToInt32(dataReader["Id"]),
-                            Descripcion = Convert.ToString(dataReader["Descripcion"]),
-                            Marca = Convert.ToString(dataReader["Marca"]),
-                            Precio = Convert.ToDecimal(dataReader["Precio"])
+                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            description = Convert.ToString(dataReader["description"]),
+                            price = Convert.ToDecimal(dataReader["price"]),
+                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            category = new CategoryDAL().GetByid(Convert.ToInt32(dataReader["idCategory"]))
                         };
-                        //
-                        //Insertamos el objeto Producto dentro de la lista Productos
-                        productos.Add(producto);
+                        products.Add(product);
                     }
                 }
             }
-            return productos;
+            return products;
         }
 
-        /// <summary>
-        /// Devuelve un Objeto Producto
-        /// </summary>
-        /// <param name="idProducto">Id del producto a buscar</param>
-        /// <returns>Un registro con los valores del Producto</returns>
-        /// <autor>José Luis García Bautista</autor>
-        public EProducto GetByid(int idProducto)
+        public Product GetByid(int idProduct)
         {
-            using (SqlCeConnection cnx = new SqlCeConnection(ConfigurationManager.ConnectionStrings["cnnString"].ToString()))
+            using (MySqlConnection connection = GetConnection())
             {
-                cnx.Open();
-
-                const string sqlGetById = "SELECT * FROM Producto WHERE Id = @id";
-                using (SqlCeCommand cmd = new SqlCeCommand(sqlGetById, cnx))
+                connection.Open();
+                const string sqlGetById = "SELECT * FROM Product WHERE idProduct = @idProduct";
+                using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
-                    //
-                    //Utilizamos el valor del parámetro idProducto para enviarlo al parámetro declarado en la consulta
-                    //de selección SQL
-                    cmd.Parameters.AddWithValue("@id", idProducto);
-                    SqlCeDataReader dataReader = cmd.ExecuteReader();
+                    command.Parameters.AddWithValue("@idProduct", idProduct);
+                    MySqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.Read())
                     {
-                        EProducto producto = new EProducto
+                        Product product = new Product
                         {
-                            Id = Convert.ToInt32(dataReader["Id"]),
-                            Descripcion = Convert.ToString(dataReader["Descripcion"]),
-                            Marca = Convert.ToString(dataReader["Marca"]),
-                            Precio = Convert.ToDecimal(dataReader["Precio"])
+                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            description = Convert.ToString(dataReader["description"]),
+                            price = Convert.ToDecimal(dataReader["price"]),
+                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            category = new CategoryDAL().GetByid(Convert.ToInt32(dataReader["idCategory"]))
                         };
-
-                        return producto;
+                        return product;
                     }
                 }
             }
-
             return null;
         }
 
-        /// <summary>
-        /// Actualiza el Producto correspondiente al Id proporcionado
-        /// </summary>
-        /// <param name="producto">Valores utilizados para hacer el Update al registro</param>
-        /// <autor>José Luis García Bautista</autor>
-        public void Update(EProducto producto)
+        public void Update(Product product)
         {
-            using (SqlCeConnection cnx = new SqlCeConnection(ConfigurationManager.ConnectionStrings["cnnString"].ToString()))
+            using (MySqlConnection connection = GetConnection())
             {
-                cnx.Open();
+                connection.Open();
                 const string sqlQuery =
-                    "UPDATE Producto SET Descripcion = @descripcion, Marca = @marca, Precio = @precio WHERE Id = @id";
-                using (SqlCeCommand cmd = new SqlCeCommand(sqlQuery, cnx))
+                    "UPDATE Producto SET description = @description, quantity = @quantity, price = @price, idCategory = @idCategory WHERE idProduct = @idProduct";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
-                    cmd.Parameters.AddWithValue("@marca", producto.Marca);
-                    cmd.Parameters.AddWithValue("@precio", producto.Precio);
-                    cmd.Parameters.AddWithValue("@id", producto.Id);
-
-                    cmd.ExecuteNonQuery();
+                    command.Parameters.AddWithValue("@description", product.description);
+                    command.Parameters.AddWithValue("@price", product.price);
+                    command.Parameters.AddWithValue("@quantity", product.quantity);
+                    command.Parameters.AddWithValue("@idCategory", product.category.idCategory);
+                    command.Parameters.AddWithValue("@idProduct", product.idProduct);
+                    command.ExecuteNonQuery();
                 }
             }
         }
 
-        /// <summary>
-        /// Elimina un registro coincidente con el Id Proporcionado
-        /// </summary>
-        /// <param name="idproducto">Id del registro a Eliminar</param>
-        /// <autor>José Luis García Bautista</autor>
-        public void Delete(int idproducto)
+        public void Delete(int idProduct)
         {
-            using (SqlCeConnection cnx = new SqlCeConnection(ConfigurationManager.ConnectionStrings["cnnString"].ToString()))
+            using (MySqlConnection connection = GetConnection())
             {
-                cnx.Open();
-                const string sqlQuery = "DELETE FROM Producto WHERE Id = @id";
-                using (SqlCeCommand cmd = new SqlCeCommand(sqlQuery, cnx))
+                connection.Open();
+                const string sqlQuery = "DELETE FROM Product WHERE idProduct = @idProduct";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    cmd.Parameters.AddWithValue("@id", idproducto);
-
-                    cmd.ExecuteNonQuery();
+                    command.Parameters.AddWithValue("@idProduct", idProduct);
+                    command.ExecuteNonQuery();
                 }
             }
         }
-        */
     }
 }
