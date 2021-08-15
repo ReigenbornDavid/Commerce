@@ -84,9 +84,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoryDAL.cs" />
-    <Compile Include="ConnectionToSql.cs" />
-    <Compile Include="ProductDAL.cs" />
+    <Compile Include="DAL\CategoryDAL.cs" />
+    <Compile Include="Sql\ConnectionToSql.cs" />
+    <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
