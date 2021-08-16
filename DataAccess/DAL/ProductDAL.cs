@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace DataAccess.DAL
 {
-    public class ProductoDal:ConnectionToSql
+    public class ProductDal : ConnectionToSql
     {
         public void Insert(Product product)
         {
@@ -27,7 +27,7 @@ namespace DataAccess
                 }
             }
         }
-        
+
         public List<Product> GetAll()
         {
             List<Product> products = new List<Product>();
@@ -116,4 +116,6 @@ namespace DataAccess
             }
         }
     }
+}
+
 }

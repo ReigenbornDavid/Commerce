@@ -1,5 +1,4 @@
-﻿
-using Common.Entities;
+﻿using Common.Entities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -7,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace DataAccess.DAL
 {
-    public class CategoryDAL:ConnectionToSql
+    public class CategoryDal : ConnectionToSql
     {
         public void Insert(Category category)
         {
