@@ -50,6 +50,30 @@ namespace DataAccess.DAL
             return categories;
         }
 
+        public Category GetByName(string name)
+        {
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlGetById = "SELECT * FROM Category WHERE name = @name";
+                using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
+                {
+                    command.Parameters.AddWithValue("@name", name);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.Read())
+                    {
+                        Category category = new Category
+                        {
+                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
+                            name = Convert.ToString(dataReader["name"])
+                        };
+                        return category;
+                    }
+                }
+            }
+            return null;
+        }
+
         public Category GetByid(int idCategory)
         {
             using (MySqlConnection connection = GetConnection())
@@ -64,7 +88,7 @@ namespace DataAccess.DAL
                     {
                         Category category = new Category
                         {
-                            idCategory = Convert.ToInt32(dataReader["idProduct"]),
+                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
                             name = Convert.ToString(dataReader["description"])
                         };
                         return category;

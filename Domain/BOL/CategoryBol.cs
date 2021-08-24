@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Domain.BOL
 {
-    public class CategoryBOL
+    public class CategoryBol
     {
         //Instanciamos nuestra clase ProductoDal para poder utilizar sus miembros
-        private CategoryDal _categoryDAL = new CategoryDal();
+        private CategoryDal _categoryDal = new CategoryDal();
         //
         //El uso de la clase StringBuilder nos ayudara a devolver los mensajes de las validaciones
         public readonly StringBuilder stringBuilder = new StringBuilder();
@@ -24,35 +24,35 @@ namespace Domain.BOL
         {
             if (ValidateCategory(category))
             {
-                if (_categoryDAL.GetByid(category.idCategory) == null)
+                if (_categoryDal.GetByid(category.idCategory) == null)
                 {
-                    _categoryDAL.Insert(category);
+                    _categoryDal.Insert(category);
                 }
                 else
-                    _categoryDAL.Update(category);
+                    _categoryDal.Update(category);
 
             }
         }
 
         public List<Category> All()
         {
-            return _categoryDAL.GetAll();
+            return _categoryDal.GetAll();
         }
 
-        public Category TraerPorId(int idCategory)
+        public Category GetByName(string name)
         {
             stringBuilder.Clear();
 
-            if (idCategory == 0) stringBuilder.Append("Por favor proporcione un valor de Id valido");
+            if (string.IsNullOrEmpty(name)) stringBuilder.Append("Por favor proporcione un valor de Nombre valido");
 
             if (stringBuilder.Length == 0)
             {
-                return _categoryDAL.GetByid(idCategory);
+                return _categoryDal.GetByName(name);
             }
             return null;
         }
 
-        public void Eliminar(int idCategory)
+        public Category GetById(int idCategory)
         {
             stringBuilder.Clear();
 
@@ -60,7 +60,20 @@ namespace Domain.BOL
 
             if (stringBuilder.Length == 0)
             {
-                _categoryDAL.Delete(idCategory);
+                return _categoryDal.GetByid(idCategory);
+            }
+            return null;
+        }
+
+        public void Delete(int idCategory)
+        {
+            stringBuilder.Clear();
+
+            if (idCategory == 0) stringBuilder.Append("Por favor proporcione un valor de Id valido");
+
+            if (stringBuilder.Length == 0)
+            {
+                _categoryDal.Delete(idCategory);
             }
         }
 

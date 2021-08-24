@@ -15,7 +15,7 @@ namespace DataAccess
         public ConnectionToSql()
         {
             //localhost
-            connectionString = "Database=mesaentrada; Data Source=localhost; User Id=root; Password=toor";
+            connectionString = "Database=commerce; Data Source=localhost; User Id=root; Password=toor";
             //localhost
             connectionStringRedLocal = "Database=mesaentrada; Server=192.168.0.140; Port=3306; Uid=dev; Pwd=Dr753159852460?&";
         }

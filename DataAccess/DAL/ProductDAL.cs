@@ -47,7 +47,7 @@ namespace DataAccess.DAL
                             description = Convert.ToString(dataReader["description"]),
                             price = Convert.ToDecimal(dataReader["price"]),
                             quantity = Convert.ToInt32(dataReader["quantity"]),
-                            category = new CategoryDAL().GetByid(Convert.ToInt32(dataReader["idCategory"]))
+                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"]))
                         };
                         products.Add(product);
                     }
@@ -74,7 +74,7 @@ namespace DataAccess.DAL
                             description = Convert.ToString(dataReader["description"]),
                             price = Convert.ToDecimal(dataReader["price"]),
                             quantity = Convert.ToInt32(dataReader["quantity"]),
-                            category = new CategoryDAL().GetByid(Convert.ToInt32(dataReader["idCategory"]))
+                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"]))
                         };
                         return product;
                     }
@@ -118,4 +118,3 @@ namespace DataAccess.DAL
     }
 }
 
-}
