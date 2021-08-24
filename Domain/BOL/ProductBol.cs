@@ -20,9 +20,9 @@ namespace Domain.BOL
         //Creamos nuestro método para Insertar un nuevo Producto, observe como este método tampoco valida los el contenido
         //de las propiedades, sino que manda a llamar a una Función que tiene como tarea única hacer esta validación
         //
-        public void Registrar(Product product)
+        public void Registrate(Product product)
         {
-            if (ValidarProducto(product))
+            if (ValidateProduct(product))
             {
                 if (_productDal.GetByid(product.idProduct) == null)
                 {
@@ -34,12 +34,12 @@ namespace Domain.BOL
             }
         }
 
-        public List<EProducto> Todos()
+        public List<Product> All()
         {
-            return _productoDal.GetAll();
+            return _productDal.GetAll();
         }
 
-        public EProducto TraerPorId(int idProduct)
+        public Product GetById(int idProduct)
         {
             stringBuilder.Clear();
 
@@ -47,12 +47,12 @@ namespace Domain.BOL
 
             if (stringBuilder.Length == 0)
             {
-                return _productoDal.GetByid(idProduct);
+                return _productDal.GetByid(idProduct);
             }
             return null;
         }
 
-        public void Eliminar(int idProduct)
+        public void Delete(int idProduct)
         {
             stringBuilder.Clear();
 
@@ -60,17 +60,18 @@ namespace Domain.BOL
 
             if (stringBuilder.Length == 0)
             {
-                _productoDal.Delete(idProduct);
+                _productDal.Delete(idProduct);
             }
         }
 
-        private bool ValidarProducto(EProducto producto)
+        private bool ValidateProduct(Product product)
         {
             stringBuilder.Clear();
 
-            if (string.IsNullOrEmpty(producto.Descripcion)) stringBuilder.Append("El campo Descripción es obligatorio");
-            if (string.IsNullOrEmpty(producto.Marca)) stringBuilder.Append(Environment.NewLine + "El campo Marca es obligatorio");
-            if (producto.Precio <= 0) stringBuilder.Append(Environment.NewLine + "El campo Precio es obligatorio");
+            if (string.IsNullOrEmpty(product.description)) stringBuilder.Append("El campo Descripción es obligatorio");
+            if (string.IsNullOrEmpty(product.category.name)) stringBuilder.Append(Environment.NewLine + "El campo Categoria es obligatorio");
+            if (product.price <= 0) stringBuilder.Append(Environment.NewLine + "El campo Precio es obligatorio");
+            if (product.quantity <= 0) stringBuilder.Append(Environment.NewLine + "El campo Cantidad es obligatorio");
 
             return stringBuilder.Length == 0;
         }

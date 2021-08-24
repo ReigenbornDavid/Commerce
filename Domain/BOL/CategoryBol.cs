@@ -20,7 +20,7 @@ namespace Domain.BOL
         //Creamos nuestro método para Insertar un nuevo Producto, observe como este método tampoco valida los el contenido
         //de las propiedades, sino que manda a llamar a una Función que tiene como tarea única hacer esta validación
         //
-        public void Registrar(Category category)
+        public void Registrate(Category category)
         {
             if (ValidateCategory(category))
             {
@@ -34,7 +34,7 @@ namespace Domain.BOL
             }
         }
 
-        public List<Category> Todos()
+        public List<Category> All()
         {
             return _categoryDAL.GetAll();
         }
