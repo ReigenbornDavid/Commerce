@@ -14,7 +14,6 @@ namespace Presentation
 {
     public partial class ProductForm : Form
     {
-        //Creamos las instancias de la clase Eproducto y ProductoBol
         private Product _product;
         private readonly ProductBol _productBol = new ProductBol();
         private readonly CategoryBol _categoryBol = new CategoryBol();
@@ -31,7 +30,7 @@ namespace Presentation
             }
         }
 
-        private void Guardar()
+        private void Save()
         {
             try
             {
@@ -61,9 +60,36 @@ namespace Presentation
             }
         }
 
+        private void GetAll()
+        {
+            List<Product> products = _productBol.All();
+
+            if (products.Count > 0)
+            {
+                dvgProducts.AutoGenerateColumns = false;
+                foreach (var item in products)
+                {
+                    dvgProducts.Rows.Add(
+                        item.idProduct,
+                        item.description,
+                        item.price,
+                        item.price*1,3,
+                        item.quantity
+                        );
+                }
+            }
+            else
+                MessageBox.Show("No existen producto Registrado");
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Guardar();
+            Save();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            GetAll();
         }
     }
 }

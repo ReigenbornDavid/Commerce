@@ -89,7 +89,7 @@ namespace DataAccess.DAL
                         Category category = new Category
                         {
                             idCategory = Convert.ToInt32(dataReader["idCategory"]),
-                            name = Convert.ToString(dataReader["description"])
+                            name = Convert.ToString(dataReader["name"])
                         };
                         return category;
                     }

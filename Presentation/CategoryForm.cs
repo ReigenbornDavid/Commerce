@@ -27,13 +27,12 @@ namespace Presentation
 
         }
 
-        private void Guardar()
+        private void Save()
         {
             try
             {
                 if (_category == null) _category = new Category();
 
-                //_category.idCategory = null;
                 _category.name = txtName.Text;
 
                 _categoryBol.Registrate(_category);
@@ -45,8 +44,6 @@ namespace Presentation
                 else
                 {
                     MessageBox.Show("Producto registrado/actualizado con éxito");
-
-                    //TraerTodos();
                 }
             }
             catch (Exception ex)
@@ -55,9 +52,9 @@ namespace Presentation
             }
         }
 
-        private void btnCargar_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
-            Guardar();
+            Save();
         }
     }
 }
