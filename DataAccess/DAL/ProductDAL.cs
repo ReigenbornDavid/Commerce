@@ -35,9 +35,39 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Product ORDER BY idProduct ASC";
+                const string sqlQuery =
+                    "SELECT * FROM Product p ORDER BY idProduct ASC";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        Product product = new Product
+                        {
+                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            description = Convert.ToString(dataReader["description"]),
+                            price = Convert.ToDecimal(dataReader["price"]),
+                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"]))
+                        };
+                        products.Add(product);
+                    }
+                }
+            }
+            return products;
+        }
+
+        public List<Product> GetByName(string description)
+        {
+            List<Product> products = new List<Product>();
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlGetById =
+                "SELECT * FROM Product WHERE description like @Description";
+                using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
+                {
+                    command.Parameters.AddWithValue("@Description", "%" + description + "%");
                     MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {

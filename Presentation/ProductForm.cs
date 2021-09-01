@@ -60,12 +60,14 @@ namespace Presentation
             }
         }
 
-        private void GetAll()
+        private void Search(string description)
         {
-            List<Product> products = _productBol.All();
+            List<Product> products = _productBol.GetProducts();
+            //List<Product> products = _productBol.GetByName(description);
 
-            if (products.Count > 0)
+            if (products.Count > 0 && products != null)
             {
+                dvgProducts.Rows.Clear();   
                 dvgProducts.AutoGenerateColumns = false;
                 foreach (var item in products)
                 {
@@ -79,7 +81,9 @@ namespace Presentation
                 }
             }
             else
+            {
                 MessageBox.Show("No existen producto Registrado");
+            } 
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -89,7 +93,12 @@ namespace Presentation
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            GetAll();
+            Search(txtSearch.Text);
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            Search(txtSearch.Text);
         }
     }
 }

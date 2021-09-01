@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PresentationMobile.MainPage">
+
+    <StackLayout>
+        <Button Text="Buscar" Clicked="Button_Clicked"></Button>
+        <ListView x:Name="lstProducts">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding idProduct}" Grid.Row="0" Grid.Column="0"></Label>
+                            <Label Text="{Binding description}" Grid.Row="0" Grid.Column="1"></Label>
+                            <Label Text="{Binding price}" Grid.Row="0" Grid.Column="2"></Label>
+                            <Label Text="{Binding quantity}" Grid.Row="0" Grid.Column="3"></Label>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+
+</ContentPage>

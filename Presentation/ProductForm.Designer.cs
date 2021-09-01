@@ -47,6 +47,7 @@ namespace Presentation
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,7 +153,7 @@ namespace Presentation
             this.Column3,
             this.Column4,
             this.Column5});
-            this.dvgProducts.Location = new System.Drawing.Point(12, 12);
+            this.dvgProducts.Location = new System.Drawing.Point(12, 35);
             this.dvgProducts.Name = "dvgProducts";
             this.dvgProducts.RowHeadersVisible = false;
             this.dvgProducts.Size = new System.Drawing.Size(350, 236);
@@ -189,7 +190,7 @@ namespace Presentation
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(287, 254);
+            this.btnSearch.Location = new System.Drawing.Point(287, 6);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 0;
@@ -197,11 +198,20 @@ namespace Presentation
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(12, 8);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(269, 20);
+            this.txtSearch.TabIndex = 5;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            // 
             // ProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(809, 314);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.dvgProducts);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.txtPrice);
@@ -244,5 +254,6 @@ namespace Presentation
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }

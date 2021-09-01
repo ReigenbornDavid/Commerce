@@ -34,9 +34,14 @@ namespace Domain.BOL
             }
         }
 
-        public List<Product> All()
+        public List<Product> GetProducts()
         {
             return _productDal.GetAll();
+        }
+
+        public List<Product> GetByName(string description)
+        {
+            return _productDal.GetByName(description);
         }
 
         public Product GetById(int idProduct)
