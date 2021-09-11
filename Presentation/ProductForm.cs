@@ -24,81 +24,232 @@ namespace Presentation
 
         private void ProductForm_Load(object sender, EventArgs e)
         {
+            btnModify.Visible = false;
             foreach (var category in _categoryBol.All())
             {
                 txtCategory.Items.Add(category.name);
             }
+            txtSearch.Focus();
         }
 
-        private void Save()
+        private void Remove()
+        {
+            if (_product != null)
+            {
+                _productBol.Delete(_product.idProduct);
+            }
+            else
+            {
+                MessageBox.Show("Error: Ningun producto seleccionado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Clear()
+        {
+            txtId.Clear();
+            txtDescription.Clear();
+            txtCost.Clear();
+            txtPrice.Clear();
+            txtQuantity.Clear();
+            txtCategory.Text = "";
+            ViewAdd();
+            RemoveSelection(dvgProducts);
+        }
+
+        private void ViewModify()
+        {
+            btnModify.Visible = true;
+            btnSave.Visible = false;
+        }
+        private void ViewAdd()
+        {
+            _product = null;
+            btnModify.Visible = false;
+            btnSave.Visible = true;
+        }
+        public void FillFields()
         {
             try
             {
-                if (_product == null) _product = new Product();
-
-                _product.description = txtDescription.Text;
-                _product.price = Convert.ToDecimal(txtPrice.Text);
-                _product.quantity = Convert.ToInt32(txtQuantity.Text);
-                _product.category = _categoryBol.GetByName(txtCategory.Text);
-
-                _productBol.Registrate(_product);
-
-                if (_productBol.stringBuilder.Length != 0)
-                {
-                    MessageBox.Show(_productBol.stringBuilder.ToString(), "Para continuar:");
-                }
-                else
-                {
-                    MessageBox.Show("Producto registrado/actualizado con éxito");
-
-                    //TraerTodos();
-                }
+                var product = _productBol.GetById(_product.idProduct);
+                txtId.Text = product.idProduct.ToString();
+                txtDescription.Text = product.description;
+                txtCost.Text = product.price.ToString();
+                txtPrice.Text = _productBol.CalculatePrice(product.price).ToString();
+                txtQuantity.Text = product.quantity.ToString();
+                txtCategory.Text = product.category.name;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado");
+
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void Search(string description)
+        public void RemoveSelection(DataGridView table)
         {
-            List<Product> products = _productBol.GetProducts();
-            //List<Product> products = _productBol.GetByName(description);
-
-            if (products.Count > 0 && products != null)
+            int Index;
+            if (table.Rows.Count > 0)
             {
-                dvgProducts.Rows.Clear();   
-                dvgProducts.AutoGenerateColumns = false;
-                foreach (var item in products)
+                Index = table.CurrentRow.Index;
+                table.Rows[Index].Selected = false;
+            }
+        }
+        private void CellClick()
+        {
+            if (dvgProducts.Rows.Count > 0)
+            {
+                _product = new Product();
+                _product.idProduct = Convert.ToInt32(dvgProducts.CurrentRow.Cells[0].Value);
+                FillFields();
+                ViewModify();
+            }
+        }
+        private void Save()
+        {
+            if (ValidateTextBox())
+            {
+                try
                 {
-                    dvgProducts.Rows.Add(
-                        item.idProduct,
-                        item.description,
-                        item.price,
-                        item.price*1,3,
-                        item.quantity
-                        );
+                    if (_product == null)
+                    {
+                        _product = new Product();
+                    }
+                    else
+                    {
+                        _product.idProduct = Convert.ToInt32(txtId.Text);
+                    }
+                    _product.description = txtDescription.Text;
+                    _product.price = Convert.ToDecimal(txtCost.Text);
+                    _product.quantity = Convert.ToInt32(txtQuantity.Text);
+                    _product.category = _categoryBol.GetByName(txtCategory.Text);
+
+                    _productBol.Registrate(_product);
+
+                    if (_productBol.stringBuilder.Length != 0)
+                    {
+                        MessageBox.Show(_productBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Producto registrado/actualizado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Search();
+                        _product = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("No existen producto Registrado");
-            } 
+                MessageBox.Show("Error: Campos Vacios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        private bool ValidateTextBox()
+        {
+            bool isValid = true;
+            if (txtDescription.Text == "")
+            {
+                isValid = false;
+            }
+            if (txtCost.Text == "")
+            {
+                isValid = false;
+            }
+            if (txtQuantity.Text == "")
+            {
+                isValid = false;
+            }
+            if (txtCategory.Text == "")
+            {
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        private void Search()
+        {
+            if (txtSearch.Text != "")
+            {
+                List<Product> products = _productBol.GetByName(txtSearch.Text);
+                if (products.Count > 0 && products != null)
+                {
+                    dvgProducts.Rows.Clear();
+                    dvgProducts.AutoGenerateColumns = false;
+                    foreach (var item in products)
+                    {
+                        dvgProducts.Rows.Add(
+                            item.idProduct,
+                            item.description
+                            );
+                    }
+                    RemoveSelection(dvgProducts);
+                    ViewAdd();
+                }
+                else
+                {
+                    MessageBox.Show("No existen producto Registrado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        //Buttons
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save();
         }
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            Save();
+            CellClick();
+        }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            Search(txtSearch.Text);
+            Search();
         }
-
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            Remove();
+        }
+        //Events
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            Search(txtSearch.Text);
+            Search();
+        }
+
+        private void dvgProducts_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            CellClick();
+        }
+        private void textBoxInt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+        }
+        private void textBoxDecimal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

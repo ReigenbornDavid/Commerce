@@ -96,10 +96,6 @@
       <Project>{d0855473-4842-4399-9ad1-ef53908ad77e}</Project>
       <Name>Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PresentationMobile\PresentationMobile.csproj">
-      <Project>{FE60FF0C-63B2-4103-B6D0-30517F5A226B}</Project>
-      <Name>PresentationMobile</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

@@ -74,7 +74,10 @@ namespace Presentation
         {
             AbrirFormEnPanel<CategoryForm>();
         }
-
+        private void btnSales_Click(object sender, EventArgs e)
+        {
+            AbrirFormEnPanel<SalesForm>();
+        }
         //------------------------------------------------------------------------------
         private void btnClose_Click(object sender, EventArgs e)
         {

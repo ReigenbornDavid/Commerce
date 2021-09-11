@@ -10,16 +10,10 @@ namespace Domain.BOL
 {
     public class CategoryBol
     {
-        //Instanciamos nuestra clase ProductoDal para poder utilizar sus miembros
+        //Instances
         private CategoryDal _categoryDal = new CategoryDal();
-        //
-        //El uso de la clase StringBuilder nos ayudara a devolver los mensajes de las validaciones
         public readonly StringBuilder stringBuilder = new StringBuilder();
 
-        //
-        //Creamos nuestro método para Insertar un nuevo Producto, observe como este método tampoco valida los el contenido
-        //de las propiedades, sino que manda a llamar a una Función que tiene como tarea única hacer esta validación
-        //
         public void Registrate(Category category)
         {
             if (ValidateCategory(category))

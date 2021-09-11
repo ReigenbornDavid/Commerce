@@ -43,31 +43,35 @@ namespace Presentation
             this.dvgProducts = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnModify = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.txtCost = new System.Windows.Forms.TextBox();
+            this.lblCosto = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(542, 163);
+            this.btnSave.Location = new System.Drawing.Point(542, 189);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 0;
+            this.btnSave.TabIndex = 10;
             this.btnSave.Text = "Cargar";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtCategory
             // 
+            this.txtCategory.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtCategory.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.txtCategory.FormattingEnabled = true;
-            this.txtCategory.Location = new System.Drawing.Point(455, 136);
+            this.txtCategory.Location = new System.Drawing.Point(455, 162);
             this.txtCategory.Name = "txtCategory";
             this.txtCategory.Size = new System.Drawing.Size(162, 21);
-            this.txtCategory.TabIndex = 1;
+            this.txtCategory.TabIndex = 8;
             // 
             // lblId
             // 
@@ -91,21 +95,23 @@ namespace Presentation
             this.txtDescription.Location = new System.Drawing.Point(455, 58);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(162, 20);
-            this.txtDescription.TabIndex = 3;
+            this.txtDescription.TabIndex = 4;
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(455, 84);
+            this.txtPrice.Location = new System.Drawing.Point(455, 110);
             this.txtPrice.Name = "txtPrice";
+            this.txtPrice.ReadOnly = true;
             this.txtPrice.Size = new System.Drawing.Size(162, 20);
-            this.txtPrice.TabIndex = 3;
+            this.txtPrice.TabIndex = 6;
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(455, 110);
+            this.txtQuantity.Location = new System.Drawing.Point(455, 136);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(162, 20);
-            this.txtQuantity.TabIndex = 3;
+            this.txtQuantity.TabIndex = 7;
+            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInt_KeyPress);
             // 
             // lblDescription
             // 
@@ -119,7 +125,7 @@ namespace Presentation
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(387, 87);
+            this.lblPrice.Location = new System.Drawing.Point(387, 113);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(37, 13);
             this.lblPrice.TabIndex = 2;
@@ -128,7 +134,7 @@ namespace Presentation
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(387, 113);
+            this.lblQuantity.Location = new System.Drawing.Point(387, 139);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(49, 13);
             this.lblQuantity.TabIndex = 2;
@@ -137,7 +143,7 @@ namespace Presentation
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(387, 139);
+            this.lblCategory.Location = new System.Drawing.Point(387, 165);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(52, 13);
             this.lblCategory.TabIndex = 2;
@@ -149,51 +155,37 @@ namespace Presentation
             this.dvgProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5});
+            this.Column2});
             this.dvgProducts.Location = new System.Drawing.Point(12, 35);
+            this.dvgProducts.MultiSelect = false;
             this.dvgProducts.Name = "dvgProducts";
+            this.dvgProducts.ReadOnly = true;
             this.dvgProducts.RowHeadersVisible = false;
+            this.dvgProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dvgProducts.Size = new System.Drawing.Size(350, 236);
-            this.dvgProducts.TabIndex = 4;
+            this.dvgProducts.TabIndex = 0;
+            this.dvgProducts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgProducts_CellClick);
             // 
             // Column1
             // 
             this.Column1.HeaderText = "Id";
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             this.Column1.Width = 50;
             // 
             // Column2
             // 
             this.Column2.HeaderText = "Descripcion";
             this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Costo";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 50;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Precio";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 50;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Cantidad";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 50;
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 270;
             // 
             // btnSearch
             // 
             this.btnSearch.Location = new System.Drawing.Point(287, 6);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
-            this.btnSearch.TabIndex = 0;
+            this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Buscar";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -203,8 +195,55 @@ namespace Presentation
             this.txtSearch.Location = new System.Drawing.Point(12, 8);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(269, 20);
-            this.txtSearch.TabIndex = 5;
+            this.txtSearch.TabIndex = 1;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            // 
+            // btnModify
+            // 
+            this.btnModify.Location = new System.Drawing.Point(542, 189);
+            this.btnModify.Name = "btnModify";
+            this.btnModify.Size = new System.Drawing.Size(75, 23);
+            this.btnModify.TabIndex = 9;
+            this.btnModify.Text = "Modificar";
+            this.btnModify.UseVisualStyleBackColor = true;
+            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(461, 189);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.Text = "Limpiar";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(287, 279);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.TabIndex = 12;
+            this.btnRemove.Text = "Eliminar";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // txtCost
+            // 
+            this.txtCost.Location = new System.Drawing.Point(455, 84);
+            this.txtCost.Name = "txtCost";
+            this.txtCost.Size = new System.Drawing.Size(162, 20);
+            this.txtCost.TabIndex = 5;
+            this.txtCost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
+            // 
+            // lblCosto
+            // 
+            this.lblCosto.AutoSize = true;
+            this.lblCosto.Location = new System.Drawing.Point(387, 87);
+            this.lblCosto.Name = "lblCosto";
+            this.lblCosto.Size = new System.Drawing.Size(34, 13);
+            this.lblCosto.TabIndex = 2;
+            this.lblCosto.Text = "Costo";
             // 
             // ProductForm
             // 
@@ -213,20 +252,26 @@ namespace Presentation
             this.ClientSize = new System.Drawing.Size(809, 314);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.dvgProducts);
+            this.Controls.Add(this.txtCost);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.lblQuantity);
+            this.Controls.Add(this.lblCosto);
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.txtCategory);
             this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.btnRemove);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnModify);
             this.Controls.Add(this.btnSave);
             this.Name = "ProductForm";
             this.Text = "ProductForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ProductForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).EndInit();
             this.ResumeLayout(false);
@@ -248,12 +293,14 @@ namespace Presentation
         private System.Windows.Forms.Label lblQuantity;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.DataGridView dvgProducts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Button btnModify;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.TextBox txtCost;
+        private System.Windows.Forms.Label lblCosto;
     }
 }

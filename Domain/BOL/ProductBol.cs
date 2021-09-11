@@ -10,16 +10,17 @@ namespace Domain.BOL
 {
     public class ProductBol
     {
-        //Instanciamos nuestra clase ProductoDal para poder utilizar sus miembros
+        //Instances
         private ProductDal _productDal = new ProductDal();
-        //
-        //El uso de la clase StringBuilder nos ayudara a devolver los mensajes de las validaciones
         public readonly StringBuilder stringBuilder = new StringBuilder();
+        //Properties
+        private readonly int profitPercentage = 30;
+        //Methods
+        public decimal CalculatePrice(decimal Cost)
+        {
+            return Cost + ((Cost * profitPercentage) / 100);
+        }
 
-        //
-        //Creamos nuestro método para Insertar un nuevo Producto, observe como este método tampoco valida los el contenido
-        //de las propiedades, sino que manda a llamar a una Función que tiene como tarea única hacer esta validación
-        //
         public void Registrate(Product product)
         {
             if (ValidateProduct(product))
@@ -29,8 +30,9 @@ namespace Domain.BOL
                     _productDal.Insert(product);
                 }
                 else
+                {
                     _productDal.Update(product);
-
+                }
             }
         }
 
