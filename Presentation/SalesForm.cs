@@ -25,6 +25,7 @@ namespace Presentation
         private void SalesForm_Load(object sender, EventArgs e)
         {
             txtTotal.Text = total.ToString();
+            ViewChange(false);
         }
 
         private void UpdateTotal()
@@ -96,46 +97,83 @@ namespace Presentation
         }
         private void btnAddToCart_Click(object sender, EventArgs e)
         {
-            if (_product != null)
+            if (txtQuantity.Text != "")
             {
-                _product = _productBol.GetById(_product.idProduct);
-                if (_product.quantity >= Convert.ToInt32(txtQuantity.Text))
+                if (_product != null)
                 {
-                    decimal subTotal = _productBol.CalculatePrice(_product.price) * Convert.ToInt32(txtQuantity.Text);
-                    dvgCart.Rows.Add(
-                        _product.idProduct,
-                        _product.description,
-                        _productBol.CalculatePrice(_product.price),
-                        txtQuantity.Text,
-                        subTotal
-                        );
-                    total += subTotal;
-                    UpdateTotal();
-                    RemoveSelection(dvgProducts);
-                    RemoveSelection(dvgCart);
-                    _product = null;
+                    _product = _productBol.GetById(_product.idProduct);
+                    if (_product.quantity >= Convert.ToInt32(txtQuantity.Text))
+                    {
+                        bool exists = false;
+                        if (dvgCart.Rows.Count > 0)
+                        {
+                            foreach (DataGridViewRow row in dvgCart.Rows)
+                            {
+                                if (Convert.ToInt32(row.Cells[0].Value) == _product.idProduct)
+                                {
+                                    exists = true;
+                                    if ((Convert.ToInt32(row.Cells[3].Value) +
+                                        Convert.ToInt32(txtQuantity.Text)) <= _product.quantity)
+                                    {
+                                        total -= Convert.ToDecimal(row.Cells[4].Value);
+                                        row.Cells[3].Value = Convert.ToInt32(row.Cells[3].Value) + Convert.ToInt32(txtQuantity.Text);
+                                        row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
+                                            * Convert.ToInt32(row.Cells[3].Value);
+                                        total += Convert.ToDecimal(row.Cells[4].Value);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                            }
+                        }
+                        if (exists == false)
+                        {
+                            decimal subTotal = _productBol.CalculatePrice(_product.price) * Convert.ToInt32(txtQuantity.Text);
+                            dvgCart.Rows.Add(
+                                _product.idProduct,
+                                _product.description,
+                                _productBol.CalculatePrice(_product.price),
+                                txtQuantity.Text,
+                                subTotal
+                                );
+                            total += subTotal;
+                        }
+                        UpdateTotal();
+                        RemoveSelection(dvgProducts);
+                        RemoveSelection(dvgCart);
+                        _product = null;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: Ningun producto seleccionado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Error: Ningun producto seleccionado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: Ingrese la cantidad que desea agregar al carrito", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void btnChange_Click(object sender, EventArgs e)
         {
             if (dvgCart.Rows.Count > 0)
             {
                 total -= Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
-                dvgCart.CurrentRow.Cells[3].Value = txtQuantity.Text;
-                dvgCart.CurrentRow.Cells[4].Value = Convert.ToDecimal(dvgCart.CurrentRow.Cells[2].Value) 
-                    * Convert.ToInt32(txtQuantity.Text);
+                dvgCart.CurrentRow.Cells[2].Value = txtPriceCart.Text;
+                dvgCart.CurrentRow.Cells[3].Value = txtQuantityCart.Text;
+                dvgCart.CurrentRow.Cells[4].Value = Convert.ToDecimal(txtPriceCart.Text)
+                    * Convert.ToInt32(txtQuantityCart.Text);
                 total += Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
                 UpdateTotal();
                 RemoveSelection(dvgCart);
+                ViewChange(false);
             }
         }
 
@@ -147,6 +185,7 @@ namespace Presentation
                 UpdateTotal();
                 dvgCart.Rows.RemoveAt(dvgCart.CurrentRow.Index);
                 RemoveSelection(dvgCart);
+                ViewChange(false);
             }
         }
         //Events
@@ -162,6 +201,32 @@ namespace Presentation
                 _product = new Product();
                 _product.idProduct = Convert.ToInt32(dvgProducts.CurrentRow.Cells[0].Value);
             }
+        }
+        private void textBoxInt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void dvgCart_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dvgCart.Rows.Count > 0)
+            {
+                txtPriceCart.Text = dvgCart.CurrentRow.Cells[2].Value.ToString();
+                txtQuantityCart.Text = dvgCart.CurrentRow.Cells[3].Value.ToString();
+                ViewChange(true);
+            }
+        }
+
+        private void ViewChange(bool view)
+        {
+            btnChange.Visible = view;
+            btnRemove.Visible = view;
+            txtPriceCart.Visible = view;
+            txtQuantityCart.Visible = view;
         }
     }
 }

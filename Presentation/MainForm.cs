@@ -78,6 +78,10 @@ namespace Presentation
         {
             AbrirFormEnPanel<SalesForm>();
         }
+        private void btnClients_Click(object sender, EventArgs e)
+        {
+            AbrirFormEnPanel<ClientForm>();
+        }
         //------------------------------------------------------------------------------
         private void btnClose_Click(object sender, EventArgs e)
         {

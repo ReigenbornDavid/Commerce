@@ -30,6 +30,7 @@ namespace Presentation
         private void InitializeComponent()
         {
             this.leftPanel = new System.Windows.Forms.Panel();
+            this.btnClients = new System.Windows.Forms.Button();
             this.btnSales = new System.Windows.Forms.Button();
             this.btnProduct = new System.Windows.Forms.Button();
             this.btnCategory = new System.Windows.Forms.Button();
@@ -45,6 +46,7 @@ namespace Presentation
             // leftPanel
             // 
             this.leftPanel.BackColor = System.Drawing.Color.DarkGray;
+            this.leftPanel.Controls.Add(this.btnClients);
             this.leftPanel.Controls.Add(this.btnSales);
             this.leftPanel.Controls.Add(this.btnProduct);
             this.leftPanel.Controls.Add(this.btnCategory);
@@ -54,6 +56,16 @@ namespace Presentation
             this.leftPanel.Name = "leftPanel";
             this.leftPanel.Size = new System.Drawing.Size(240, 344);
             this.leftPanel.TabIndex = 0;
+            // 
+            // btnClients
+            // 
+            this.btnClients.Location = new System.Drawing.Point(12, 201);
+            this.btnClients.Name = "btnClients";
+            this.btnClients.Size = new System.Drawing.Size(75, 23);
+            this.btnClients.TabIndex = 1;
+            this.btnClients.Text = "Clientes";
+            this.btnClients.UseVisualStyleBackColor = true;
+            this.btnClients.Click += new System.EventHandler(this.btnClients_Click);
             // 
             // btnSales
             // 
@@ -166,5 +178,6 @@ namespace Presentation
         private System.Windows.Forms.Button btnCategory;
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnClients;
     }
 }

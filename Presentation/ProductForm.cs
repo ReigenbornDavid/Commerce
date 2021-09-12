@@ -71,13 +71,13 @@ namespace Presentation
         {
             try
             {
-                var product = _productBol.GetById(_product.idProduct);
-                txtId.Text = product.idProduct.ToString();
-                txtDescription.Text = product.description;
-                txtCost.Text = product.price.ToString();
-                txtPrice.Text = _productBol.CalculatePrice(product.price).ToString();
-                txtQuantity.Text = product.quantity.ToString();
-                txtCategory.Text = product.category.name;
+                _product = _productBol.GetById(_product.idProduct);
+                txtId.Text = _product.idProduct.ToString();
+                txtDescription.Text = _product.description;
+                txtCost.Text = _product.price.ToString();
+                txtPrice.Text = _productBol.CalculatePrice(_product.price).ToString();
+                txtQuantity.Text = _product.quantity.ToString();
+                txtCategory.Text = _product.category.name;
             }
             catch (Exception ex)
             {
@@ -200,6 +200,7 @@ namespace Presentation
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save();
+            Clear();
         }
         private void btnModify_Click(object sender, EventArgs e)
         {

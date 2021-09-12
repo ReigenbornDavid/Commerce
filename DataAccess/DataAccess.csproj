@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\CategoryDal.cs" />
+    <Compile Include="DAL\ClientDal.cs" />
     <Compile Include="DAL\ProductDal.cs" />
     <Compile Include="Sql\ConnectionToSql.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

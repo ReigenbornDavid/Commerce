@@ -29,10 +29,10 @@ namespace Presentation
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.dvgProducts = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +55,8 @@ namespace Presentation
             this.lblCart = new System.Windows.Forms.Label();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnChange = new System.Windows.Forms.Button();
+            this.txtPriceCart = new System.Windows.Forms.TextBox();
+            this.txtQuantityCart = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCart)).BeginInit();
             this.SuspendLayout();
@@ -80,14 +82,14 @@ namespace Presentation
             this.Column5,
             this.Column3,
             this.Column4});
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dvgProducts.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dvgProducts.DefaultCellStyle = dataGridViewCellStyle6;
             this.dvgProducts.Location = new System.Drawing.Point(12, 39);
             this.dvgProducts.MultiSelect = false;
             this.dvgProducts.Name = "dvgProducts";
@@ -108,8 +110,8 @@ namespace Presentation
             // 
             // Column2
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column2.HeaderText = "Descripcion";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
@@ -172,14 +174,14 @@ namespace Presentation
             this.Column8,
             this.Column9,
             this.Column10});
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dvgCart.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dvgCart.DefaultCellStyle = dataGridViewCellStyle8;
             this.dvgCart.Location = new System.Drawing.Point(467, 39);
             this.dvgCart.MultiSelect = false;
             this.dvgCart.Name = "dvgCart";
@@ -188,6 +190,7 @@ namespace Presentation
             this.dvgCart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dvgCart.Size = new System.Drawing.Size(370, 236);
             this.dvgCart.TabIndex = 23;
+            this.dvgCart.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCart_CellClick);
             // 
             // Column6
             // 
@@ -198,8 +201,8 @@ namespace Presentation
             // 
             // Column7
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column7.HeaderText = "Descripcion";
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
@@ -249,6 +252,7 @@ namespace Presentation
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(100, 20);
             this.txtQuantity.TabIndex = 3;
+            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInt_KeyPress);
             // 
             // lblQuantity
             // 
@@ -288,11 +292,29 @@ namespace Presentation
             this.btnChange.UseVisualStyleBackColor = true;
             this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
+            // txtPriceCart
+            // 
+            this.txtPriceCart.Location = new System.Drawing.Point(658, 15);
+            this.txtPriceCart.Name = "txtPriceCart";
+            this.txtPriceCart.Size = new System.Drawing.Size(50, 20);
+            this.txtPriceCart.TabIndex = 26;
+            this.txtPriceCart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtQuantityCart
+            // 
+            this.txtQuantityCart.Location = new System.Drawing.Point(709, 15);
+            this.txtQuantityCart.Name = "txtQuantityCart";
+            this.txtQuantityCart.Size = new System.Drawing.Size(50, 20);
+            this.txtQuantityCart.TabIndex = 26;
+            this.txtQuantityCart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // SalesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(919, 367);
+            this.Controls.Add(this.txtQuantityCart);
+            this.Controls.Add(this.txtPriceCart);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.lblQuantity);
@@ -339,5 +361,7 @@ namespace Presentation
         private System.Windows.Forms.Label lblCart;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnChange;
+        private System.Windows.Forms.TextBox txtPriceCart;
+        private System.Windows.Forms.TextBox txtQuantityCart;
     }
 }
