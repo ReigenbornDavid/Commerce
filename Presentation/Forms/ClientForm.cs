@@ -94,64 +94,34 @@ namespace Presentation.Forms
         }
         private void Save()
         {
-            if (ValidateTextBox())
+            try
             {
-                try
+                if (_client == null)
                 {
-                    if (_client == null)
-                    {
-                        _client = new Client();
-                    }
-                    _client.idClient = Convert.ToInt32(txtId.Text);
-                    _client.firstName = txtFirstName.Text;
-                    _client.lastName = txtLastName.Text;
-                    _client.address = txtAddress.Text;
-
-                    _clientBol.Registrate(_client);
-
-                    if (_clientBol.stringBuilder.Length != 0)
-                    {
-                        MessageBox.Show(_clientBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cliente registrado/actualizado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Search();
-                        _client = null;
-                    }
+                    _client = new Client();
                 }
-                catch (Exception ex)
+                _client.idClient = Convert.ToInt32(txtId.Text);
+                _client.firstName = txtFirstName.Text;
+                _client.lastName = txtLastName.Text;
+                _client.address = txtAddress.Text;
+
+                _clientBol.Registrate(_client);
+
+                if (_clientBol.stringBuilder.Length != 0)
                 {
-                    MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(_clientBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Cliente registrado/actualizado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Search();
+                    _client = null;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error: Campos Vacios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private bool ValidateTextBox()
-        {
-            bool isValid = true;
-
-            if (txtId.Text == "")
-            {
-                isValid = false;
-            }
-            if (txtFirstName.Text == "")
-            {
-                isValid = false;
-            }
-            if (txtLastName.Text == "")
-            {
-                isValid = false;
-            }
-            if (txtAddress.Text == "")
-            {
-                isValid = false;
-            }
-            return isValid;
         }
 
         private void Search()
@@ -194,7 +164,7 @@ namespace Presentation.Forms
         private void btnModify_Click(object sender, EventArgs e)
         {
             Save();
-            CellClick();
+            Clear();
         }
 
         private void btnSave_Click(object sender, EventArgs e)

@@ -107,67 +107,38 @@ namespace Presentation.Forms
         }
         private void Save()
         {
-            if (ValidateTextBox())
+            try
             {
-                try
+                if (_product == null)
                 {
-                    if (_product == null)
-                    {
-                        _product = new Product();
-                    }
-                    else
-                    {
-                        _product.idProduct = Convert.ToInt32(txtId.Text);
-                    }
-                    _product.description = txtDescription.Text;
-                    _product.price = Convert.ToDecimal(txtCost.Text);
-                    _product.quantity = Convert.ToInt32(txtQuantity.Text);
-                    _product.category = _categoryBol.GetByName(txtCategory.Text);
-
-                    _productBol.Registrate(_product);
-
-                    if (_productBol.stringBuilder.Length != 0)
-                    {
-                        MessageBox.Show(_productBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Producto registrado/actualizado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Search();
-                        _product = null;
-                    }
+                    _product = new Product();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _product.idProduct = Convert.ToInt32(txtId.Text);
+                }
+                _product.description = txtDescription.Text;
+                _product.price = Convert.ToDecimal(txtCost.Text);
+                _product.quantity = Convert.ToInt32(txtQuantity.Text);
+                _product.category = _categoryBol.GetByName(txtCategory.Text);
+
+                _productBol.Registrate(_product);
+
+                if (_productBol.stringBuilder.Length != 0)
+                {
+                    MessageBox.Show(_productBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Producto registrado/actualizado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Search();
+                    _product = null;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error: Campos Vacios", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private bool ValidateTextBox()
-        {
-            bool isValid = true;
-            if (txtDescription.Text == "")
-            {
-                isValid = false;
-            }
-            if (txtCost.Text == "")
-            {
-                isValid = false;
-            }
-            if (txtQuantity.Text == "")
-            {
-                isValid = false;
-            }
-            if (txtCategory.Text == "")
-            {
-                isValid = false;
-            }
-            return isValid;
         }
 
         private void Search()
@@ -205,7 +176,7 @@ namespace Presentation.Forms
         private void btnModify_Click(object sender, EventArgs e)
         {
             Save();
-            CellClick();
+            Clear();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

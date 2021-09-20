@@ -71,7 +71,6 @@ namespace Domain.BOL
             if (string.IsNullOrEmpty(client.idClient.ToString())) stringBuilder.Append("El campo Dni es obligatorio");
             if (string.IsNullOrEmpty(client.firstName)) stringBuilder.Append(Environment.NewLine + "El campo Apellido es obligatorio");
             if (string.IsNullOrEmpty(client.lastName)) stringBuilder.Append(Environment.NewLine + "El campo Nombre es obligatorio");
-
             return stringBuilder.Length == 0;
         }
     }
