@@ -11,6 +11,8 @@ namespace Common.Entities
         public int idEmployee { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
+        public string user { get; set; }
+        public string pass { get; set; }
         public string email { get; set; }
         public string position { get; set; }
         public bool active { get; set; }

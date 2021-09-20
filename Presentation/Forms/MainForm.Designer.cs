@@ -1,5 +1,5 @@
 ﻿
-namespace Presentation
+namespace Presentation.Forms
 {
     partial class MainForm
     {
@@ -39,6 +39,7 @@ namespace Presentation
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.midPanel = new System.Windows.Forms.Panel();
+            this.btnEmployee = new System.Windows.Forms.Button();
             this.leftPanel.SuspendLayout();
             this.topPpanel.SuspendLayout();
             this.SuspendLayout();
@@ -46,6 +47,7 @@ namespace Presentation
             // leftPanel
             // 
             this.leftPanel.BackColor = System.Drawing.Color.DarkGray;
+            this.leftPanel.Controls.Add(this.btnEmployee);
             this.leftPanel.Controls.Add(this.btnClients);
             this.leftPanel.Controls.Add(this.btnSales);
             this.leftPanel.Controls.Add(this.btnProduct);
@@ -59,7 +61,7 @@ namespace Presentation
             // 
             // btnClients
             // 
-            this.btnClients.Location = new System.Drawing.Point(12, 201);
+            this.btnClients.Location = new System.Drawing.Point(12, 187);
             this.btnClients.Name = "btnClients";
             this.btnClients.Size = new System.Drawing.Size(75, 23);
             this.btnClients.TabIndex = 1;
@@ -69,7 +71,7 @@ namespace Presentation
             // 
             // btnSales
             // 
-            this.btnSales.Location = new System.Drawing.Point(12, 172);
+            this.btnSales.Location = new System.Drawing.Point(12, 158);
             this.btnSales.Name = "btnSales";
             this.btnSales.Size = new System.Drawing.Size(75, 23);
             this.btnSales.TabIndex = 1;
@@ -79,7 +81,7 @@ namespace Presentation
             // 
             // btnProduct
             // 
-            this.btnProduct.Location = new System.Drawing.Point(12, 143);
+            this.btnProduct.Location = new System.Drawing.Point(12, 129);
             this.btnProduct.Name = "btnProduct";
             this.btnProduct.Size = new System.Drawing.Size(75, 23);
             this.btnProduct.TabIndex = 1;
@@ -89,7 +91,7 @@ namespace Presentation
             // 
             // btnCategory
             // 
-            this.btnCategory.Location = new System.Drawing.Point(12, 114);
+            this.btnCategory.Location = new System.Drawing.Point(12, 100);
             this.btnCategory.Name = "btnCategory";
             this.btnCategory.Size = new System.Drawing.Size(75, 23);
             this.btnCategory.TabIndex = 1;
@@ -149,6 +151,16 @@ namespace Presentation
             this.midPanel.Size = new System.Drawing.Size(655, 294);
             this.midPanel.TabIndex = 2;
             // 
+            // btnEmployee
+            // 
+            this.btnEmployee.Location = new System.Drawing.Point(12, 216);
+            this.btnEmployee.Name = "btnEmployee";
+            this.btnEmployee.Size = new System.Drawing.Size(75, 23);
+            this.btnEmployee.TabIndex = 1;
+            this.btnEmployee.Text = "Empleados";
+            this.btnEmployee.UseVisualStyleBackColor = true;
+            this.btnEmployee.Click += new System.EventHandler(this.btnEmployee_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,5 +191,6 @@ namespace Presentation
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnClients;
+        private System.Windows.Forms.Button btnEmployee;
     }
 }

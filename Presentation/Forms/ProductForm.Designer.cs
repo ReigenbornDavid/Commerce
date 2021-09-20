@@ -1,5 +1,5 @@
 ﻿
-namespace Presentation
+namespace Presentation.Forms
 {
     partial class ProductForm
     {

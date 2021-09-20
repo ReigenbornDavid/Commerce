@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Presentation
+namespace Presentation.Forms
 {
     public partial class ClientForm : Form
     {
@@ -176,7 +176,7 @@ namespace Presentation
                 }
                 else
                 {
-                    MessageBox.Show("No existen cliente Registrado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No existen clientes registrados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

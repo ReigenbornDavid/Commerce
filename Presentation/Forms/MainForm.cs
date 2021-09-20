@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Presentation
+namespace Presentation.Forms
 {
     public partial class MainForm : Form
     {
@@ -68,19 +68,23 @@ namespace Presentation
         //Buttons in lateral panel
         private void btnProduct_Click(object sender, EventArgs e)
         {
-            AbrirFormEnPanel<ProductForm>();
+            AbrirFormEnPanel<Forms.ProductForm>();
         }
         private void btnCategory_Click(object sender, EventArgs e)
         {
-            AbrirFormEnPanel<CategoryForm>();
+            AbrirFormEnPanel<Forms.CategoryForm>();
         }
         private void btnSales_Click(object sender, EventArgs e)
         {
-            AbrirFormEnPanel<SalesForm>();
+            AbrirFormEnPanel<Forms.SalesForm>();
         }
         private void btnClients_Click(object sender, EventArgs e)
         {
-            AbrirFormEnPanel<ClientForm>();
+            AbrirFormEnPanel<Forms.ClientForm>();
+        }
+        private void btnEmployee_Click(object sender, EventArgs e)
+        {
+            AbrirFormEnPanel<Forms.EmployeeForm>();
         }
         //------------------------------------------------------------------------------
         private void btnClose_Click(object sender, EventArgs e)

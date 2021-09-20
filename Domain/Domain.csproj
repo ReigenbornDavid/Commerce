@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="BOL\CategoryBol.cs" />
     <Compile Include="BOL\ClientBol.cs" />
+    <Compile Include="BOL\DetailSaleBol.cs" />
+    <Compile Include="BOL\EmployeeBol.cs" />
     <Compile Include="BOL\ProductBol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
