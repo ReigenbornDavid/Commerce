@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.BOL
 {
-    class DetailSaleBol
+    public class DetailSaleBol
     {
         //Instances
         private DetailSaleDal _detailSaleDal = new DetailSaleDal();

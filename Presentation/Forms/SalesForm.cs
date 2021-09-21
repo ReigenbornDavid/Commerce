@@ -15,7 +15,13 @@ namespace Presentation.Forms
     public partial class SalesForm : Form
     {
         private Product _product;
+        private Sale _sale;
+        private DetailSale _detailSale;
         private readonly ProductBol _productBol = new ProductBol();
+        private readonly SaleBol _saleBol = new SaleBol();
+        private readonly DetailSaleBol _detailSaleBol = new DetailSaleBol();
+        private readonly ClientBol _clientBol = new ClientBol();
+        private readonly EmployeeBol _employeeBol = new EmployeeBol();
         private decimal total = 0;
         public SalesForm()
         {
@@ -26,6 +32,7 @@ namespace Presentation.Forms
         {
             txtTotal.Text = total.ToString();
             ViewChange(false);
+            lblEmployee.Text = "40500077";
         }
 
         private void UpdateTotal()
@@ -87,6 +94,47 @@ namespace Presentation.Forms
                 {
                     MessageBox.Show("No existen producto Registrado");
                 }
+            }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(_saleBol.GetLastId().ToString());
+        }
+        private void Sell()
+        {
+            try
+            {
+                _sale = new Sale();
+                _sale.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
+                _sale.client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
+                _sale.date = DateTime.Now;
+                _sale.detailSales = new List<DetailSale>();
+                foreach (DataGridViewRow row in dvgCart.Rows)
+                {
+                    _detailSale = new DetailSale();
+                    _detailSale.product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
+                    _detailSale.price = Convert.ToDecimal(row.Cells[2].Value);
+                    _detailSale.quantity = Convert.ToInt32(row.Cells[3].Value);
+                    _sale.detailSales.Add(_detailSale);
+                }
+                _saleBol.Registrate(_sale);
+                if (_saleBol.stringBuilder.Length != 0 )
+                {
+                    MessageBox.Show(_saleBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Venta registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dvgCart.Rows.Clear();
+                    dvgProducts.Rows.Clear();
+                    txtSearch.Clear();
+                    _sale = null;
+                    _detailSale = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -188,6 +236,10 @@ namespace Presentation.Forms
                 ViewChange(false);
             }
         }
+        private void btnSell_Click(object sender, EventArgs e)
+        {
+            Sell();
+        }
         //Events
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -228,5 +280,7 @@ namespace Presentation.Forms
             txtPriceCart.Visible = view;
             txtQuantityCart.Visible = view;
         }
+
+        
     }
 }

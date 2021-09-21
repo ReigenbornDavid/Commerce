@@ -57,6 +57,10 @@ namespace Presentation.Forms
             this.btnChange = new System.Windows.Forms.Button();
             this.txtPriceCart = new System.Windows.Forms.TextBox();
             this.txtQuantityCart = new System.Windows.Forms.TextBox();
+            this.btnSell = new System.Windows.Forms.Button();
+            this.lblEmployee = new System.Windows.Forms.Label();
+            this.txtClient = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCart)).BeginInit();
             this.SuspendLayout();
@@ -308,11 +312,51 @@ namespace Presentation.Forms
             this.txtQuantityCart.TabIndex = 26;
             this.txtQuantityCart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // btnSell
+            // 
+            this.btnSell.Location = new System.Drawing.Point(762, 309);
+            this.btnSell.Name = "btnSell";
+            this.btnSell.Size = new System.Drawing.Size(75, 23);
+            this.btnSell.TabIndex = 27;
+            this.btnSell.Text = "Confirmar";
+            this.btnSell.UseVisualStyleBackColor = true;
+            this.btnSell.Click += new System.EventHandler(this.btnSell_Click);
+            // 
+            // lblEmployee
+            // 
+            this.lblEmployee.AutoSize = true;
+            this.lblEmployee.Location = new System.Drawing.Point(13, 326);
+            this.lblEmployee.Name = "lblEmployee";
+            this.lblEmployee.Size = new System.Drawing.Size(35, 13);
+            this.lblEmployee.TabIndex = 28;
+            this.lblEmployee.Text = "label1";
+            // 
+            // txtClient
+            // 
+            this.txtClient.Location = new System.Drawing.Point(467, 286);
+            this.txtClient.Name = "txtClient";
+            this.txtClient.Size = new System.Drawing.Size(100, 20);
+            this.txtClient.TabIndex = 29;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(592, 309);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Confirmar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // SalesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(919, 367);
+            this.Controls.Add(this.txtClient);
+            this.Controls.Add(this.lblEmployee);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSell);
             this.Controls.Add(this.txtQuantityCart);
             this.Controls.Add(this.txtPriceCart);
             this.Controls.Add(this.txtQuantity);
@@ -363,5 +407,9 @@ namespace Presentation.Forms
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.TextBox txtPriceCart;
         private System.Windows.Forms.TextBox txtQuantityCart;
+        private System.Windows.Forms.Button btnSell;
+        private System.Windows.Forms.Label lblEmployee;
+        private System.Windows.Forms.TextBox txtClient;
+        private System.Windows.Forms.Button button1;
     }
 }

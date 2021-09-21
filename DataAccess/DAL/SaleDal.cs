@@ -56,6 +56,25 @@ namespace DataAccess.DAL
             return sales;
         }
 
+        public int GetLastId()
+        {
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlGetById = "SELECT s.idSale as last FROM Sale s " +
+                    "ORDER BY s.idSale DESC LIMIT 1";
+                using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.Read())
+                    {
+                        return Convert.ToInt32(dataReader["last"]);
+                    }
+                }
+            }
+            return -1;
+        }
+
         public Sale GetByDate(DateTime date)
         {
             using (MySqlConnection connection = GetConnection())

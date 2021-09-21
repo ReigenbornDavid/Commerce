@@ -46,6 +46,7 @@
     <Compile Include="BOL\DetailSaleBol.cs" />
     <Compile Include="BOL\EmployeeBol.cs" />
     <Compile Include="BOL\ProductBol.cs" />
+    <Compile Include="BOL\SaleBol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
