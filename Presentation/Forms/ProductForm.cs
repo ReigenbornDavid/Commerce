@@ -50,7 +50,6 @@ namespace Presentation.Forms
             txtDescription.Clear();
             txtCost.Clear();
             txtPrice.Clear();
-            txtQuantity.Clear();
             txtCategory.Text = "";
             ViewAdd();
             RemoveSelection(dvgProducts);
@@ -76,7 +75,6 @@ namespace Presentation.Forms
                 txtDescription.Text = _product.description;
                 txtCost.Text = _product.price.ToString();
                 txtPrice.Text = _productBol.CalculatePrice(_product.price).ToString();
-                txtQuantity.Text = _product.quantity.ToString();
                 txtCategory.Text = _product.category.name;
             }
             catch (Exception ex)
@@ -119,7 +117,7 @@ namespace Presentation.Forms
                 }
                 _product.description = txtDescription.Text;
                 _product.price = Convert.ToDecimal(txtCost.Text);
-                _product.quantity = Convert.ToInt32(txtQuantity.Text);
+                _product.quantity = 0;
                 _product.category = _categoryBol.GetByName(txtCategory.Text);
 
                 _productBol.Registrate(_product);

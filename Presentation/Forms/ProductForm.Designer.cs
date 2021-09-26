@@ -35,10 +35,8 @@ namespace Presentation.Forms
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
-            this.txtQuantity = new System.Windows.Forms.TextBox();
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblPrice = new System.Windows.Forms.Label();
-            this.lblQuantity = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
             this.dvgProducts = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,7 +53,7 @@ namespace Presentation.Forms
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(542, 189);
+            this.btnSave.Location = new System.Drawing.Point(542, 163);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 10;
@@ -68,7 +66,7 @@ namespace Presentation.Forms
             this.txtCategory.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtCategory.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.txtCategory.FormattingEnabled = true;
-            this.txtCategory.Location = new System.Drawing.Point(455, 162);
+            this.txtCategory.Location = new System.Drawing.Point(455, 136);
             this.txtCategory.Name = "txtCategory";
             this.txtCategory.Size = new System.Drawing.Size(162, 21);
             this.txtCategory.TabIndex = 8;
@@ -105,14 +103,6 @@ namespace Presentation.Forms
             this.txtPrice.Size = new System.Drawing.Size(162, 20);
             this.txtPrice.TabIndex = 6;
             // 
-            // txtQuantity
-            // 
-            this.txtQuantity.Location = new System.Drawing.Point(455, 136);
-            this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(162, 20);
-            this.txtQuantity.TabIndex = 7;
-            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInt_KeyPress);
-            // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
@@ -131,19 +121,10 @@ namespace Presentation.Forms
             this.lblPrice.TabIndex = 2;
             this.lblPrice.Text = "Precio";
             // 
-            // lblQuantity
-            // 
-            this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(387, 139);
-            this.lblQuantity.Name = "lblQuantity";
-            this.lblQuantity.Size = new System.Drawing.Size(49, 13);
-            this.lblQuantity.TabIndex = 2;
-            this.lblQuantity.Text = "Cantidad";
-            // 
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(387, 165);
+            this.lblCategory.Location = new System.Drawing.Point(387, 139);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(52, 13);
             this.lblCategory.TabIndex = 2;
@@ -200,7 +181,7 @@ namespace Presentation.Forms
             // 
             // btnModify
             // 
-            this.btnModify.Location = new System.Drawing.Point(542, 189);
+            this.btnModify.Location = new System.Drawing.Point(542, 163);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(75, 23);
             this.btnModify.TabIndex = 9;
@@ -210,7 +191,7 @@ namespace Presentation.Forms
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(461, 189);
+            this.btnClear.Location = new System.Drawing.Point(461, 163);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
@@ -253,12 +234,10 @@ namespace Presentation.Forms
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.dvgProducts);
             this.Controls.Add(this.txtCost);
-            this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.lblCategory);
-            this.Controls.Add(this.lblQuantity);
             this.Controls.Add(this.lblCosto);
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.lblDescription);
@@ -287,10 +266,8 @@ namespace Presentation.Forms
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lblPrice;
-        private System.Windows.Forms.Label lblQuantity;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.DataGridView dvgProducts;
         private System.Windows.Forms.Button btnSearch;

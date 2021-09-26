@@ -78,7 +78,7 @@ namespace Domain.BOL
             if (string.IsNullOrEmpty(product.description)) stringBuilder.Append("El campo Descripción es obligatorio");
             if (string.IsNullOrEmpty(product.category.name)) stringBuilder.Append(Environment.NewLine + "El campo Categoria es obligatorio");
             if (product.price <= 0) stringBuilder.Append(Environment.NewLine + "El campo Precio es obligatorio");
-            if (product.quantity <= 0) stringBuilder.Append(Environment.NewLine + "El campo Cantidad es obligatorio");
+            if (product.quantity < 0) stringBuilder.Append(Environment.NewLine + "El campo Cantidad es obligatorio");
 
             return stringBuilder.Length == 0;
         }

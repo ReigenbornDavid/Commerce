@@ -86,6 +86,14 @@ namespace Presentation.Forms
         {
             AbrirFormEnPanel<Forms.EmployeeForm>();
         }
+        private void btnPurchase_Click(object sender, EventArgs e)
+        {
+            AbrirFormEnPanel<Forms.PurchaseForm>();
+        }
+        private void btnExpense_Click(object sender, EventArgs e)
+        {
+            AbrirFormEnPanel<Forms.ExpenseForm>();
+        }
         //------------------------------------------------------------------------------
         private void btnClose_Click(object sender, EventArgs e)
         {

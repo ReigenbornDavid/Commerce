@@ -12,16 +12,16 @@ using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
-    public partial class CategoryForm : Form
+    public partial class ExpenseForm : Form
     {
-        private Category _category;
-        private readonly CategoryBol _categoryBol = new CategoryBol();
-        public CategoryForm()
+        private Expense _expense;
+        private readonly ExpenseBol _expenseBol = new ExpenseBol();
+        public ExpenseForm()
         {
             InitializeComponent();
         }
 
-        private void CategoryForm_Load(object sender, EventArgs e)
+        private void ExpenseForm_Load(object sender, EventArgs e)
         {
 
         }
@@ -30,19 +30,18 @@ namespace Presentation.Forms
         {
             try
             {
-                if (_category == null) _category = new Category();
-
-                _category.name = txtName.Text;
-
-                _categoryBol.Registrate(_category);
-
-                if (_categoryBol.stringBuilder.Length != 0)
+                if (_expense == null) _expense = new Expense();
+                _expense.description = txtDescripcion.Text;
+                _expense.price = Convert.ToDecimal(txtPrice.Text);
+                _expense.purchase = new Purchase();
+                _expenseBol.Registrate(_expense);
+                if (_expenseBol.stringBuilder.Length != 0)
                 {
-                    MessageBox.Show(_categoryBol.stringBuilder.ToString(), "Para continuar:");
+                    MessageBox.Show(_expenseBol.stringBuilder.ToString(), "Para continuar:");
                 }
                 else
                 {
-                    MessageBox.Show("Categoria registrada/actualizada con éxito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Gasto registrado/actualizado con éxito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)

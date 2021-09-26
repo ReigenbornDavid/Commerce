@@ -11,5 +11,6 @@ namespace Common.Entities
         public int idPurchase { get; set; }
         public DateTime date { get; set; }
         public Employee employee { get; set; }
+        public List<DetailPurchase> detailPurchases { get; set; }
     }
 }

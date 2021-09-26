@@ -12,22 +12,21 @@ using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
-    public partial class SalesForm : Form
+    public partial class PurchaseForm : Form
     {
         private Product _product;
-        private Sale _sale;
-        private DetailSale _detailSale;
+        private Purchase _purchase;
+        private DetailPurchase _detailPurchase;
         private readonly ProductBol _productBol = new ProductBol();
-        private readonly SaleBol _saleBol = new SaleBol();
-        private readonly ClientBol _clientBol = new ClientBol();
+        private readonly PurchaseBol _purchaseBol = new PurchaseBol();
         private readonly EmployeeBol _employeeBol = new EmployeeBol();
         private decimal total = 0;
-        public SalesForm()
+        public PurchaseForm()
         {
             InitializeComponent();
         }
 
-        private void SalesForm_Load(object sender, EventArgs e)
+        private void PurchaseForm_Load(object sender, EventArgs e)
         {
             txtTotal.Text = total.ToString();
             ViewChange(false);
@@ -60,7 +59,7 @@ namespace Presentation.Forms
                     dvgProducts.AutoGenerateColumns = false;
                     foreach (var item in products)
                     {
-                        decimal salePrice = _productBol.CalculatePrice(item.price); 
+                        decimal salePrice = _productBol.CalculatePrice(item.price);
                         dvgProducts.Rows.Add(
                             item.idProduct,
                             item.description,
@@ -95,31 +94,26 @@ namespace Presentation.Forms
                 }
             }
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(_saleBol.GetLastId().ToString());
-        }
-        private void Sell()
+        private void Buy()
         {
             try
             {
-                _sale = new Sale();
-                _sale.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
-                _sale.client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
-                _sale.date = DateTime.Now;
-                _sale.detailSales = new List<DetailSale>();
+                _purchase = new Purchase();
+                _purchase.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
+                _purchase.date = DateTime.Now;
+                _purchase.detailPurchases = new List<DetailPurchase>();
                 foreach (DataGridViewRow row in dvgCart.Rows)
                 {
-                    _detailSale = new DetailSale();
-                    _detailSale.product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
-                    _detailSale.price = Convert.ToDecimal(row.Cells[2].Value);
-                    _detailSale.quantity = Convert.ToInt32(row.Cells[3].Value);
-                    _sale.detailSales.Add(_detailSale);
+                    _detailPurchase = new DetailPurchase();
+                    _detailPurchase.product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
+                    _detailPurchase.price = Convert.ToDecimal(row.Cells[2].Value);
+                    _detailPurchase.quantity = Convert.ToInt32(row.Cells[3].Value);
+                    _purchase.detailPurchases.Add(_detailPurchase);
                 }
-                _saleBol.Registrate(_sale);
-                if (_saleBol.stringBuilder.Length != 0 )
+                _purchaseBol.Registrate(_purchase);
+                if (_purchaseBol.stringBuilder.Length != 0)
                 {
-                    MessageBox.Show(_saleBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_purchaseBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -127,8 +121,8 @@ namespace Presentation.Forms
                     dvgCart.Rows.Clear();
                     dvgProducts.Rows.Clear();
                     txtSearch.Clear();
-                    _sale = null;
-                    _detailSale = null;
+                    _purchase = null;
+                    _detailPurchase = null;
                 }
             }
             catch (Exception ex)
@@ -149,53 +143,46 @@ namespace Presentation.Forms
                 if (_product != null)
                 {
                     _product = _productBol.GetById(_product.idProduct);
-                    if (_product.quantity >= Convert.ToInt32(txtQuantity.Text))
+                    bool exists = false;
+                    if (dvgCart.Rows.Count > 0)
                     {
-                        bool exists = false;
-                        if (dvgCart.Rows.Count > 0)
+                        foreach (DataGridViewRow row in dvgCart.Rows)
                         {
-                            foreach (DataGridViewRow row in dvgCart.Rows)
+                            if (Convert.ToInt32(row.Cells[0].Value) == _product.idProduct)
                             {
-                                if (Convert.ToInt32(row.Cells[0].Value) == _product.idProduct)
+                                exists = true;
+                                if ((Convert.ToInt32(row.Cells[3].Value) +
+                                    Convert.ToInt32(txtQuantity.Text)) <= _product.quantity)
                                 {
-                                    exists = true;
-                                    if ((Convert.ToInt32(row.Cells[3].Value) +
-                                        Convert.ToInt32(txtQuantity.Text)) <= _product.quantity)
-                                    {
-                                        total -= Convert.ToDecimal(row.Cells[4].Value);
-                                        row.Cells[3].Value = Convert.ToInt32(row.Cells[3].Value) + Convert.ToInt32(txtQuantity.Text);
-                                        row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
-                                            * Convert.ToInt32(row.Cells[3].Value);
-                                        total += Convert.ToDecimal(row.Cells[4].Value);
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    }
+                                    total -= Convert.ToDecimal(row.Cells[4].Value);
+                                    row.Cells[3].Value = Convert.ToInt32(row.Cells[3].Value) + Convert.ToInt32(txtQuantity.Text);
+                                    row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
+                                        * Convert.ToInt32(row.Cells[3].Value);
+                                    total += Convert.ToDecimal(row.Cells[4].Value);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                         }
-                        if (exists == false)
-                        {
-                            decimal subTotal = _productBol.CalculatePrice(_product.price) * Convert.ToInt32(txtQuantity.Text);
-                            dvgCart.Rows.Add(
-                                _product.idProduct,
-                                _product.description,
-                                _productBol.CalculatePrice(_product.price),
-                                txtQuantity.Text,
-                                subTotal
-                                );
-                            total += subTotal;
-                        }
-                        UpdateTotal();
-                        RemoveSelection(dvgProducts);
-                        RemoveSelection(dvgCart);
-                        _product = null;
                     }
-                    else
+                    if (exists == false)
                     {
-                        MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        decimal subTotal = _productBol.CalculatePrice(_product.price) * Convert.ToInt32(txtQuantity.Text);
+                        dvgCart.Rows.Add(
+                            _product.idProduct,
+                            _product.description,
+                            _productBol.CalculatePrice(_product.price),
+                            txtQuantity.Text,
+                            subTotal
+                            );
+                        total += subTotal;
                     }
+                    UpdateTotal();
+                    RemoveSelection(dvgProducts);
+                    RemoveSelection(dvgCart);
+                    _product = null;
                 }
                 else
                 {
@@ -235,9 +222,9 @@ namespace Presentation.Forms
                 ViewChange(false);
             }
         }
-        private void btnSell_Click(object sender, EventArgs e)
+        private void btnBuy_Click(object sender, EventArgs e)
         {
-            Sell();
+            Buy();
         }
         //Events
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -279,7 +266,5 @@ namespace Presentation.Forms
             txtPriceCart.Visible = view;
             txtQuantityCart.Visible = view;
         }
-
-        
     }
 }

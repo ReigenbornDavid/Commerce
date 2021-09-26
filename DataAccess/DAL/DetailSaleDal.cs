@@ -119,7 +119,7 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Sale SET idSale = @idSale, price = @price, quantity = @quantity, idProduct = @idProduct " +
+                    "UPDATE DetailSale SET idSale = @idSale, price = @price, quantity = @quantity, idProduct = @idProduct " +
                     "WHERE idDetailSale = @idDetailSale";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {

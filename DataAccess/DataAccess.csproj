@@ -86,9 +86,12 @@
   <ItemGroup>
     <Compile Include="DAL\CategoryDal.cs" />
     <Compile Include="DAL\ClientDal.cs" />
+    <Compile Include="DAL\DetailPurchaseDal.cs" />
     <Compile Include="DAL\DetailSaleDal.cs" />
     <Compile Include="DAL\EmployeeDal.cs" />
+    <Compile Include="DAL\ExpenseDal.cs" />
     <Compile Include="DAL\ProductDal.cs" />
+    <Compile Include="DAL\PurchaseDal.cs" />
     <Compile Include="DAL\SaleDal.cs" />
     <Compile Include="Sql\ConnectionToSql.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

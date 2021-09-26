@@ -10,6 +10,8 @@ namespace Common.Entities
     {
         public int idExpense { get; set; }
         public string description { get; set; }
+        public decimal price { get; set; }
         public Purchase purchase { get; set; }
+        public DateTime date { get; set; }
     }
 }
