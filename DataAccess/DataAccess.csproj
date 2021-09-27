@@ -93,6 +93,7 @@
     <Compile Include="DAL\ProductDal.cs" />
     <Compile Include="DAL\PurchaseDal.cs" />
     <Compile Include="DAL\SaleDal.cs" />
+    <Compile Include="DAL\ServiceDal.cs" />
     <Compile Include="Sql\ConnectionToSql.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

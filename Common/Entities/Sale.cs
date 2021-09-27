@@ -10,6 +10,7 @@ namespace Common.Entities
     {
         public int idSale { get; set; }
         public DateTime date { get; set; }
+        public decimal total { get; set; }
         public Client client { get; set; }
         public Employee employee { get; set; }
         public List<DetailSale> detailSales { get; set; }

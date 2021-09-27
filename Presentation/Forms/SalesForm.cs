@@ -21,7 +21,7 @@ namespace Presentation.Forms
         private readonly SaleBol _saleBol = new SaleBol();
         private readonly ClientBol _clientBol = new ClientBol();
         private readonly EmployeeBol _employeeBol = new EmployeeBol();
-        private decimal total = 0;
+        private decimal _total = 0;
         public SalesForm()
         {
             InitializeComponent();
@@ -29,14 +29,14 @@ namespace Presentation.Forms
 
         private void SalesForm_Load(object sender, EventArgs e)
         {
-            txtTotal.Text = total.ToString();
+            txtTotal.Text = _total.ToString();
             ViewChange(false);
             lblEmployee.Text = "40500077";
         }
 
         private void UpdateTotal()
         {
-            txtTotal.Text = total.ToString();
+            txtTotal.Text = _total.ToString();
         }
 
         public void RemoveSelection(DataGridView table)
@@ -116,6 +116,7 @@ namespace Presentation.Forms
                     _detailSale.quantity = Convert.ToInt32(row.Cells[3].Value);
                     _sale.detailSales.Add(_detailSale);
                 }
+                _sale.total = _total;
                 _saleBol.Registrate(_sale);
                 if (_saleBol.stringBuilder.Length != 0 )
                 {
@@ -162,11 +163,11 @@ namespace Presentation.Forms
                                     if ((Convert.ToInt32(row.Cells[3].Value) +
                                         Convert.ToInt32(txtQuantity.Text)) <= _product.quantity)
                                     {
-                                        total -= Convert.ToDecimal(row.Cells[4].Value);
+                                        _total -= Convert.ToDecimal(row.Cells[4].Value);
                                         row.Cells[3].Value = Convert.ToInt32(row.Cells[3].Value) + Convert.ToInt32(txtQuantity.Text);
                                         row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
                                             * Convert.ToInt32(row.Cells[3].Value);
-                                        total += Convert.ToDecimal(row.Cells[4].Value);
+                                        _total += Convert.ToDecimal(row.Cells[4].Value);
                                     }
                                     else
                                     {
@@ -185,7 +186,7 @@ namespace Presentation.Forms
                                 txtQuantity.Text,
                                 subTotal
                                 );
-                            total += subTotal;
+                            _total += subTotal;
                         }
                         UpdateTotal();
                         RemoveSelection(dvgProducts);
@@ -212,12 +213,12 @@ namespace Presentation.Forms
         {
             if (dvgCart.Rows.Count > 0)
             {
-                total -= Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
+                _total -= Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
                 dvgCart.CurrentRow.Cells[2].Value = txtPriceCart.Text;
                 dvgCart.CurrentRow.Cells[3].Value = txtQuantityCart.Text;
                 dvgCart.CurrentRow.Cells[4].Value = Convert.ToDecimal(txtPriceCart.Text)
                     * Convert.ToInt32(txtQuantityCart.Text);
-                total += Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
+                _total += Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
                 UpdateTotal();
                 RemoveSelection(dvgCart);
                 ViewChange(false);
@@ -228,7 +229,7 @@ namespace Presentation.Forms
         {
             if (dvgCart.Rows.Count > 0)
             {
-                total -= Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
+                _total -= Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
                 UpdateTotal();
                 dvgCart.Rows.RemoveAt(dvgCart.CurrentRow.Index);
                 RemoveSelection(dvgCart);

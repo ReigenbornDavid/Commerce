@@ -16,13 +16,14 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Sale (dniClient, dniEmployee, date) " +
-                    "VALUES (@dniClient, @dniEmployee, @date)";
+                    "INSERT INTO Sale (dniClient, dniEmployee, date, total) " +
+                    "VALUES (@dniClient, @dniEmployee, @date, @total)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@dniClient", sale.client.idClient);
                     command.Parameters.AddWithValue("@dniEmployee", sale.employee.idEmployee);
                     command.Parameters.AddWithValue("@date", sale.date);
+                    command.Parameters.AddWithValue("@total", sale.total);
                     command.ExecuteNonQuery();
                 }
             }
@@ -47,6 +48,7 @@ namespace DataAccess.DAL
                             client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             date = Convert.ToDateTime(dataReader["date"]),
+                            total = Convert.ToDecimal(dataReader["total"]),
                             detailSales = new DetailSaleDal().GetBySale(Convert.ToInt32(dataReader["idSale"]))
                         };
                         sales.Add(sale);
@@ -93,6 +95,7 @@ namespace DataAccess.DAL
                             client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             date = Convert.ToDateTime(dataReader["date"]),
+                            total = Convert.ToDecimal(dataReader["total"]),
                             detailSales = new DetailSaleDal().GetBySale(Convert.ToInt32(dataReader["idSale"]))
                         };
                         return sale;
@@ -120,6 +123,7 @@ namespace DataAccess.DAL
                             client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             date = Convert.ToDateTime(dataReader["date"]),
+                            total = Convert.ToDecimal(dataReader["total"]),
                             detailSales = new DetailSaleDal().GetBySale(Convert.ToInt32(dataReader["idSale"]))
                         };
                         return sale;
@@ -134,7 +138,8 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Sale SET dniClient = @dniClient, dniEmployee = @dniEmployee, date = @date " +
+                    "UPDATE Sale SET dniClient = @dniClient, dniEmployee = @dniEmployee, " +
+                    "date = @date, total = @total " +
                     "WHERE idSale = @idSale";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
@@ -142,6 +147,7 @@ namespace DataAccess.DAL
                     command.Parameters.AddWithValue("@dniClient", sale.client.idClient);
                     command.Parameters.AddWithValue("@dniEmployee", sale.employee.idEmployee);
                     command.Parameters.AddWithValue("@date", sale.date);
+                    command.Parameters.AddWithValue("@total", sale.total);
                     command.ExecuteNonQuery();
                 }
             }

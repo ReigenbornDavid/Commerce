@@ -16,9 +16,18 @@ namespace Domain.BOL
         //Properties
         private readonly int profitPercentage = 30;
         //Methods
-        public decimal CalculatePrice(decimal Cost)
+        public decimal CalculatePrice(decimal cost)
         {
-            return Cost + ((Cost * profitPercentage) / 100);
+            return RoundUp((cost + ((cost * profitPercentage)) / 100));
+        }
+        //Round up to nearest multiple of 10
+        private decimal RoundUp(decimal toRound)
+        {
+            if (toRound % 10 == 0)
+            {
+                return toRound;
+            }
+            return (10 - toRound % 10) + toRound;
         }
 
         public void Registrate(Product product)
