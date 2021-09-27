@@ -20,7 +20,7 @@ namespace Domain.BOL
 
         public void Registrate(Purchase purchase)
         {
-            if (ValidateSale(purchase))
+            if (ValidatePurchase(purchase))
             {
                 if (_purchaseDal.GetByid(purchase.idPurchase) == null)
                 {
@@ -84,7 +84,7 @@ namespace Domain.BOL
             }
         }
 
-        private bool ValidateSale(Purchase purchase)
+        private bool ValidatePurchase(Purchase purchase)
         {
             stringBuilder.Clear();
 

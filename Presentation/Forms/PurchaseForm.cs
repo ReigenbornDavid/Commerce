@@ -117,7 +117,7 @@ namespace Presentation.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Venta registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Compra registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dvgCart.Rows.Clear();
                     dvgProducts.Rows.Clear();
                     txtSearch.Clear();
