@@ -94,6 +94,10 @@ namespace Presentation.Forms
         {
             AbrirFormEnPanel<Forms.ExpenseForm>();
         }
+        private void btnService_Click(object sender, EventArgs e)
+        {
+            AbrirFormEnPanel<Forms.ServiceForm>();
+        }
         //------------------------------------------------------------------------------
         private void btnClose_Click(object sender, EventArgs e)
         {

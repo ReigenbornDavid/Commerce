@@ -48,8 +48,7 @@ namespace DataAccess.DAL
                             client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             date = Convert.ToDateTime(dataReader["date"]),
-                            total = Convert.ToDecimal(dataReader["total"]),
-                            detailSales = new DetailSaleDal().GetBySale(Convert.ToInt32(dataReader["idSale"]))
+                            total = Convert.ToDecimal(dataReader["total"])
                         };
                         sales.Add(sale);
                     }
@@ -95,8 +94,7 @@ namespace DataAccess.DAL
                             client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             date = Convert.ToDateTime(dataReader["date"]),
-                            total = Convert.ToDecimal(dataReader["total"]),
-                            detailSales = new DetailSaleDal().GetBySale(Convert.ToInt32(dataReader["idSale"]))
+                            total = Convert.ToDecimal(dataReader["total"])
                         };
                         return sale;
                     }
@@ -123,8 +121,7 @@ namespace DataAccess.DAL
                             client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             date = Convert.ToDateTime(dataReader["date"]),
-                            total = Convert.ToDecimal(dataReader["total"]),
-                            detailSales = new DetailSaleDal().GetBySale(Convert.ToInt32(dataReader["idSale"]))
+                            total = Convert.ToDecimal(dataReader["total"])
                         };
                         return sale;
                     }

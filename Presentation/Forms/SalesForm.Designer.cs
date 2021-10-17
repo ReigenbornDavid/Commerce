@@ -59,7 +59,8 @@ namespace Presentation.Forms
             this.txtQuantityCart = new System.Windows.Forms.TextBox();
             this.btnSell = new System.Windows.Forms.Button();
             this.lblEmployee = new System.Windows.Forms.Label();
-            this.txtClient = new System.Windows.Forms.TextBox();
+            this.txtClient = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCart)).BeginInit();
             this.SuspendLayout();
@@ -333,10 +334,21 @@ namespace Presentation.Forms
             // 
             // txtClient
             // 
-            this.txtClient.Location = new System.Drawing.Point(467, 286);
+            this.txtClient.FormattingEnabled = true;
+            this.txtClient.Location = new System.Drawing.Point(467, 283);
             this.txtClient.Name = "txtClient";
-            this.txtClient.Size = new System.Drawing.Size(100, 20);
-            this.txtClient.TabIndex = 29;
+            this.txtClient.Size = new System.Drawing.Size(152, 21);
+            this.txtClient.TabIndex = 30;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(762, 338);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Confirmar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // SalesForm
             // 
@@ -345,6 +357,7 @@ namespace Presentation.Forms
             this.ClientSize = new System.Drawing.Size(919, 367);
             this.Controls.Add(this.txtClient);
             this.Controls.Add(this.lblEmployee);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSell);
             this.Controls.Add(this.txtQuantityCart);
             this.Controls.Add(this.txtPriceCart);
@@ -398,6 +411,7 @@ namespace Presentation.Forms
         private System.Windows.Forms.TextBox txtQuantityCart;
         private System.Windows.Forms.Button btnSell;
         private System.Windows.Forms.Label lblEmployee;
-        private System.Windows.Forms.TextBox txtClient;
+        private System.Windows.Forms.ComboBox txtClient;
+        private System.Windows.Forms.Button button1;
     }
 }

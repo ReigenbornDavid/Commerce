@@ -25,91 +25,104 @@ namespace DataAccess.DAL
                     command.Parameters.AddWithValue("@date", service.date);
                     command.Parameters.AddWithValue("@dniClient", service.client.idClient);
                     command.Parameters.AddWithValue("@dniEmployee", service.employee.idEmployee);
-                    command.Parameters.AddWithValue("@idSale", service.sale.idSale);
+                    if (service.sale.idSale == 0)
+                    {
+                        command.Parameters.AddWithValue("@idSale", null);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@idSale", service.sale.idSale);
+                    }
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public List<Product> GetAll()
+        public List<Service> GetAll()
         {
-            List<Product> products = new List<Product>();
+            List<Service> services = new List<Service>();
 
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
                 const string sqlQuery =
-                    "SELECT * FROM Product p ORDER BY idProduct ASC";
+                    "SELECT * FROM Service s ORDER BY idService ASC";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
-                        Product product = new Product
+                        Service service = new Service
                         {
-                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            idService = Convert.ToInt32(dataReader["idService"]),
                             description = Convert.ToString(dataReader["description"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
-                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"]))
+                            date = Convert.ToDateTime(dataReader["date"]),
+                            client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
+                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"])),
+                            sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"]))
                         };
-                        products.Add(product);
+                        services.Add(service);
                     }
                 }
             }
-            return products;
+            return services;
         }
 
-        public List<Product> GetByName(string description)
+        public List<Service> GetByName(string description)
         {
-            List<Product> products = new List<Product>();
+            List<Service> services = new List<Service>();
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
                 const string sqlGetById =
-                "SELECT * FROM Product WHERE description like @Description";
+                "SELECT * FROM Service WHERE description like @Description";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@Description", "%" + description + "%");
                     MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
-                        Product product = new Product
+                        Service service = new Service
                         {
-                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            idService = Convert.ToInt32(dataReader["idService"]),
                             description = Convert.ToString(dataReader["description"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
-                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"]))
+                            date = Convert.ToDateTime(dataReader["date"]),
+                            client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
+                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"])),
+                            sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"]))
                         };
-                        products.Add(product);
+                        services.Add(service);
                     }
                 }
             }
-            return products;
+            return services;
         }
 
-        public Product GetByid(int idProduct)
+        public Service GetByid(int idService)
         {
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Product WHERE idProduct = @idProduct";
+                const string sqlGetById = "SELECT * FROM Service WHERE idService = @idService";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
-                    command.Parameters.AddWithValue("@idProduct", idProduct);
+                    command.Parameters.AddWithValue("@idService", idService);
                     MySqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.Read())
                     {
-                        Product product = new Product
+                        Service service = new Service
                         {
-                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            idService = Convert.ToInt32(dataReader["idService"]),
                             description = Convert.ToString(dataReader["description"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
-                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"]))
+                            date = Convert.ToDateTime(dataReader["date"]),
+                            client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
+                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"])),
+                            sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"]))
                         };
-                        return product;
+                        return service;
                     }
                 }
             }
@@ -122,7 +135,7 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Service SET description = @description, date = @date, dniClient = @dniClient, " +
+                    "UPDATE Service SET description = @description, price = @price, date = @date, dniClient = @dniClient, " +
                     "dniEmployee = @dniEmployee, idSale = @idSale WHERE idService = @idService";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
@@ -132,21 +145,28 @@ namespace DataAccess.DAL
                     command.Parameters.AddWithValue("@date", service.date);
                     command.Parameters.AddWithValue("@dniClient", service.client.idClient);
                     command.Parameters.AddWithValue("@dniEmployee", service.employee.idEmployee);
-                    command.Parameters.AddWithValue("@idSale", service.sale.idSale);
+                    if (service.sale.idSale == 0)
+                    {
+                        command.Parameters.AddWithValue("@idSale", null);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@idSale", service.sale.idSale);
+                    }
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void Delete(int idProduct)
+        public void Delete(int idService)
         {
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "DELETE FROM Product WHERE idProduct = @idProduct";
+                const string sqlQuery = "DELETE FROM Service WHERE idService = @idService";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@idProduct", idProduct);
+                    command.Parameters.AddWithValue("@idService", idService);
                     command.ExecuteNonQuery();
                 }
             }

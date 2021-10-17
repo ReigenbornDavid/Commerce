@@ -1,5 +1,6 @@
 ﻿using Common.Entities;
 using Domain.BOL;
+using Presentation.ReportForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,15 @@ namespace Presentation.Forms
             txtTotal.Text = _total.ToString();
             ViewChange(false);
             lblEmployee.Text = "40500077";
+            AddClientsToComboBox();
+        }
+
+        private void AddClientsToComboBox()
+        {
+            foreach (var client in _clientBol.GetClients())
+            {
+                txtClient.Items.Add(client.idClient);
+            }
         }
 
         private void UpdateTotal()
@@ -234,6 +244,19 @@ namespace Presentation.Forms
                 dvgCart.Rows.RemoveAt(dvgCart.CurrentRow.Index);
                 RemoveSelection(dvgCart);
                 ViewChange(false);
+            }
+        }
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ReportSaleForm formR = new ReportSaleForm();
+                formR._idSale = _saleBol.GetLastId();
+                formR.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error", ex.Message);
             }
         }
         private void btnSell_Click(object sender, EventArgs e)

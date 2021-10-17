@@ -30,6 +30,11 @@ namespace Presentation.Forms
         private void InitializeComponent()
         {
             this.leftPanel = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnExpense = new System.Windows.Forms.Button();
+            this.btnPurchase = new System.Windows.Forms.Button();
             this.btnEmployee = new System.Windows.Forms.Button();
             this.btnClients = new System.Windows.Forms.Button();
             this.btnSales = new System.Windows.Forms.Button();
@@ -40,11 +45,7 @@ namespace Presentation.Forms
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.midPanel = new System.Windows.Forms.Panel();
-            this.btnPurchase = new System.Windows.Forms.Button();
-            this.btnExpense = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.btnService = new System.Windows.Forms.Button();
             this.leftPanel.SuspendLayout();
             this.topPpanel.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +56,7 @@ namespace Presentation.Forms
             this.leftPanel.Controls.Add(this.label3);
             this.leftPanel.Controls.Add(this.label2);
             this.leftPanel.Controls.Add(this.label1);
+            this.leftPanel.Controls.Add(this.btnService);
             this.leftPanel.Controls.Add(this.btnExpense);
             this.leftPanel.Controls.Add(this.btnPurchase);
             this.leftPanel.Controls.Add(this.btnEmployee);
@@ -66,8 +68,61 @@ namespace Presentation.Forms
             this.leftPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.leftPanel.Location = new System.Drawing.Point(0, 0);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(240, 344);
+            this.leftPanel.Size = new System.Drawing.Size(240, 380);
             this.leftPanel.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label3.Location = new System.Drawing.Point(93, 132);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(159, 16);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "CARGA PRODUCTOS";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label2.Location = new System.Drawing.Point(93, 248);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 16);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "INGRESOS";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label1.Location = new System.Drawing.Point(93, 161);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 16);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "FACTURAS";
+            // 
+            // btnExpense
+            // 
+            this.btnExpense.Location = new System.Drawing.Point(12, 274);
+            this.btnExpense.Name = "btnExpense";
+            this.btnExpense.Size = new System.Drawing.Size(75, 23);
+            this.btnExpense.TabIndex = 1;
+            this.btnExpense.Text = "Gastos";
+            this.btnExpense.UseVisualStyleBackColor = true;
+            this.btnExpense.Click += new System.EventHandler(this.btnExpense_Click);
+            // 
+            // btnPurchase
+            // 
+            this.btnPurchase.Location = new System.Drawing.Point(12, 245);
+            this.btnPurchase.Name = "btnPurchase";
+            this.btnPurchase.Size = new System.Drawing.Size(75, 23);
+            this.btnPurchase.TabIndex = 1;
+            this.btnPurchase.Text = "Compras";
+            this.btnPurchase.UseVisualStyleBackColor = true;
+            this.btnPurchase.Click += new System.EventHandler(this.btnPurchase_Click);
             // 
             // btnEmployee
             // 
@@ -168,67 +223,24 @@ namespace Presentation.Forms
             this.midPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.midPanel.Location = new System.Drawing.Point(240, 50);
             this.midPanel.Name = "midPanel";
-            this.midPanel.Size = new System.Drawing.Size(655, 294);
+            this.midPanel.Size = new System.Drawing.Size(655, 330);
             this.midPanel.TabIndex = 2;
             // 
-            // btnPurchase
+            // btnService
             // 
-            this.btnPurchase.Location = new System.Drawing.Point(12, 245);
-            this.btnPurchase.Name = "btnPurchase";
-            this.btnPurchase.Size = new System.Drawing.Size(75, 23);
-            this.btnPurchase.TabIndex = 1;
-            this.btnPurchase.Text = "Compras";
-            this.btnPurchase.UseVisualStyleBackColor = true;
-            this.btnPurchase.Click += new System.EventHandler(this.btnPurchase_Click);
-            // 
-            // btnExpense
-            // 
-            this.btnExpense.Location = new System.Drawing.Point(12, 274);
-            this.btnExpense.Name = "btnExpense";
-            this.btnExpense.Size = new System.Drawing.Size(75, 23);
-            this.btnExpense.TabIndex = 1;
-            this.btnExpense.Text = "Gastos";
-            this.btnExpense.UseVisualStyleBackColor = true;
-            this.btnExpense.Click += new System.EventHandler(this.btnExpense_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(93, 161);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 16);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "FACTURAS";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label2.Location = new System.Drawing.Point(93, 248);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 16);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "INGRESOS";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(93, 132);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(159, 16);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "CARGA PRODUCTOS";
+            this.btnService.Location = new System.Drawing.Point(12, 303);
+            this.btnService.Name = "btnService";
+            this.btnService.Size = new System.Drawing.Size(75, 23);
+            this.btnService.TabIndex = 1;
+            this.btnService.Text = "Servicios";
+            this.btnService.UseVisualStyleBackColor = true;
+            this.btnService.Click += new System.EventHandler(this.btnService_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 344);
+            this.ClientSize = new System.Drawing.Size(895, 380);
             this.Controls.Add(this.midPanel);
             this.Controls.Add(this.topPpanel);
             this.Controls.Add(this.leftPanel);
@@ -261,5 +273,6 @@ namespace Presentation.Forms
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnService;
     }
 }

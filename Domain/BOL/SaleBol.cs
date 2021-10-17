@@ -50,6 +50,19 @@ namespace Domain.BOL
             return _saleDal.GetLastId();
         }
 
+        public List<DetailSale> GetDetailBySale(int idSale)
+        {
+            stringBuilder.Clear();
+
+            if (idSale == 0) stringBuilder.Append("Por favor proporcione un valor de Id valido");
+
+            if (stringBuilder.Length == 0)
+            {
+                return _detailSaleDal.GetBySale(idSale);
+            }
+            return null;
+        }
+
         public Sale GetById(int idSale)
         {
             stringBuilder.Clear();

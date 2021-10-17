@@ -30,7 +30,7 @@ namespace Domain.BOL
             }
         }
 
-        public List<Client> GetProducts()
+        public List<Client> GetClients()
         {
             return _clientDal.GetAll();
         }
