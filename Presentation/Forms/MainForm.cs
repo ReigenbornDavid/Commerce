@@ -98,6 +98,10 @@ namespace Presentation.Forms
         {
             AbrirFormEnPanel<Forms.ServiceForm>();
         }
+        private void btnSupplier_Click(object sender, EventArgs e)
+        {
+            AbrirFormEnPanel<Forms.SupplierForm>();
+        }
         //------------------------------------------------------------------------------
         private void btnClose_Click(object sender, EventArgs e)
         {

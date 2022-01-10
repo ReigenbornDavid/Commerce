@@ -33,6 +33,7 @@ namespace Presentation.Forms
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnService = new System.Windows.Forms.Button();
             this.btnExpense = new System.Windows.Forms.Button();
             this.btnPurchase = new System.Windows.Forms.Button();
             this.btnEmployee = new System.Windows.Forms.Button();
@@ -45,7 +46,7 @@ namespace Presentation.Forms
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.midPanel = new System.Windows.Forms.Panel();
-            this.btnService = new System.Windows.Forms.Button();
+            this.btnSupplier = new System.Windows.Forms.Button();
             this.leftPanel.SuspendLayout();
             this.topPpanel.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +57,7 @@ namespace Presentation.Forms
             this.leftPanel.Controls.Add(this.label3);
             this.leftPanel.Controls.Add(this.label2);
             this.leftPanel.Controls.Add(this.label1);
+            this.leftPanel.Controls.Add(this.btnSupplier);
             this.leftPanel.Controls.Add(this.btnService);
             this.leftPanel.Controls.Add(this.btnExpense);
             this.leftPanel.Controls.Add(this.btnPurchase);
@@ -103,6 +105,16 @@ namespace Presentation.Forms
             this.label1.Size = new System.Drawing.Size(89, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "FACTURAS";
+            // 
+            // btnService
+            // 
+            this.btnService.Location = new System.Drawing.Point(12, 303);
+            this.btnService.Name = "btnService";
+            this.btnService.Size = new System.Drawing.Size(75, 23);
+            this.btnService.TabIndex = 1;
+            this.btnService.Text = "Servicios";
+            this.btnService.UseVisualStyleBackColor = true;
+            this.btnService.Click += new System.EventHandler(this.btnService_Click);
             // 
             // btnExpense
             // 
@@ -226,15 +238,15 @@ namespace Presentation.Forms
             this.midPanel.Size = new System.Drawing.Size(655, 330);
             this.midPanel.TabIndex = 2;
             // 
-            // btnService
+            // btnSupplier
             // 
-            this.btnService.Location = new System.Drawing.Point(12, 303);
-            this.btnService.Name = "btnService";
-            this.btnService.Size = new System.Drawing.Size(75, 23);
-            this.btnService.TabIndex = 1;
-            this.btnService.Text = "Servicios";
-            this.btnService.UseVisualStyleBackColor = true;
-            this.btnService.Click += new System.EventHandler(this.btnService_Click);
+            this.btnSupplier.Location = new System.Drawing.Point(12, 332);
+            this.btnSupplier.Name = "btnSupplier";
+            this.btnSupplier.Size = new System.Drawing.Size(75, 23);
+            this.btnSupplier.TabIndex = 1;
+            this.btnSupplier.Text = "Proveedores";
+            this.btnSupplier.UseVisualStyleBackColor = true;
+            this.btnSupplier.Click += new System.EventHandler(this.btnSupplier_Click);
             // 
             // MainForm
             // 
@@ -274,5 +286,6 @@ namespace Presentation.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnService;
+        private System.Windows.Forms.Button btnSupplier;
     }
 }

@@ -48,12 +48,16 @@ namespace Presentation.Forms
             this.btnRemove = new System.Windows.Forms.Button();
             this.txtCost = new System.Windows.Forms.TextBox();
             this.lblCosto = new System.Windows.Forms.Label();
+            this.txtSupplier = new System.Windows.Forms.ComboBox();
+            this.lblSupplier = new System.Windows.Forms.Label();
+            this.lblCode = new System.Windows.Forms.Label();
+            this.txtCode = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(542, 163);
+            this.btnSave.Location = new System.Drawing.Point(542, 217);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 10;
@@ -66,7 +70,7 @@ namespace Presentation.Forms
             this.txtCategory.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtCategory.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.txtCategory.FormattingEnabled = true;
-            this.txtCategory.Location = new System.Drawing.Point(455, 136);
+            this.txtCategory.Location = new System.Drawing.Point(455, 162);
             this.txtCategory.Name = "txtCategory";
             this.txtCategory.Size = new System.Drawing.Size(162, 21);
             this.txtCategory.TabIndex = 8;
@@ -90,14 +94,14 @@ namespace Presentation.Forms
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(455, 58);
+            this.txtDescription.Location = new System.Drawing.Point(455, 84);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(162, 20);
             this.txtDescription.TabIndex = 4;
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(455, 110);
+            this.txtPrice.Location = new System.Drawing.Point(455, 136);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.ReadOnly = true;
             this.txtPrice.Size = new System.Drawing.Size(162, 20);
@@ -106,7 +110,7 @@ namespace Presentation.Forms
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(387, 61);
+            this.lblDescription.Location = new System.Drawing.Point(387, 87);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(63, 13);
             this.lblDescription.TabIndex = 2;
@@ -115,7 +119,7 @@ namespace Presentation.Forms
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(387, 113);
+            this.lblPrice.Location = new System.Drawing.Point(387, 139);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(37, 13);
             this.lblPrice.TabIndex = 2;
@@ -124,7 +128,7 @@ namespace Presentation.Forms
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(387, 139);
+            this.lblCategory.Location = new System.Drawing.Point(387, 165);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(52, 13);
             this.lblCategory.TabIndex = 2;
@@ -181,7 +185,7 @@ namespace Presentation.Forms
             // 
             // btnModify
             // 
-            this.btnModify.Location = new System.Drawing.Point(542, 163);
+            this.btnModify.Location = new System.Drawing.Point(542, 217);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(75, 23);
             this.btnModify.TabIndex = 9;
@@ -191,7 +195,7 @@ namespace Presentation.Forms
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(461, 163);
+            this.btnClear.Location = new System.Drawing.Point(461, 217);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
@@ -211,7 +215,7 @@ namespace Presentation.Forms
             // 
             // txtCost
             // 
-            this.txtCost.Location = new System.Drawing.Point(455, 84);
+            this.txtCost.Location = new System.Drawing.Point(455, 110);
             this.txtCost.Name = "txtCost";
             this.txtCost.Size = new System.Drawing.Size(162, 20);
             this.txtCost.TabIndex = 5;
@@ -220,11 +224,46 @@ namespace Presentation.Forms
             // lblCosto
             // 
             this.lblCosto.AutoSize = true;
-            this.lblCosto.Location = new System.Drawing.Point(387, 87);
+            this.lblCosto.Location = new System.Drawing.Point(387, 113);
             this.lblCosto.Name = "lblCosto";
             this.lblCosto.Size = new System.Drawing.Size(34, 13);
             this.lblCosto.TabIndex = 2;
             this.lblCosto.Text = "Costo";
+            // 
+            // txtSupplier
+            // 
+            this.txtSupplier.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtSupplier.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.txtSupplier.FormattingEnabled = true;
+            this.txtSupplier.Location = new System.Drawing.Point(455, 190);
+            this.txtSupplier.Name = "txtSupplier";
+            this.txtSupplier.Size = new System.Drawing.Size(162, 21);
+            this.txtSupplier.TabIndex = 8;
+            // 
+            // lblSupplier
+            // 
+            this.lblSupplier.AutoSize = true;
+            this.lblSupplier.Location = new System.Drawing.Point(387, 193);
+            this.lblSupplier.Name = "lblSupplier";
+            this.lblSupplier.Size = new System.Drawing.Size(56, 13);
+            this.lblSupplier.TabIndex = 2;
+            this.lblSupplier.Text = "Proveedor";
+            // 
+            // lblCode
+            // 
+            this.lblCode.AutoSize = true;
+            this.lblCode.Location = new System.Drawing.Point(387, 61);
+            this.lblCode.Name = "lblCode";
+            this.lblCode.Size = new System.Drawing.Size(40, 13);
+            this.lblCode.TabIndex = 2;
+            this.lblCode.Text = "Codigo";
+            // 
+            // txtCode
+            // 
+            this.txtCode.Location = new System.Drawing.Point(455, 58);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.Size = new System.Drawing.Size(162, 20);
+            this.txtCode.TabIndex = 4;
             // 
             // ProductForm
             // 
@@ -235,12 +274,16 @@ namespace Presentation.Forms
             this.Controls.Add(this.dvgProducts);
             this.Controls.Add(this.txtCost);
             this.Controls.Add(this.txtPrice);
+            this.Controls.Add(this.txtCode);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.txtId);
+            this.Controls.Add(this.lblSupplier);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.lblCosto);
+            this.Controls.Add(this.lblCode);
             this.Controls.Add(this.lblPrice);
             this.Controls.Add(this.lblDescription);
+            this.Controls.Add(this.txtSupplier);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.txtCategory);
             this.Controls.Add(this.btnSearch);
@@ -279,5 +322,9 @@ namespace Presentation.Forms
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.TextBox txtCost;
         private System.Windows.Forms.Label lblCosto;
+        private System.Windows.Forms.ComboBox txtSupplier;
+        private System.Windows.Forms.Label lblSupplier;
+        private System.Windows.Forms.Label lblCode;
+        private System.Windows.Forms.TextBox txtCode;
     }
 }

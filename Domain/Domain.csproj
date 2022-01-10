@@ -49,6 +49,7 @@
     <Compile Include="BOL\PurchaseBol.cs" />
     <Compile Include="BOL\SaleBol.cs" />
     <Compile Include="BOL\ServiceBol.cs" />
+    <Compile Include="BOL\SupplierBol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\DetailSaleReport.cs" />
     <Compile Include="Reports\SaleReport.cs" />

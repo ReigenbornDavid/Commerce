@@ -17,6 +17,7 @@ namespace Presentation.Forms
         private Product _product;
         private readonly ProductBol _productBol = new ProductBol();
         private readonly CategoryBol _categoryBol = new CategoryBol();
+        private readonly SupplierBol _supplierBol = new SupplierBol();
         public ProductForm()
         {
             InitializeComponent();
@@ -25,11 +26,25 @@ namespace Presentation.Forms
         private void ProductForm_Load(object sender, EventArgs e)
         {
             btnModify.Visible = false;
+            AddCategoriesToCombobox();
+            AddSuppliersToCombobox();
+            txtSearch.Focus();
+        }
+
+        private void AddSuppliersToCombobox()
+        {
+            foreach (var supplier in _supplierBol.All())
+            {
+                txtSupplier.Items.Add(supplier.name);
+            }
+        }
+
+        private void AddCategoriesToCombobox()
+        {
             foreach (var category in _categoryBol.All())
             {
                 txtCategory.Items.Add(category.name);
             }
-            txtSearch.Focus();
         }
 
         private void Remove()
@@ -47,10 +62,12 @@ namespace Presentation.Forms
         private void Clear()
         {
             txtId.Clear();
+            txtCode.Clear();
             txtDescription.Clear();
             txtCost.Clear();
             txtPrice.Clear();
             txtCategory.Text = "";
+            txtSupplier.Text = "";
             ViewAdd();
             RemoveSelection(dvgProducts);
         }
@@ -72,10 +89,12 @@ namespace Presentation.Forms
             {
                 _product = _productBol.GetById(_product.idProduct);
                 txtId.Text = _product.idProduct.ToString();
+                txtCode.Text = _product.code;
                 txtDescription.Text = _product.description;
                 txtCost.Text = _product.price.ToString();
                 txtPrice.Text = _productBol.CalculatePrice(_product.price).ToString();
                 txtCategory.Text = _product.category.name;
+                txtSupplier.Text = _product.supplier.name;
             }
             catch (Exception ex)
             {
@@ -116,9 +135,11 @@ namespace Presentation.Forms
                 {
                     _product.idProduct = Convert.ToInt32(txtId.Text);
                 }
+                _product.code = txtCode.Text;
                 _product.description = txtDescription.Text;
                 _product.price = Convert.ToDecimal(txtCost.Text);
                 _product.category = _categoryBol.GetByName(txtCategory.Text);
+                _product.supplier = _supplierBol.GetByName(txtSupplier.Text);
 
                 _productBol.Registrate(_product);
 

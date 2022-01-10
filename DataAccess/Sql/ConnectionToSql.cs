@@ -10,18 +10,20 @@ namespace DataAccess
     public abstract class ConnectionToSql
     {
         private readonly string connectionString;
-        private readonly string connectionString2;
-        private readonly string connectionStringRedLocal;
+        private readonly string connectionStringCasa;
+        private readonly string connectionStringLocal;
         public ConnectionToSql()
         {
             //localhost
             connectionString = "Database=commerce; Data Source=localhost; User Id=root; Password=toor";
             //localhost
-            connectionStringRedLocal = "Database=commerce; Server=192.168.1.41; Port=3306; Uid=root; Pwd=toor";
+            connectionStringCasa = "Database=commerce; Server=192.168.1.41; Port=3306; Uid=root; Pwd=toor";
+            //localhost
+            connectionStringLocal = "Database=commerce; Server=192.168.100.2; Port=3306; Uid=root; Pwd=toor";
         }
         protected MySqlConnection GetConnection()
         {
-            return new MySqlConnection(connectionStringRedLocal);
+            return new MySqlConnection(connectionStringLocal);
         }
     }
 }
