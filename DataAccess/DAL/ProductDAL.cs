@@ -16,10 +16,11 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Product (description, price, quantity, idCategory) " +
-                    "VALUES (@description, @price, @quantity, @idCategory)";
+                    "INSERT INTO Product (codeProduct, description, price, quantity, idCategory) " +
+                    "VALUES (@codeProduct, @description, @price, @quantity, @idCategory)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
+                    command.Parameters.AddWithValue("@codeProduct", product.codeProduct);
                     command.Parameters.AddWithValue("@description", product.description);
                     command.Parameters.AddWithValue("@price", product.price);
                     command.Parameters.AddWithValue("@quantity", product.quantity);

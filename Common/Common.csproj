@@ -51,6 +51,7 @@
     <Compile Include="Entities\Purchase.cs" />
     <Compile Include="Entities\Sale.cs" />
     <Compile Include="Entities\Service.cs" />
+    <Compile Include="Entities\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

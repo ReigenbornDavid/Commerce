@@ -110,6 +110,7 @@ namespace Presentation.Forms
                 if (_product == null)
                 {
                     _product = new Product();
+                    _product.quantity = 0;
                 }
                 else
                 {
@@ -117,7 +118,6 @@ namespace Presentation.Forms
                 }
                 _product.description = txtDescription.Text;
                 _product.price = Convert.ToDecimal(txtCost.Text);
-                _product.quantity = 0;
                 _product.category = _categoryBol.GetByName(txtCategory.Text);
 
                 _productBol.Registrate(_product);

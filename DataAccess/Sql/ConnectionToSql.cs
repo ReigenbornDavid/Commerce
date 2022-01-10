@@ -17,11 +17,11 @@ namespace DataAccess
             //localhost
             connectionString = "Database=commerce; Data Source=localhost; User Id=root; Password=toor";
             //localhost
-            connectionStringRedLocal = "Database=mesaentrada; Server=192.168.0.140; Port=3306; Uid=dev; Pwd=Dr753159852460?&";
+            connectionStringRedLocal = "Database=commerce; Server=192.168.1.41; Port=3306; Uid=root; Pwd=toor";
         }
         protected MySqlConnection GetConnection()
         {
-            return new MySqlConnection(connectionString);
+            return new MySqlConnection(connectionStringRedLocal);
         }
     }
 }

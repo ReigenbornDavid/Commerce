@@ -14,11 +14,12 @@ namespace Domain.BOL
         private ProductDal _productDal = new ProductDal();
         public readonly StringBuilder stringBuilder = new StringBuilder();
         //Properties
-        private readonly int profitPercentage = 30;
+        private readonly int profitPercentage = 60;
         //Methods
         public decimal CalculatePrice(decimal cost)
         {
-            return RoundUp((cost + ((cost * profitPercentage)) / 100));
+            //return RoundUp((cost + ((cost * profitPercentage)) / 100));
+            return (cost + ((cost * profitPercentage)) / 100);
         }
         //Round up to nearest multiple of 10
         private decimal RoundUp(decimal toRound)
