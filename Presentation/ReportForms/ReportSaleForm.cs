@@ -1,5 +1,4 @@
 ﻿using Common.Entities;
-using Domain.BOL;
 using Domain.Reports;
 using Microsoft.Reporting.WinForms;
 using System;
@@ -17,8 +16,7 @@ namespace Presentation.ReportForms
     public partial class ReportSaleForm : Form
     {
         //Instances
-        public int _idSale { get; set; }
-        SaleBol _saleBol = new SaleBol();
+        public Sale _sale { get; set; }
         public ReportSaleForm()
         {
             InitializeComponent();
@@ -34,13 +32,22 @@ namespace Presentation.ReportForms
         {
             try
             {
-                Sale _sale = _saleBol.GetById(_idSale);
                 this.reportViewer1.LocalReport.DataSources.Clear();
                 ReportDataSource rds = new ReportDataSource("DetailSale", GetSaleReport(_sale));
                 this.reportViewer1.LocalReport.DataSources.Add(rds);
                 this.reportViewer1.LocalReport.SetParameters(new ReportParameter("date", _sale.date.ToString()));
                 this.reportViewer1.LocalReport.SetParameters(new ReportParameter("dniClient", _sale.client.idClient.ToString()));
                 this.reportViewer1.LocalReport.SetParameters(new ReportParameter("dniEmployee", _sale.employee.idEmployee.ToString()));
+                string type;
+                if (_sale.idSale != 0)
+                {
+                    type = "Comprobante";
+                }
+                else
+                {
+                    type = "Presupuesto";
+                }
+                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("type", type));
                 this.reportViewer1.LocalReport.SetParameters(new ReportParameter("idSale", _sale.idSale.ToString()));
                 this.reportViewer1.LocalReport.SetParameters(new ReportParameter("total", _sale.total.ToString()));
                 this.reportViewer1.RefreshReport();
@@ -55,7 +62,6 @@ namespace Presentation.ReportForms
         {
             DetailSaleReport _detailSaleReport = new DetailSaleReport();
             List<DetailSaleReport> detailSaleList = new List<DetailSaleReport>();
-            _sale.detailSales = _saleBol.GetDetailBySale(_sale.idSale);
             foreach (var item in _sale.detailSales)
             {
                 _detailSaleReport.description = item.product.description;

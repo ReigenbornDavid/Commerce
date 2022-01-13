@@ -246,12 +246,49 @@ namespace Presentation.Forms
                 ViewChange(false);
             }
         }
+        private void btnBudget_Click(object sender, EventArgs e)
+        {
+            if (true)
+            {
+
+            }
+            try
+            {
+                ReportSaleForm formR = new ReportSaleForm();
+                _sale = new Sale();
+                _sale.idSale = 0;
+                _sale.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
+                _sale.client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
+                _sale.date = DateTime.Now;
+                _sale.detailSales = new List<DetailSale>();
+                foreach (DataGridViewRow row in dvgCart.Rows)
+                {
+                    _detailSale = new DetailSale();
+                    _detailSale.product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
+                    _detailSale.price = Convert.ToDecimal(row.Cells[2].Value);
+                    _detailSale.quantity = Convert.ToInt32(row.Cells[3].Value);
+                    _sale.detailSales.Add(_detailSale);
+                }
+                _sale.total = _total;
+                formR._sale = _sale;
+                
+                _sale = null;
+                _detailSale = null;
+                formR.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error", ex.Message);
+            }
+        }
         private void btnReport_Click(object sender, EventArgs e)
         {
             try
             {
                 ReportSaleForm formR = new ReportSaleForm();
-                formR._idSale = _saleBol.GetLastId();
+                var sale = _saleBol.GetById(_saleBol.GetLastId());
+                sale.detailSales = _saleBol.GetDetailBySale(sale.idSale);
+                formR._sale = sale;
                 formR.ShowDialog();
             }
             catch (Exception ex)
