@@ -11,9 +11,9 @@ namespace Common.Entities
         public int idService { get; set; }
         public string description { get; set; }
         public decimal price { get; set; }
+        public string state { get; set; }
         public DateTime date { get; set; }
         public Client client { get; set; }
         public Employee employee { get; set; }
-        public Sale sale { get; set; }
     }
 }

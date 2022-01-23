@@ -11,6 +11,7 @@ namespace DataAccess
     {
         private readonly string connectionString;
         private readonly string connectionStringCasa;
+        private readonly string connectionStringCasa2;
         private readonly string connectionStringLocal;
         public ConnectionToSql()
         {
@@ -19,11 +20,13 @@ namespace DataAccess
             //localhost
             connectionStringCasa = "Database=commerce; Server=192.168.1.41; Port=3306; Uid=root; Pwd=toor";
             //localhost
-            connectionStringLocal = "Database=commerce; Server=192.168.100.2; Port=3306; Uid=root; Pwd=toor";
+            connectionStringCasa2 = "Database=commerce2; Server=192.168.1.41; Port=3306; Uid=root; Pwd=toor";
+            //localhost
+            connectionStringLocal = "Database=commerce; Server=192.168.100.5; Port=3306; Uid=root; Pwd=toor";
         }
         protected MySqlConnection GetConnection()
         {
-            return new MySqlConnection(connectionStringLocal);
+            return new MySqlConnection(connectionStringCasa);
         }
     }
 }

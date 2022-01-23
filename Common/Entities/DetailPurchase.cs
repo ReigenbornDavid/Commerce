@@ -10,7 +10,7 @@ namespace Common.Entities
     {
         public int idDetailPurchase { get; set; }
         public decimal price { get; set; }
-        public int quantity { get; set; }
+        public decimal quantity { get; set; }
         public Product product { get; set; }
         public Purchase purchase { get; set; }
     }

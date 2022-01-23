@@ -16,12 +16,14 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Purchase (dniEmployee, date) " +
-                    "VALUES (@dniEmployee, @date)";
+                    "INSERT INTO Purchase (dniEmployee, date, idSupplier, total) " +
+                    "VALUES (@dniEmployee, @date, @idSupplier, @total)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@dniEmployee", purchase.employee.idEmployee);
                     command.Parameters.AddWithValue("@date", purchase.date);
+                    command.Parameters.AddWithValue("@total", purchase.total);
+                    command.Parameters.AddWithValue("@idSupplier", purchase.supplier.idSupplier);
                     command.ExecuteNonQuery();
                 }
             }
@@ -44,7 +46,9 @@ namespace DataAccess.DAL
                         {
                             idPurchase = Convert.ToInt32(dataReader["idPurchase"]),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
+                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
                             date = Convert.ToDateTime(dataReader["date"]),
+                            total = Convert.ToDecimal(dataReader["total"]),
                             detailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
                         };
                         purchases.Add(purchase);
@@ -89,7 +93,9 @@ namespace DataAccess.DAL
                         {
                             idPurchase = Convert.ToInt32(dataReader["idPurchase"]),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
+                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
                             date = Convert.ToDateTime(dataReader["date"]),
+                            total = Convert.ToDecimal(dataReader["total"]),
                             detailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
                         };
                         return purchase;
@@ -116,6 +122,8 @@ namespace DataAccess.DAL
                             idPurchase = Convert.ToInt32(dataReader["idPurchase"]),
                             employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             date = Convert.ToDateTime(dataReader["date"]),
+                            total = Convert.ToDecimal(dataReader["total"]),
+                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
                             detailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
                         };
                         return purchase;
@@ -130,13 +138,15 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Sale SET dniEmployee = @dniEmployee, date = @date " +
+                    "UPDATE Sale SET dniEmployee = @dniEmployee, date = @date, idSupplier = @idSupplier, total = @total " +
                     "WHERE idPurchase = @idPurchase";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@idPurchase", purchase.idPurchase);
                     command.Parameters.AddWithValue("@dniEmployee", purchase.employee.idEmployee);
                     command.Parameters.AddWithValue("@date", purchase.date);
+                    command.Parameters.AddWithValue("@total", purchase.total);
+                    command.Parameters.AddWithValue("@idSupplier", purchase.supplier.idSupplier);
                     command.ExecuteNonQuery();
                 }
             }

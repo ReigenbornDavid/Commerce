@@ -50,6 +50,32 @@ namespace DataAccess.DAL
             return categories;
         }
 
+        public List<Category> GetAllByName(string name)
+        {
+            List<Category> categories = new List<Category>();
+
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlQuery = "SELECT * FROM Category WHERE name like @name";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@name", "%" + name + "%");
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        Category category = new Category
+                        {
+                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
+                            name = Convert.ToString(dataReader["name"])
+                        };
+                        categories.Add(category);
+                    }
+                }
+            }
+            return categories;
+        }
+
         public Category GetByName(string name)
         {
             using (MySqlConnection connection = GetConnection())

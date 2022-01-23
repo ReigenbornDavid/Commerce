@@ -91,8 +91,8 @@ namespace Presentation.Forms
                 txtId.Text = _product.idProduct.ToString();
                 txtCode.Text = _product.code;
                 txtDescription.Text = _product.description;
-                txtCost.Text = _product.price.ToString();
-                txtPrice.Text = _productBol.CalculatePrice(_product.price).ToString();
+                txtCost.Text = _product.cost.ToString();
+                txtPrice.Text = _product.price.ToString();
                 txtCategory.Text = _product.category.name;
                 txtSupplier.Text = _product.supplier.name;
             }
@@ -137,7 +137,8 @@ namespace Presentation.Forms
                 }
                 _product.code = txtCode.Text;
                 _product.description = txtDescription.Text;
-                _product.price = Convert.ToDecimal(txtCost.Text);
+                _product.cost = Convert.ToDecimal(txtCost.Text);
+                _product.price = Convert.ToDecimal(txtPrice.Text);
                 _product.category = _categoryBol.GetByName(txtCategory.Text);
                 _product.supplier = _supplierBol.GetByName(txtSupplier.Text);
 
@@ -223,7 +224,7 @@ namespace Presentation.Forms
         private void textBoxInt_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != '.'))
+                (e.KeyChar != ','))
             {
                 e.Handled = true;
             }
@@ -231,13 +232,13 @@ namespace Presentation.Forms
         private void textBoxDecimal_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != '.'))
+                (e.KeyChar != ','))
             {
                 e.Handled = true;
             }
 
             // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
             {
                 e.Handled = true;
             }

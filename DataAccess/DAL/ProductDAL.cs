@@ -16,12 +16,13 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Product (code, description, price, quantity, idCategory, idSupplier) " +
-                    "VALUES (@code, @description, @price, @quantity, @idCategory, @idSupplier)";
+                    "INSERT INTO Product (code, description, cost, price, quantity, idCategory, idSupplier) " +
+                    "VALUES (@code, @description, @cost, @price, @quantity, @idCategory, @idSupplier)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@code", product.code);
                     command.Parameters.AddWithValue("@description", product.description);
+                    command.Parameters.AddWithValue("@cost", product.cost);
                     command.Parameters.AddWithValue("@price", product.price);
                     command.Parameters.AddWithValue("@quantity", product.quantity);
                     command.Parameters.AddWithValue("@idCategory", product.category.idCategory);
@@ -50,8 +51,9 @@ namespace DataAccess.DAL
                             idProduct = Convert.ToInt32(dataReader["idProduct"]),
                             code = Convert.ToString(dataReader["code"]),
                             description = Convert.ToString(dataReader["description"]),
+                            cost = Convert.ToDecimal(dataReader["cost"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            quantity = Convert.ToDecimal(dataReader["quantity"]),
                             category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
                             supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"]))
                         };
@@ -81,8 +83,9 @@ namespace DataAccess.DAL
                             idProduct = Convert.ToInt32(dataReader["idProduct"]),
                             code = Convert.ToString(dataReader["code"]),
                             description = Convert.ToString(dataReader["description"]),
+                            cost = Convert.ToDecimal(dataReader["cost"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            quantity = Convert.ToDecimal(dataReader["quantity"]),
                             category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
                             supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"]))
                         };
@@ -110,8 +113,9 @@ namespace DataAccess.DAL
                             idProduct = Convert.ToInt32(dataReader["idProduct"]),
                             code = Convert.ToString(dataReader["code"]),
                             description = Convert.ToString(dataReader["description"]),
+                            cost = Convert.ToDecimal(dataReader["cost"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            quantity = Convert.ToDecimal(dataReader["quantity"]),
                             category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
                             supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"]))
                         };
@@ -128,11 +132,12 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Product SET code = @code, description = @description, quantity = @quantity, price = @price, idCategory = @idCategory, idSupplier = @idSupplier WHERE idProduct = @idProduct";
+                    "UPDATE Product SET code = @code, description = @description, cost = @cost, price = @price, quantity = @quantity, idCategory = @idCategory, idSupplier = @idSupplier WHERE idProduct = @idProduct";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@code", product.code);
                     command.Parameters.AddWithValue("@description", product.description);
+                    command.Parameters.AddWithValue("@cost", product.cost);
                     command.Parameters.AddWithValue("@price", product.price);
                     command.Parameters.AddWithValue("@quantity", product.quantity);
                     command.Parameters.AddWithValue("@idCategory", product.category.idCategory);

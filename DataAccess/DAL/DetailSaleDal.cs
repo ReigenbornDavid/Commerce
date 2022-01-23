@@ -46,7 +46,7 @@ namespace DataAccess.DAL
                         {
                             idDetailSale = Convert.ToInt32(dataReader["idDetailSale"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            quantity = Convert.ToDecimal(dataReader["quantity"]),
                             product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
                             sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"])),
                         };
@@ -75,7 +75,7 @@ namespace DataAccess.DAL
                         {
                             idDetailSale = Convert.ToInt32(dataReader["idDetailSale"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            quantity = Convert.ToDecimal(dataReader["quantity"]),
                             product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
                             sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"])),
                         };
@@ -102,7 +102,7 @@ namespace DataAccess.DAL
                         {
                             idDetailSale = Convert.ToInt32(dataReader["idDetailSale"]),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
+                            quantity = Convert.ToDecimal(dataReader["quantity"]),
                             product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
                             sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"])),
                         };

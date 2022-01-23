@@ -14,11 +14,10 @@ namespace Domain.BOL
         private PurchaseDal _purchaseDal = new PurchaseDal();
         private DetailPurchaseDal _detailPurchaseDal = new DetailPurchaseDal();
         private ProductDal _productDal = new ProductDal();
-        private ExpenseDal _expenseDal = new ExpenseDal();
         public readonly StringBuilder stringBuilder = new StringBuilder();
         public int lastPurchase;
 
-        public void Registrate(Purchase purchase)
+        public int Registrate(Purchase purchase)
         {
             if (ValidatePurchase(purchase))
             {
@@ -26,12 +25,6 @@ namespace Domain.BOL
                 {
                     _purchaseDal.Insert(purchase);
                     lastPurchase = _purchaseDal.GetLastId();
-                    Expense expense = new Expense();
-                    expense.description = "Compra";
-                    expense.purchase = new Purchase();
-                    expense.purchase.idPurchase = lastPurchase;
-                    expense.date = purchase.date;
-                    expense.price = 0;
                     foreach (var item in purchase.detailPurchases)
                     {
                         item.purchase = new Purchase();
@@ -39,14 +32,15 @@ namespace Domain.BOL
                         _detailPurchaseDal.Insert(item);
                         item.product.quantity = item.product.quantity + item.quantity;
                         _productDal.Update(item.product);
-                        expense.price += item.price * item.quantity;
                     }
-                    _expenseDal.Insert(expense);
+                    return lastPurchase;
                 }
                 else
                     _purchaseDal.Update(purchase);
-
+            
+                return 0;
             }
+            return 0;
         }
 
         public List<Purchase> All()
@@ -90,6 +84,7 @@ namespace Domain.BOL
 
             if (string.IsNullOrEmpty(purchase.employee.idEmployee.ToString())) stringBuilder.Append("El campo empleado es obligatorio");
             if (string.IsNullOrEmpty(purchase.date.ToString())) stringBuilder.Append(Environment.NewLine + "El campo fecha es obligatorio");
+            if (string.IsNullOrEmpty(purchase.supplier.name)) stringBuilder.Append(Environment.NewLine + "El campo proveedor es obligatorio");
             //if (string.IsNullOrEmpty(sale.detailSales.Count.ToString())) stringBuilder.Append(Environment.NewLine + "El campo detalle es obligatorio");
             return stringBuilder.Length == 0;
         }

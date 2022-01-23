@@ -44,10 +44,11 @@ namespace DataAccess.DAL
                     {
                         Client client = new Client
                         {
-                            idClient = Convert.ToInt32(dataReader["dniClient"]),
+                            idClient = Convert.ToInt64(dataReader["dniClient"]),
                             firstName = Convert.ToString(dataReader["firstName"]),
                             lastName = Convert.ToString(dataReader["lastName"]),
                             address = Convert.ToString(dataReader["address"]),
+                            tel = Convert.ToString(dataReader["tel"])
                         };
                         clients.Add(client);
                     }
@@ -72,10 +73,11 @@ namespace DataAccess.DAL
                     {
                         Client client = new Client
                         {
-                            idClient = Convert.ToInt32(dataReader["dniClient"]),
+                            idClient = Convert.ToInt64(dataReader["dniClient"]),
                             firstName = Convert.ToString(dataReader["firstName"]),
                             lastName = Convert.ToString(dataReader["lastName"]),
                             address = Convert.ToString(dataReader["address"]),
+                            tel = Convert.ToString(dataReader["tel"])
                         };
                         clients.Add(client);
                     }
@@ -98,10 +100,11 @@ namespace DataAccess.DAL
                     {
                         Client client = new Client
                         {
-                            idClient = Convert.ToInt32(dataReader["dniClient"]),
+                            idClient = Convert.ToInt64(dataReader["dniClient"]),
                             firstName = Convert.ToString(dataReader["firstName"]),
                             lastName = Convert.ToString(dataReader["lastName"]),
                             address = Convert.ToString(dataReader["address"]),
+                            tel = Convert.ToString(dataReader["tel"])
                         };
                         return client;
                     }

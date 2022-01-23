@@ -33,7 +33,6 @@ namespace Presentation.Forms
                 if (_expense == null) _expense = new Expense();
                 _expense.description = txtDescripcion.Text;
                 _expense.price = Convert.ToDecimal(txtPrice.Text);
-                _expense.purchase = new Purchase();
                 _expenseBol.Registrate(_expense);
                 if (_expenseBol.stringBuilder.Length != 0)
                 {

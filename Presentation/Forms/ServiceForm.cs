@@ -39,11 +39,6 @@ namespace Presentation.Forms
                 _service.date = DateTime.Now;
                 _service.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
                 _service.client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
-                _service.sale = new Sale();
-                if (txtIdSale.Text != "")
-                {
-                    _service.sale.idSale = Convert.ToInt32(txtIdSale.Text);
-                }
                 _serviceBol.Registrate(_service);
                 if (_saleBol.stringBuilder.Length != 0)
                 {

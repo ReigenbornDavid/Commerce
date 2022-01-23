@@ -16,8 +16,8 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Service (description, price, date, dniClient, dniEmployee, idSale) " +
-                    "VALUES (@description, @price, @date, @dniClient, @dniEmployee, @idSale)";
+                    "INSERT INTO Service (description, price, date, dniClient, dniEmployee) " +
+                    "VALUES (@description, @price, @date, @dniClient, @dniEmployee)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@description", service.description);
@@ -25,14 +25,6 @@ namespace DataAccess.DAL
                     command.Parameters.AddWithValue("@date", service.date);
                     command.Parameters.AddWithValue("@dniClient", service.client.idClient);
                     command.Parameters.AddWithValue("@dniEmployee", service.employee.idEmployee);
-                    if (service.sale.idSale == 0)
-                    {
-                        command.Parameters.AddWithValue("@idSale", null);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@idSale", service.sale.idSale);
-                    }
                     command.ExecuteNonQuery();
                 }
             }
@@ -59,8 +51,7 @@ namespace DataAccess.DAL
                             price = Convert.ToDecimal(dataReader["price"]),
                             date = Convert.ToDateTime(dataReader["date"]),
                             client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"])),
-                            sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"]))
+                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"]))
                         };
                         services.Add(service);
                     }
@@ -90,8 +81,7 @@ namespace DataAccess.DAL
                             price = Convert.ToDecimal(dataReader["price"]),
                             date = Convert.ToDateTime(dataReader["date"]),
                             client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"])),
-                            sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"]))
+                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"]))
                         };
                         services.Add(service);
                     }
@@ -119,8 +109,7 @@ namespace DataAccess.DAL
                             price = Convert.ToDecimal(dataReader["price"]),
                             date = Convert.ToDateTime(dataReader["date"]),
                             client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"])),
-                            sale = new SaleDal().GetByid(Convert.ToInt32(dataReader["idSale"]))
+                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"]))
                         };
                         return service;
                     }
@@ -136,7 +125,7 @@ namespace DataAccess.DAL
                 connection.Open();
                 const string sqlQuery =
                     "UPDATE Service SET description = @description, price = @price, date = @date, dniClient = @dniClient, " +
-                    "dniEmployee = @dniEmployee, idSale = @idSale WHERE idService = @idService";
+                    "dniEmployee = @dniEmployee WHERE idService = @idService";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@idService", service.idService);
@@ -145,14 +134,6 @@ namespace DataAccess.DAL
                     command.Parameters.AddWithValue("@date", service.date);
                     command.Parameters.AddWithValue("@dniClient", service.client.idClient);
                     command.Parameters.AddWithValue("@dniEmployee", service.employee.idEmployee);
-                    if (service.sale.idSale == 0)
-                    {
-                        command.Parameters.AddWithValue("@idSale", null);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@idSale", service.sale.idSale);
-                    }
                     command.ExecuteNonQuery();
                 }
             }

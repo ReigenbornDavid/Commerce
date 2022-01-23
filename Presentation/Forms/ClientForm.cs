@@ -43,6 +43,7 @@ namespace Presentation.Forms
             txtFirstName.Clear();
             txtLastName.Clear();
             txtAddress.Clear();
+            txtTel.Clear();
             ViewAdd();
             RemoveSelection(dvgClients);
         }
@@ -66,6 +67,7 @@ namespace Presentation.Forms
                 txtFirstName.Text = _client.firstName;
                 txtLastName.Text = _client.lastName;
                 txtAddress.Text = _client.address;
+                txtTel.Text = _client.tel;
             }
             catch (Exception ex)
             {
@@ -87,7 +89,7 @@ namespace Presentation.Forms
             if (dvgClients.Rows.Count > 0)
             {
                 _client = new Client();
-                _client.idClient = Convert.ToInt32(dvgClients.CurrentRow.Cells[0].Value);
+                _client.idClient = Convert.ToInt64(dvgClients.CurrentRow.Cells[0].Value);
                 FillFields();
                 ViewModify();
             }
@@ -100,10 +102,11 @@ namespace Presentation.Forms
                 {
                     _client = new Client();
                 }
-                _client.idClient = Convert.ToInt32(txtId.Text);
+                _client.idClient = Convert.ToInt64(txtId.Text);
                 _client.firstName = txtFirstName.Text;
                 _client.lastName = txtLastName.Text;
                 _client.address = txtAddress.Text;
+                _client.tel = txtTel.Text;
 
                 _clientBol.Registrate(_client);
 
@@ -137,8 +140,8 @@ namespace Presentation.Forms
                     {
                         dvgClients.Rows.Add(
                             item.idClient,
-                            item.firstName,
-                            item.lastName
+                            item.lastName,
+                            item.firstName
                             );
                     }
                     RemoveSelection(dvgClients);

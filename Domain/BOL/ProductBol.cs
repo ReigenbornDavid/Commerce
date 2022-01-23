@@ -14,23 +14,7 @@ namespace Domain.BOL
         private ProductDal _productDal = new ProductDal();
         public readonly StringBuilder stringBuilder = new StringBuilder();
         //Properties
-        private readonly int profitPercentage = 60;
         //Methods
-        public decimal CalculatePrice(decimal cost)
-        {
-            //return RoundUp((cost + ((cost * profitPercentage)) / 100));
-            return (cost + ((cost * profitPercentage)) / 100);
-        }
-        //Round up to nearest multiple of 10
-        private decimal RoundUp(decimal toRound)
-        {
-            if (toRound % 10 == 0)
-            {
-                return toRound;
-            }
-            return (10 - toRound % 10) + toRound;
-        }
-
         public void Registrate(Product product)
         {
             if (ValidateProduct(product))
@@ -88,6 +72,7 @@ namespace Domain.BOL
             if (string.IsNullOrEmpty(product.code)) stringBuilder.Append("El campo Codigo es obligatorio");
             if (string.IsNullOrEmpty(product.description)) stringBuilder.Append(Environment.NewLine + "El campo Descripcion es obligatorio");
             if (string.IsNullOrEmpty(product.category.name)) stringBuilder.Append(Environment.NewLine + "El campo Categoria es obligatorio");
+            if (product.cost <= 0) stringBuilder.Append(Environment.NewLine + "El campo Costo es obligatorio");
             if (product.price <= 0) stringBuilder.Append(Environment.NewLine + "El campo Precio es obligatorio");
             if (product.quantity < 0) stringBuilder.Append(Environment.NewLine + "El campo Cantidad es obligatorio");
 

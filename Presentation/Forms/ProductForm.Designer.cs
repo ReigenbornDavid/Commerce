@@ -97,15 +97,15 @@ namespace Presentation.Forms
             this.txtDescription.Location = new System.Drawing.Point(455, 84);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(162, 20);
-            this.txtDescription.TabIndex = 4;
+            this.txtDescription.TabIndex = 5;
             // 
             // txtPrice
             // 
             this.txtPrice.Location = new System.Drawing.Point(455, 136);
             this.txtPrice.Name = "txtPrice";
-            this.txtPrice.ReadOnly = true;
             this.txtPrice.Size = new System.Drawing.Size(162, 20);
-            this.txtPrice.TabIndex = 6;
+            this.txtPrice.TabIndex = 7;
+            this.txtPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
             // 
             // lblDescription
             // 
@@ -188,7 +188,7 @@ namespace Presentation.Forms
             this.btnModify.Location = new System.Drawing.Point(542, 217);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(75, 23);
-            this.btnModify.TabIndex = 9;
+            this.btnModify.TabIndex = 10;
             this.btnModify.Text = "Modificar";
             this.btnModify.UseVisualStyleBackColor = true;
             this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
@@ -198,7 +198,7 @@ namespace Presentation.Forms
             this.btnClear.Location = new System.Drawing.Point(461, 217);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 11;
+            this.btnClear.TabIndex = 0;
             this.btnClear.Text = "Limpiar";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -218,7 +218,7 @@ namespace Presentation.Forms
             this.txtCost.Location = new System.Drawing.Point(455, 110);
             this.txtCost.Name = "txtCost";
             this.txtCost.Size = new System.Drawing.Size(162, 20);
-            this.txtCost.TabIndex = 5;
+            this.txtCost.TabIndex = 6;
             this.txtCost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
             // 
             // lblCosto
@@ -238,7 +238,7 @@ namespace Presentation.Forms
             this.txtSupplier.Location = new System.Drawing.Point(455, 190);
             this.txtSupplier.Name = "txtSupplier";
             this.txtSupplier.Size = new System.Drawing.Size(162, 21);
-            this.txtSupplier.TabIndex = 8;
+            this.txtSupplier.TabIndex = 9;
             // 
             // lblSupplier
             // 

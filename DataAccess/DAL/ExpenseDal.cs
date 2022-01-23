@@ -16,20 +16,12 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Expense (description, price, idPurchase, date) " +
-                    "VALUES (@description, @price, @idPurchase, @date)";
+                    "INSERT INTO Expense (description, price, date) " +
+                    "VALUES (@description, @price, @date)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@description", expense.description);
                     command.Parameters.AddWithValue("@price", expense.price);
-                    if (expense.purchase.idPurchase == 0)
-                    {
-                        command.Parameters.AddWithValue("@idPurchase", null);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@idPurchase", expense.purchase.idPurchase);
-                    }
                     command.Parameters.AddWithValue("@date", expense.date);
                     command.ExecuteNonQuery();
                 }
@@ -54,7 +46,6 @@ namespace DataAccess.DAL
                             idExpense = Convert.ToInt32(dataReader["idExpense"]),
                             description = dataReader["description"].ToString(),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
                             date = Convert.ToDateTime(dataReader["date"])
                         };
                         expenses.Add(expense);
@@ -100,7 +91,6 @@ namespace DataAccess.DAL
                             idExpense = Convert.ToInt32(dataReader["idExpense"]),
                             description = dataReader["description"].ToString(),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
                             date = Convert.ToDateTime(dataReader["date"])
                         };
                         return expense;
@@ -127,7 +117,6 @@ namespace DataAccess.DAL
                             idExpense = Convert.ToInt32(dataReader["idExpense"]),
                             description = dataReader["description"].ToString(),
                             price = Convert.ToDecimal(dataReader["price"]),
-                            purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
                             date = Convert.ToDateTime(dataReader["date"])
                         };
                         return expense;
@@ -142,7 +131,7 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Expense SET description = @description, price = @price, idPurchase = @idPurchase, " +
+                    "UPDATE Expense SET description = @description, price = @price, " +
                     "date = @date " +
                     "WHERE idExpense = @idExpense";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
@@ -150,7 +139,6 @@ namespace DataAccess.DAL
                     command.Parameters.AddWithValue("@idExpense", expense.idExpense);
                     command.Parameters.AddWithValue("@description", expense.description);
                     command.Parameters.AddWithValue("@price", expense.price);
-                    command.Parameters.AddWithValue("@idPurchase", expense.purchase.idPurchase);
                     command.Parameters.AddWithValue("@date", expense.date);
                     command.ExecuteNonQuery();
                 }

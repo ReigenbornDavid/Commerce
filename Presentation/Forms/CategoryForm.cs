@@ -23,7 +23,8 @@ namespace Presentation.Forms
 
         private void CategoryForm_Load(object sender, EventArgs e)
         {
-
+            btnModify.Visible = false;
+            txtSearch.Focus();
         }
 
         private void Save()
@@ -51,9 +52,134 @@ namespace Presentation.Forms
             }
         }
 
+        private void Remove()
+        {
+            if (_category != null)
+            {
+                _categoryBol.Delete(_category.idCategory);
+            }
+            else
+            {
+                MessageBox.Show("Error: Ninguna categria seleccionado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Clear()
+        {
+            txtId.Clear();
+            txtName.Clear();
+            ViewAdd();
+            RemoveSelection(dvgCategories);
+        }
+
+        private void ViewModify()
+        {
+            btnModify.Visible = true;
+            btnSave.Visible = false;
+        }
+        private void ViewAdd()
+        {
+            _category = null;
+            btnModify.Visible = false;
+            btnSave.Visible = true;
+        }
+        public void FillFields()
+        {
+            try
+            {
+                _category = _categoryBol.GetById(_category.idCategory);
+                txtId.Text = _category.idCategory.ToString();
+                txtName.Text = _category.name;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void RemoveSelection(DataGridView table)
+        {
+            int Index;
+            if (table.Rows.Count > 0)
+            {
+                Index = table.CurrentRow.Index;
+                table.Rows[Index].Selected = false;
+            }
+        }
+        private void CellClick()
+        {
+            if (dvgCategories.Rows.Count > 0)
+            {
+                _category = new Category();
+                _category.idCategory = Convert.ToInt32(dvgCategories.CurrentRow.Cells[0].Value);
+                FillFields();
+                ViewModify();
+            }
+        }
+        
+        private void Search()
+        {
+            if (txtSearch.Text != "")
+            {
+                List<Category> categories = _categoryBol.GetAllByName(txtSearch.Text);
+                if (categories.Count > 0 && categories != null)
+                {
+                    dvgCategories.Rows.Clear();
+                    dvgCategories.AutoGenerateColumns = false;
+                    foreach (var item in categories)
+                    {
+                        dvgCategories.Rows.Add(
+                            item.idCategory,
+                            item.name
+                            );
+                    }
+                    RemoveSelection(dvgCategories);
+                    ViewAdd();
+                }
+                else
+                {
+                    MessageBox.Show("No existen categorias registradas", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        //Buttons
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save();
+            Clear();
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            Save();
+            Clear();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            Remove();
+        }
+
+        //Events
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+        private void dvgCategories_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            CellClick();
         }
     }
 }

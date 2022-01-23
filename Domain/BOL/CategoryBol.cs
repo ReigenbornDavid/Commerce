@@ -33,6 +33,19 @@ namespace Domain.BOL
             return _categoryDal.GetAll();
         }
 
+        public List<Category> GetAllByName(string name)
+        {
+            stringBuilder.Clear();
+
+            if (string.IsNullOrEmpty(name)) stringBuilder.Append("Por favor proporcione un valor de Nombre valido");
+
+            if (stringBuilder.Length == 0)
+            {
+                return _categoryDal.GetAllByName(name);
+            }
+            return null;
+        }
+
         public Category GetByName(string name)
         {
             stringBuilder.Clear();

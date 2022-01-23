@@ -11,8 +11,9 @@ namespace Common.Entities
         public int idProduct { get; set; }
         public string code { get; set; }
         public string description { get; set; }
+        public decimal cost { get; set; }
         public decimal price { get; set; }
-        public int quantity { get; set; }
+        public decimal quantity { get; set; }
         public Category category { get; set; }
         public Supplier supplier { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Domain.BOL
         public readonly StringBuilder stringBuilder = new StringBuilder();
         public int lastSale; 
 
-        public void Registrate(Sale sale)
+        public int Registrate(Sale sale)
         {
             if (ValidateSale(sale))
             {
@@ -33,11 +33,13 @@ namespace Domain.BOL
                         item.product.quantity = item.product.quantity - item.quantity; 
                         _productDal.Update(item.product);
                     }
+                    return lastSale;
                 }
                 else
                     _saleDal.Update(sale);
-
+                return 0;
             }
+            return 0;
         }
 
         public List<Sale> All()

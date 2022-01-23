@@ -69,31 +69,29 @@ namespace Presentation.Forms
                     dvgProducts.Rows.Clear();
                     dvgProducts.AutoGenerateColumns = false;
                     foreach (var item in products)
-                    {
-                        decimal salePrice = _productBol.CalculatePrice(item.price); 
+                    { 
                         dvgProducts.Rows.Add(
                             item.idProduct,
                             item.description,
                             item.price,
-                            salePrice,
                             item.quantity
                             );
                     }
                     foreach (DataGridViewRow row in dvgProducts.Rows)
                     {
-                        if (Convert.ToInt32(row.Cells[4].Value) == 0)
+                        if (Convert.ToDecimal(row.Cells[3].Value) == 0)
                         {
-                            row.Cells[4].Style.BackColor = Color.Red;
+                            row.Cells[3].Style.BackColor = Color.Red;
                         }
                         else
                         {
-                            if (Convert.ToInt32(row.Cells[4].Value) <= 5)
+                            if (Convert.ToDecimal(row.Cells[3].Value) <= 5)
                             {
-                                row.Cells[4].Style.BackColor = Color.Orange;
+                                row.Cells[3].Style.BackColor = Color.Orange;
                             }
                             else
                             {
-                                row.Cells[4].Style.BackColor = Color.LimeGreen;
+                                row.Cells[3].Style.BackColor = Color.LimeGreen;
                             }
                         }
                     }
@@ -105,10 +103,7 @@ namespace Presentation.Forms
                 }
             }
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(_saleBol.GetLastId().ToString());
-        }
+
         private void Sell()
         {
             try
@@ -117,19 +112,20 @@ namespace Presentation.Forms
                 _sale.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
                 _sale.client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
                 _sale.date = DateTime.Now;
+                _sale.total = Convert.ToDecimal(txtTotal.Text);
                 _sale.detailSales = new List<DetailSale>();
                 foreach (DataGridViewRow row in dvgCart.Rows)
                 {
                     _detailSale = new DetailSale();
                     _detailSale.product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
                     _detailSale.price = Convert.ToDecimal(row.Cells[2].Value);
-                    _detailSale.quantity = Convert.ToInt32(row.Cells[3].Value);
+                    _detailSale.quantity = Convert.ToDecimal(row.Cells[3].Value);
                     _sale.detailSales.Add(_detailSale);
                 }
-                _sale.total = _total;
-                _saleBol.Registrate(_sale);
+                _sale.idSale = _saleBol.Registrate(_sale);
                 if (_saleBol.stringBuilder.Length != 0 )
                 {
+                    _saleBol.Delete(_sale.idSale);
                     MessageBox.Show(_saleBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -138,12 +134,15 @@ namespace Presentation.Forms
                     dvgCart.Rows.Clear();
                     dvgProducts.Rows.Clear();
                     txtSearch.Clear();
+                    txtTotal.Clear();
+                    _total = 0;
                     _sale = null;
                     _detailSale = null;
                 }
             }
             catch (Exception ex)
             {
+                _saleBol.Delete(_sale.idSale);
                 MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -160,7 +159,7 @@ namespace Presentation.Forms
                 if (_product != null)
                 {
                     _product = _productBol.GetById(_product.idProduct);
-                    if (_product.quantity >= Convert.ToInt32(txtQuantity.Text))
+                    if (_product.quantity >= Convert.ToDecimal(txtQuantity.Text))
                     {
                         bool exists = false;
                         if (dvgCart.Rows.Count > 0)
@@ -170,13 +169,13 @@ namespace Presentation.Forms
                                 if (Convert.ToInt32(row.Cells[0].Value) == _product.idProduct)
                                 {
                                     exists = true;
-                                    if ((Convert.ToInt32(row.Cells[3].Value) +
-                                        Convert.ToInt32(txtQuantity.Text)) <= _product.quantity)
+                                    if ((Convert.ToDecimal(row.Cells[3].Value) +
+                                        Convert.ToDecimal(txtQuantity.Text)) <= _product.quantity)
                                     {
                                         _total -= Convert.ToDecimal(row.Cells[4].Value);
-                                        row.Cells[3].Value = Convert.ToInt32(row.Cells[3].Value) + Convert.ToInt32(txtQuantity.Text);
+                                        row.Cells[3].Value = Convert.ToDecimal(row.Cells[3].Value) + Convert.ToDecimal(txtQuantity.Text);
                                         row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
-                                            * Convert.ToInt32(row.Cells[3].Value);
+                                            * Convert.ToDecimal(row.Cells[3].Value);
                                         _total += Convert.ToDecimal(row.Cells[4].Value);
                                     }
                                     else
@@ -188,11 +187,11 @@ namespace Presentation.Forms
                         }
                         if (exists == false)
                         {
-                            decimal subTotal = _productBol.CalculatePrice(_product.price) * Convert.ToInt32(txtQuantity.Text);
+                            decimal subTotal = _product.price * Convert.ToDecimal(txtQuantity.Text);
                             dvgCart.Rows.Add(
                                 _product.idProduct,
                                 _product.description,
-                                _productBol.CalculatePrice(_product.price),
+                                _product.price,
                                 txtQuantity.Text,
                                 subTotal
                                 );
@@ -227,7 +226,7 @@ namespace Presentation.Forms
                 dvgCart.CurrentRow.Cells[2].Value = txtPriceCart.Text;
                 dvgCart.CurrentRow.Cells[3].Value = txtQuantityCart.Text;
                 dvgCart.CurrentRow.Cells[4].Value = Convert.ToDecimal(txtPriceCart.Text)
-                    * Convert.ToInt32(txtQuantityCart.Text);
+                    * Convert.ToDecimal(txtQuantityCart.Text);
                 _total += Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
                 UpdateTotal();
                 RemoveSelection(dvgCart);
@@ -317,7 +316,7 @@ namespace Presentation.Forms
         private void textBoxInt_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != '.'))
+                (e.KeyChar != ','))
             {
                 e.Handled = true;
             }
