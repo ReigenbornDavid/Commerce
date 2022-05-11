@@ -36,10 +36,10 @@ namespace Presentation.Forms
             this.btnSave = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.dvgCategories = new System.Windows.Forms.DataGridView();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.btnRemove = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnModify = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCategories)).BeginInit();
@@ -50,7 +50,7 @@ namespace Presentation.Forms
             this.txtName.Location = new System.Drawing.Point(460, 78);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(172, 20);
-            this.txtName.TabIndex = 0;
+            this.txtName.TabIndex = 3;
             // 
             // txtId
             // 
@@ -58,7 +58,7 @@ namespace Presentation.Forms
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
             this.txtId.Size = new System.Drawing.Size(172, 20);
-            this.txtId.TabIndex = 0;
+            this.txtId.TabIndex = 2;
             // 
             // lblId
             // 
@@ -93,7 +93,7 @@ namespace Presentation.Forms
             this.txtSearch.Location = new System.Drawing.Point(12, 12);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(269, 20);
-            this.txtSearch.TabIndex = 14;
+            this.txtSearch.TabIndex = 1;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // dvgCategories
@@ -111,27 +111,8 @@ namespace Presentation.Forms
             this.dvgCategories.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dvgCategories.Size = new System.Drawing.Size(350, 236);
             this.dvgCategories.TabIndex = 13;
+            this.dvgCategories.TabStop = false;
             this.dvgCategories.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCategories_CellClick);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Location = new System.Drawing.Point(287, 10);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 23);
-            this.btnSearch.TabIndex = 15;
-            this.btnSearch.Text = "Buscar";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnRemove
-            // 
-            this.btnRemove.Location = new System.Drawing.Point(287, 283);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(75, 23);
-            this.btnRemove.TabIndex = 16;
-            this.btnRemove.Text = "Eliminar";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // Column1
             // 
@@ -147,12 +128,35 @@ namespace Presentation.Forms
             this.Column2.ReadOnly = true;
             this.Column2.Width = 270;
             // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(287, 10);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.TabIndex = 15;
+            this.btnSearch.TabStop = false;
+            this.btnSearch.Text = "Buscar";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(287, 283);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.TabIndex = 16;
+            this.btnRemove.TabStop = false;
+            this.btnRemove.Text = "Eliminar";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
             // btnClear
             // 
             this.btnClear.Location = new System.Drawing.Point(476, 104);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 17;
+            this.btnClear.TabStop = false;
             this.btnClear.Text = "Limpiar";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -162,7 +166,7 @@ namespace Presentation.Forms
             this.btnModify.Location = new System.Drawing.Point(557, 104);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(75, 23);
-            this.btnModify.TabIndex = 18;
+            this.btnModify.TabIndex = 4;
             this.btnModify.Text = "Modificar";
             this.btnModify.UseVisualStyleBackColor = true;
             this.btnModify.Click += new System.EventHandler(this.btnModify_Click);

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BOL\BrandBol.cs" />
     <Compile Include="BOL\CategoryBol.cs" />
     <Compile Include="BOL\ClientBol.cs" />
     <Compile Include="BOL\EmployeeBol.cs" />
@@ -65,6 +66,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\DataSources\Domain.Reports.DetailSaleReport.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

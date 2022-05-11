@@ -49,6 +49,8 @@ namespace Presentation.Forms
             this.btnSave = new System.Windows.Forms.Button();
             this.txtTel = new System.Windows.Forms.TextBox();
             this.lblTel = new System.Windows.Forms.Label();
+            this.lblBalance = new System.Windows.Forms.Label();
+            this.txtBalance = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dvgClients)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +59,7 @@ namespace Presentation.Forms
             this.txtSearch.Location = new System.Drawing.Point(12, 12);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(269, 20);
-            this.txtSearch.TabIndex = 14;
+            this.txtSearch.TabIndex = 1;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // dvgClients
@@ -76,6 +78,7 @@ namespace Presentation.Forms
             this.dvgClients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dvgClients.Size = new System.Drawing.Size(430, 236);
             this.dvgClients.TabIndex = 13;
+            this.dvgClients.TabStop = false;
             this.dvgClients.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgClients_CellClick);
             // 
             // Column1
@@ -103,28 +106,28 @@ namespace Presentation.Forms
             this.txtLastName.Location = new System.Drawing.Point(516, 62);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(162, 20);
-            this.txtLastName.TabIndex = 24;
+            this.txtLastName.TabIndex = 3;
             // 
             // txtAddress
             // 
             this.txtAddress.Location = new System.Drawing.Point(516, 114);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(162, 20);
-            this.txtAddress.TabIndex = 25;
+            this.txtAddress.TabIndex = 5;
             // 
             // txtFirstName
             // 
             this.txtFirstName.Location = new System.Drawing.Point(516, 88);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(162, 20);
-            this.txtFirstName.TabIndex = 23;
+            this.txtFirstName.TabIndex = 4;
             // 
             // txtId
             // 
             this.txtId.Location = new System.Drawing.Point(516, 36);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(162, 20);
-            this.txtId.TabIndex = 22;
+            this.txtId.TabIndex = 2;
             this.txtId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInt_KeyPress);
             // 
             // lblFirstName
@@ -169,6 +172,7 @@ namespace Presentation.Forms
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 15;
+            this.btnSearch.TabStop = false;
             this.btnSearch.Text = "Buscar";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -179,33 +183,35 @@ namespace Presentation.Forms
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 31;
+            this.btnRemove.TabStop = false;
             this.btnRemove.Text = "Eliminar";
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(516, 179);
+            this.btnClear.Location = new System.Drawing.Point(516, 192);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 30;
+            this.btnClear.TabStop = false;
             this.btnClear.Text = "Limpiar";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnModify
             // 
-            this.btnModify.Location = new System.Drawing.Point(603, 179);
+            this.btnModify.Location = new System.Drawing.Point(603, 192);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(75, 23);
-            this.btnModify.TabIndex = 28;
+            this.btnModify.TabIndex = 7;
             this.btnModify.Text = "Modificar";
             this.btnModify.UseVisualStyleBackColor = true;
             this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(603, 179);
+            this.btnSave.Location = new System.Drawing.Point(603, 192);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 29;
@@ -218,7 +224,7 @@ namespace Presentation.Forms
             this.txtTel.Location = new System.Drawing.Point(516, 140);
             this.txtTel.Name = "txtTel";
             this.txtTel.Size = new System.Drawing.Size(162, 20);
-            this.txtTel.TabIndex = 33;
+            this.txtTel.TabIndex = 6;
             // 
             // lblTel
             // 
@@ -229,11 +235,31 @@ namespace Presentation.Forms
             this.lblTel.TabIndex = 32;
             this.lblTel.Text = "Telefono";
             // 
+            // lblBalance
+            // 
+            this.lblBalance.AutoSize = true;
+            this.lblBalance.Location = new System.Drawing.Point(448, 169);
+            this.lblBalance.Name = "lblBalance";
+            this.lblBalance.Size = new System.Drawing.Size(46, 13);
+            this.lblBalance.TabIndex = 32;
+            this.lblBalance.Text = "Balance";
+            // 
+            // txtBalance
+            // 
+            this.txtBalance.Location = new System.Drawing.Point(516, 166);
+            this.txtBalance.Name = "txtBalance";
+            this.txtBalance.ReadOnly = true;
+            this.txtBalance.Size = new System.Drawing.Size(162, 20);
+            this.txtBalance.TabIndex = 6;
+            this.txtBalance.TabStop = false;
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(899, 340);
+            this.Controls.Add(this.txtBalance);
+            this.Controls.Add(this.lblBalance);
             this.Controls.Add(this.txtTel);
             this.Controls.Add(this.lblTel);
             this.Controls.Add(this.txtSearch);
@@ -282,5 +308,7 @@ namespace Presentation.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.TextBox txtTel;
         private System.Windows.Forms.Label lblTel;
+        private System.Windows.Forms.Label lblBalance;
+        private System.Windows.Forms.TextBox txtBalance;
     }
 }

@@ -21,19 +21,34 @@ namespace Domain.BOL
         {
             if (ValidateSale(sale))
             {
-                if (_saleDal.GetByid(sale.idSale) == null)
+                if (_saleDal.GetByid(sale.IdSale) == null)
                 {
                     _saleDal.Insert(sale);
                     lastSale = _saleDal.GetLastId();
-                    foreach (var item in sale.detailSales)
+                    foreach (var item in sale.DetailSales)
                     {
-                        item.sale = new Sale();
-                        item.sale.idSale = lastSale;
+                        item.Sale = new Sale();
+                        item.Sale.IdSale = lastSale;
                         _detailSaleDal.Insert(item);
-                        item.product.quantity = item.product.quantity - item.quantity; 
-                        _productDal.Update(item.product);
+                        item.Product.Quantity = item.Product.Quantity - item.Quantity; 
+                        _productDal.Update(item.Product);
                     }
                     return lastSale;
+                }
+                else
+                    _saleDal.Update(sale);
+                return 0;
+            }
+            return 0;
+        }
+
+        public int Registrate2(Sale sale)
+        {
+            if (ValidateSale(sale))
+            {
+                if (_saleDal.GetByid(sale.IdSale) == null)
+                {
+                    _saleDal.Insert2(sale);
                 }
                 else
                     _saleDal.Update(sale);
@@ -94,9 +109,9 @@ namespace Domain.BOL
         {
             stringBuilder.Clear();
 
-            if (string.IsNullOrEmpty(sale.client.idClient.ToString())) stringBuilder.Append("El campo cliente es obligatorio");
-            if (string.IsNullOrEmpty(sale.employee.idEmployee.ToString())) stringBuilder.Append(Environment.NewLine + "El campo empleado es obligatorio");
-            if (string.IsNullOrEmpty(sale.date.ToString())) stringBuilder.Append(Environment.NewLine + "El campo fecha es obligatorio");
+            if (string.IsNullOrEmpty(sale.Client.IdClient.ToString())) stringBuilder.Append("El campo cliente es obligatorio");
+            if (string.IsNullOrEmpty(sale.Employee.IdEmployee.ToString())) stringBuilder.Append(Environment.NewLine + "El campo empleado es obligatorio");
+            if (string.IsNullOrEmpty(sale.Date.ToString())) stringBuilder.Append(Environment.NewLine + "El campo fecha es obligatorio");
             //if (string.IsNullOrEmpty(sale.detailSales.Count.ToString())) stringBuilder.Append(Environment.NewLine + "El campo detalle es obligatorio");
             return stringBuilder.Length == 0;
         }

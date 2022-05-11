@@ -8,10 +8,16 @@ namespace Common.Entities
 {
     public class DetailSale
     {
-        public int idDetailSale { get; set; }
-        public decimal price { get; set; }
-        public decimal quantity { get; set; }
-        public Product product { get; set; }
-        public Sale sale { get; set; }
+        private int idDetailSale;
+        private double price;
+        private double quantity;
+        private Product product;
+        private Sale sale;
+
+        public int IdDetailSale { get => idDetailSale; set => idDetailSale = value; }
+        public double Price { get => price; set => price = value; }
+        public double Quantity { get => quantity; set => quantity = value; }
+        public Product Product { get => product; set => product = value; }
+        public Sale Sale { get => sale; set => sale = value; }
     }
 }

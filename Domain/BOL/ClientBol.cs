@@ -19,7 +19,7 @@ namespace Domain.BOL
         {
             if (ValidateClient(client))
             {
-                if (_clientDal.GetByid(client.idClient) == null)
+                if (_clientDal.GetByid(client.IdClient) == null)
                 {
                     _clientDal.Insert(client);
                 }
@@ -68,9 +68,9 @@ namespace Domain.BOL
         private bool ValidateClient(Client client)
         {
             stringBuilder.Clear();
-            if (string.IsNullOrEmpty(client.idClient.ToString())) stringBuilder.Append("El campo Dni es obligatorio");
-            if (string.IsNullOrEmpty(client.firstName)) stringBuilder.Append(Environment.NewLine + "El campo Apellido es obligatorio");
-            if (string.IsNullOrEmpty(client.lastName)) stringBuilder.Append(Environment.NewLine + "El campo Nombre es obligatorio");
+            if (string.IsNullOrEmpty(client.IdClient.ToString())) stringBuilder.Append("El campo Dni es obligatorio");
+            if (string.IsNullOrEmpty(client.FirstName)) stringBuilder.Append(Environment.NewLine + "El campo Apellido es obligatorio");
+            if (string.IsNullOrEmpty(client.LastName)) stringBuilder.Append(Environment.NewLine + "El campo Nombre es obligatorio");
             return stringBuilder.Length == 0;
         }
     }

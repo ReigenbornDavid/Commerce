@@ -3,6 +3,7 @@ using Domain.BOL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Presentation.Forms
         private readonly ProductBol _productBol = new ProductBol();
         private readonly CategoryBol _categoryBol = new CategoryBol();
         private readonly SupplierBol _supplierBol = new SupplierBol();
+        private readonly BrandBol _brandBol = new BrandBol();
         public ProductForm()
         {
             InitializeComponent();
@@ -28,14 +30,25 @@ namespace Presentation.Forms
             btnModify.Visible = false;
             AddCategoriesToCombobox();
             AddSuppliersToCombobox();
+            AddBrandsToCombobox();
             txtSearch.Focus();
+        }
+
+        private void AddBrandsToCombobox()
+        {
+            foreach (var brand in _brandBol.All())
+            {
+                txtBrand.Items.Add(brand.Name);
+                txtBrandFilter.Items.Add(brand.Name);
+            }
         }
 
         private void AddSuppliersToCombobox()
         {
             foreach (var supplier in _supplierBol.All())
             {
-                txtSupplier.Items.Add(supplier.name);
+                txtSupplier.Items.Add(supplier.Name);
+                txtSupplierFilter.Items.Add(supplier.Name);
             }
         }
 
@@ -43,7 +56,8 @@ namespace Presentation.Forms
         {
             foreach (var category in _categoryBol.All())
             {
-                txtCategory.Items.Add(category.name);
+                txtCategory.Items.Add(category.Name);
+                txtCategoryFilter.Items.Add(category.Name);
             }
         }
 
@@ -51,7 +65,8 @@ namespace Presentation.Forms
         {
             if (_product != null)
             {
-                _productBol.Delete(_product.idProduct);
+                _productBol.Delete(_product.IdProduct);
+                MessageBox.Show("Producto eliminado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -68,6 +83,7 @@ namespace Presentation.Forms
             txtPrice.Clear();
             txtCategory.Text = "";
             txtSupplier.Text = "";
+            txtBrand.Text = "";
             ViewAdd();
             RemoveSelection(dvgProducts);
         }
@@ -83,18 +99,42 @@ namespace Presentation.Forms
             btnModify.Visible = false;
             btnSave.Visible = true;
         }
+        private bool ConvertStringToBoolean(string text)
+        {
+            if (text == "SI")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private string ConvertBooleanToString(bool active)
+        {
+            if (active)
+            {
+                return "SI";
+            }
+            else
+            {
+                return "NO";
+            }
+        }
         public void FillFields()
         {
             try
             {
-                _product = _productBol.GetById(_product.idProduct);
-                txtId.Text = _product.idProduct.ToString();
-                txtCode.Text = _product.code;
-                txtDescription.Text = _product.description;
-                txtCost.Text = _product.cost.ToString();
-                txtPrice.Text = _product.price.ToString();
-                txtCategory.Text = _product.category.name;
-                txtSupplier.Text = _product.supplier.name;
+                _product = _productBol.GetById(_product.IdProduct);
+                txtId.Text = _product.IdProduct.ToString();
+                txtCode.Text = _product.Code;
+                txtDescription.Text = _product.Description;
+                txtCost.Text = _product.Cost.ToString();
+                txtPrice.Text = _product.Price.ToString();
+                txtCategory.Text = _product.Category.Name;
+                txtSupplier.Text = _product.Supplier.Name;
+                txtBrand.Text = _product.Brand.Name;
+                txtUsd.Text = ConvertBooleanToString(_product.Usd);
             }
             catch (Exception ex)
             {
@@ -117,7 +157,7 @@ namespace Presentation.Forms
             if (dvgProducts.Rows.Count > 0)
             {
                 _product = new Product();
-                _product.idProduct = Convert.ToInt32(dvgProducts.CurrentRow.Cells[0].Value);
+                _product.IdProduct = Convert.ToInt32(dvgProducts.CurrentRow.Cells[0].Value);
                 FillFields();
                 ViewModify();
             }
@@ -129,19 +169,20 @@ namespace Presentation.Forms
                 if (_product == null)
                 {
                     _product = new Product();
-                    _product.quantity = 0;
+                    _product.Quantity = 0;
                 }
                 else
                 {
-                    _product.idProduct = Convert.ToInt32(txtId.Text);
+                    _product.IdProduct = Convert.ToInt32(txtId.Text);
                 }
-                _product.code = txtCode.Text;
-                _product.description = txtDescription.Text;
-                _product.cost = Convert.ToDecimal(txtCost.Text);
-                _product.price = Convert.ToDecimal(txtPrice.Text);
-                _product.category = _categoryBol.GetByName(txtCategory.Text);
-                _product.supplier = _supplierBol.GetByName(txtSupplier.Text);
-
+                _product.Code = txtCode.Text;
+                _product.Description = txtDescription.Text;
+                _product.Cost = Convert.ToDouble(txtCost.Text);
+                _product.Price = Convert.ToDouble(txtPrice.Text);
+                _product.Category = _categoryBol.GetByName(txtCategory.Text);
+                _product.Supplier = _supplierBol.GetByName(txtSupplier.Text);
+                _product.Brand = _brandBol.GetByName(txtBrand.Text);
+                _product.Usd = ConvertStringToBoolean(txtUsd.Text);
                 _productBol.Registrate(_product);
 
                 if (_productBol.stringBuilder.Length != 0)
@@ -163,27 +204,21 @@ namespace Presentation.Forms
 
         private void Search()
         {
-            if (txtSearch.Text != "")
+            List<Product> products = _productBol.GetByName(txtSearch.Text, txtCategoryFilter.Text, txtSupplierFilter.Text, txtBrandFilter.Text);
+            if (products.Count > 0 && products != null)
             {
-                List<Product> products = _productBol.GetByName(txtSearch.Text);
-                if (products.Count > 0 && products != null)
+                dvgProducts.Rows.Clear();
+                dvgProducts.AutoGenerateColumns = false;
+                foreach (var item in products)
                 {
-                    dvgProducts.Rows.Clear();
-                    dvgProducts.AutoGenerateColumns = false;
-                    foreach (var item in products)
-                    {
-                        dvgProducts.Rows.Add(
-                            item.idProduct,
-                            item.description
-                            );
-                    }
-                    RemoveSelection(dvgProducts);
-                    ViewAdd();
+                    dvgProducts.Rows.Add(
+                        item.IdProduct,
+                        item.Description,
+                        item.Brand.Name
+                        );
                 }
-                else
-                {
-                    MessageBox.Show("No existen producto Registrado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                RemoveSelection(dvgProducts);
+                ViewAdd();
             }
         }
 
@@ -211,6 +246,14 @@ namespace Presentation.Forms
         {
             Remove();
         }
+        private void btnIncrease_Click(object sender, EventArgs e)
+        {
+            if(txtIncrease.Text != "" && btnModify.Visible)
+            {
+                txtCost.Text = (Convert.ToDecimal(txtCost.Text) * ((Convert.ToDecimal(txtIncrease.Text) / 100) + 1)).ToString();
+                txtPrice.Text = (Convert.ToDecimal(txtPrice.Text) * ((Convert.ToDecimal(txtIncrease.Text) / 100) + 1)).ToString();
+            }
+        }
         //Events
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -231,16 +274,28 @@ namespace Presentation.Forms
         }
         private void textBoxDecimal_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            if ((e.KeyChar == '.'))
+            {
+                e.KeyChar = ',';
+            }
+            else if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
                 (e.KeyChar != ','))
             {
                 e.Handled = true;
             }
-
-            // only allow one decimal point
-            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            if ((e.KeyChar == ',' || e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf(',') > -1))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void txtCost_Leave(object sender, EventArgs e)
+        {
+            if (txtCost.Text != "")
+            {
+                double profit = Convert.ToDouble(ConfigurationManager.AppSettings["profit"])/100+1;
+                double tax = Convert.ToDouble(ConfigurationManager.AppSettings["tax"])/100+1;
+                txtPrice.Text = (Convert.ToDouble(txtCost.Text) * profit * tax).ToString();
             }
         }
     }

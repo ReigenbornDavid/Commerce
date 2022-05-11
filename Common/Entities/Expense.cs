@@ -8,9 +8,14 @@ namespace Common.Entities
 {
     public class Expense
     {
-        public int idExpense { get; set; }
-        public string description { get; set; }
-        public decimal price { get; set; }
-        public DateTime date { get; set; }
+        private int idExpense;
+        private string description;
+        private decimal price;
+        private DateTime date;
+
+        public int IdExpense { get => idExpense; set => idExpense = value; }
+        public string Description { get => description; set => description = value; }
+        public decimal Price { get => price; set => price = value; }
+        public DateTime Date { get => date; set => date = value; }
     }
 }

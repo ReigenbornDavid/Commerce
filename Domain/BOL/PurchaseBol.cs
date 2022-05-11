@@ -21,17 +21,17 @@ namespace Domain.BOL
         {
             if (ValidatePurchase(purchase))
             {
-                if (_purchaseDal.GetByid(purchase.idPurchase) == null)
+                if (_purchaseDal.GetByid(purchase.IdPurchase) == null)
                 {
                     _purchaseDal.Insert(purchase);
                     lastPurchase = _purchaseDal.GetLastId();
-                    foreach (var item in purchase.detailPurchases)
+                    foreach (var item in purchase.DetailPurchases)
                     {
-                        item.purchase = new Purchase();
-                        item.purchase.idPurchase = lastPurchase;
+                        item.Purchase = new Purchase();
+                        item.Purchase.IdPurchase = lastPurchase;
                         _detailPurchaseDal.Insert(item);
-                        item.product.quantity = item.product.quantity + item.quantity;
-                        _productDal.Update(item.product);
+                        item.Product.Quantity = item.Product.Quantity + item.Quantity;
+                        _productDal.Update(item.Product);
                     }
                     return lastPurchase;
                 }
@@ -82,9 +82,9 @@ namespace Domain.BOL
         {
             stringBuilder.Clear();
 
-            if (string.IsNullOrEmpty(purchase.employee.idEmployee.ToString())) stringBuilder.Append("El campo empleado es obligatorio");
-            if (string.IsNullOrEmpty(purchase.date.ToString())) stringBuilder.Append(Environment.NewLine + "El campo fecha es obligatorio");
-            if (string.IsNullOrEmpty(purchase.supplier.name)) stringBuilder.Append(Environment.NewLine + "El campo proveedor es obligatorio");
+            if (string.IsNullOrEmpty(purchase.Employee.IdEmployee.ToString())) stringBuilder.Append("El campo empleado es obligatorio");
+            if (string.IsNullOrEmpty(purchase.Date.ToString())) stringBuilder.Append(Environment.NewLine + "El campo fecha es obligatorio");
+            if (string.IsNullOrEmpty(purchase.Supplier.Name)) stringBuilder.Append(Environment.NewLine + "El campo proveedor es obligatorio");
             //if (string.IsNullOrEmpty(sale.detailSales.Count.ToString())) stringBuilder.Append(Environment.NewLine + "El campo detalle es obligatorio");
             return stringBuilder.Length == 0;
         }

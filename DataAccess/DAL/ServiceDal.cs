@@ -16,20 +16,40 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Service (description, price, date, dniClient, dniEmployee) " +
-                    "VALUES (@description, @price, @date, @dniClient, @dniEmployee)";
+                    "INSERT INTO Service (description, details, price, date, state, client, tel) " +
+                    "VALUES (@description, @details, @price, @date, @state, @client, @tel)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@description", service.description);
-                    command.Parameters.AddWithValue("@price", service.price);
-                    command.Parameters.AddWithValue("@date", service.date);
-                    command.Parameters.AddWithValue("@dniClient", service.client.idClient);
-                    command.Parameters.AddWithValue("@dniEmployee", service.employee.idEmployee);
+                    command.Parameters.AddWithValue("@description", service.Description);
+                    command.Parameters.AddWithValue("@details", service.Details);
+                    command.Parameters.AddWithValue("@price", service.Price);
+                    command.Parameters.AddWithValue("@date", service.Date);
+                    command.Parameters.AddWithValue("@state", service.State);
+                    command.Parameters.AddWithValue("@client", service.Client);
+                    command.Parameters.AddWithValue("@tel", service.Tel);
                     command.ExecuteNonQuery();
                 }
             }
         }
 
+        public int GetLastId()
+        {
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlGetById = "SELECT s.idService as last FROM Service s " +
+                    "ORDER BY s.idService DESC LIMIT 1";
+                using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
+                {
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.Read())
+                    {
+                        return Convert.ToInt32(dataReader["last"]);
+                    }
+                }
+            }
+            return -1;
+        }
         public List<Service> GetAll()
         {
             List<Service> services = new List<Service>();
@@ -46,12 +66,14 @@ namespace DataAccess.DAL
                     {
                         Service service = new Service
                         {
-                            idService = Convert.ToInt32(dataReader["idService"]),
-                            description = Convert.ToString(dataReader["description"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            date = Convert.ToDateTime(dataReader["date"]),
-                            client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"]))
+                            IdService = Convert.ToInt32(dataReader["idService"]),
+                            Description = Convert.ToString(dataReader["description"]),
+                            Details = Convert.ToString(dataReader["details"]),
+                            Price = Convert.ToDecimal(dataReader["price"]),
+                            Date = Convert.ToDateTime(dataReader["date"]),
+                            State = Convert.ToString(dataReader["state"]),
+                            Client = Convert.ToString(dataReader["client"]),
+                            Tel = Convert.ToString(dataReader["tel"]),
                         };
                         services.Add(service);
                     }
@@ -60,28 +82,29 @@ namespace DataAccess.DAL
             return services;
         }
 
-        public List<Service> GetByName(string description)
+        public List<Service> GetByName(string description, string query, string filter)
         {
             List<Service> services = new List<Service>();
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById =
-                "SELECT * FROM Service WHERE description like @Description";
-                using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Description", "%" + description + "%");
+                    command.Parameters.AddWithValue("@Filter", filter);
                     MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
                         Service service = new Service
                         {
-                            idService = Convert.ToInt32(dataReader["idService"]),
-                            description = Convert.ToString(dataReader["description"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            date = Convert.ToDateTime(dataReader["date"]),
-                            client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"]))
+                            IdService = Convert.ToInt32(dataReader["idService"]),
+                            Description = Convert.ToString(dataReader["description"]),
+                            Details = Convert.ToString(dataReader["details"]),
+                            Price = Convert.ToDecimal(dataReader["price"]),
+                            Date = Convert.ToDateTime(dataReader["date"]),
+                            State = Convert.ToString(dataReader["state"]),
+                            Client = Convert.ToString(dataReader["client"]),
+                            Tel = Convert.ToString(dataReader["tel"]),
                         };
                         services.Add(service);
                     }
@@ -104,12 +127,14 @@ namespace DataAccess.DAL
                     {
                         Service service = new Service
                         {
-                            idService = Convert.ToInt32(dataReader["idService"]),
-                            description = Convert.ToString(dataReader["description"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            date = Convert.ToDateTime(dataReader["date"]),
-                            client = new ClientDal().GetByid(Convert.ToInt32(dataReader["idClient"])),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["idEmployee"]))
+                            IdService = Convert.ToInt32(dataReader["idService"]),
+                            Description = Convert.ToString(dataReader["description"]),
+                            Details = Convert.ToString(dataReader["details"]),
+                            Price = Convert.ToDecimal(dataReader["price"]),
+                            Date = Convert.ToDateTime(dataReader["date"]),
+                            State = Convert.ToString(dataReader["state"]),
+                            Client = Convert.ToString(dataReader["client"]),
+                            Tel = Convert.ToString(dataReader["tel"]),
                         };
                         return service;
                     }
@@ -124,16 +149,19 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Service SET description = @description, price = @price, date = @date, dniClient = @dniClient, " +
-                    "dniEmployee = @dniEmployee WHERE idService = @idService";
+                    "UPDATE Service SET description = @description, details = @details, price = @price, " +
+                    "date = @date, state = @state, client = @client, tel = @tel " +
+                    "WHERE idService = @idService";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@idService", service.idService);
-                    command.Parameters.AddWithValue("@description", service.description);
-                    command.Parameters.AddWithValue("@price", service.price);
-                    command.Parameters.AddWithValue("@date", service.date);
-                    command.Parameters.AddWithValue("@dniClient", service.client.idClient);
-                    command.Parameters.AddWithValue("@dniEmployee", service.employee.idEmployee);
+                    command.Parameters.AddWithValue("@idService", service.IdService);
+                    command.Parameters.AddWithValue("@description", service.Description);
+                    command.Parameters.AddWithValue("@details", service.Details);
+                    command.Parameters.AddWithValue("@price", service.Price);
+                    command.Parameters.AddWithValue("@date", service.Date);
+                    command.Parameters.AddWithValue("@state", service.State);
+                    command.Parameters.AddWithValue("@client", service.Client);
+                    command.Parameters.AddWithValue("@tel", service.Tel);
                     command.ExecuteNonQuery();
                 }
             }

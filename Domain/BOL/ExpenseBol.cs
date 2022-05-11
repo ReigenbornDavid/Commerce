@@ -19,7 +19,7 @@ namespace Domain.BOL
         {
             if (ValidateExpense(expense))
             {
-                if (_expenseDal.GetByid(expense.idExpense) == null)
+                if (_expenseDal.GetByid(expense.IdExpense) == null)
                 {
                     _expenseDal.Insert(expense);
                 }
@@ -68,9 +68,9 @@ namespace Domain.BOL
         {
             stringBuilder.Clear();
 
-            if (string.IsNullOrEmpty(expense.description)) stringBuilder.Append("El campo descipcion es obligatorio");
-            if (string.IsNullOrEmpty(expense.price.ToString())) stringBuilder.Append(Environment.NewLine + "El campo monto es obligatorio");
-            if (string.IsNullOrEmpty(expense.date.ToString())) stringBuilder.Append(Environment.NewLine + "El campo fecha es obligatorio");
+            if (string.IsNullOrEmpty(expense.Description)) stringBuilder.Append("El campo descipcion es obligatorio");
+            if (string.IsNullOrEmpty(expense.Price.ToString())) stringBuilder.Append(Environment.NewLine + "El campo monto es obligatorio");
+            if (string.IsNullOrEmpty(expense.Date.ToString())) stringBuilder.Append(Environment.NewLine + "El campo fecha es obligatorio");
             //if (string.IsNullOrEmpty(sale.detailSales.Count.ToString())) stringBuilder.Append(Environment.NewLine + "El campo detalle es obligatorio");
             return stringBuilder.Length == 0;
         }

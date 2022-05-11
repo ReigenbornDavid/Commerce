@@ -16,10 +16,10 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Category (name) VALUES (@name)";
+                    "INSERT INTO category (name) VALUES (@name)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@name", category.name);
+                    command.Parameters.AddWithValue("@name", category.Name);
                     command.ExecuteNonQuery();
                 }
             }
@@ -32,7 +32,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Category ORDER BY idCategory ASC";
+                const string sqlQuery = "SELECT * FROM category c ORDER BY c.name ASC";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -40,8 +40,8 @@ namespace DataAccess.DAL
                     {
                         Category category = new Category
                         {
-                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
-                            name = Convert.ToString(dataReader["name"])
+                            IdCategory = Convert.ToInt32(dataReader["idCategory"]),
+                            Name = Convert.ToString(dataReader["name"])
                         };
                         categories.Add(category);
                     }
@@ -57,17 +57,17 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Category WHERE name like @name";
+                const string sqlQuery = "SELECT * FROM category c WHERE c.name like @name order by c.name";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@name", "%" + name + "%");
+                    command.Parameters.AddWithValue("@name", name + "%");
                     MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
                         Category category = new Category
                         {
-                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
-                            name = Convert.ToString(dataReader["name"])
+                            IdCategory = Convert.ToInt32(dataReader["idCategory"]),
+                            Name = Convert.ToString(dataReader["name"])
                         };
                         categories.Add(category);
                     }
@@ -81,7 +81,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Category WHERE name = @name";
+                const string sqlGetById = "SELECT * FROM category WHERE name = @name";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@name", name);
@@ -90,8 +90,8 @@ namespace DataAccess.DAL
                     {
                         Category category = new Category
                         {
-                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
-                            name = Convert.ToString(dataReader["name"])
+                            IdCategory = Convert.ToInt32(dataReader["idCategory"]),
+                            Name = Convert.ToString(dataReader["name"])
                         };
                         return category;
                     }
@@ -105,7 +105,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Category WHERE idCategory = @idCategory";
+                const string sqlGetById = "SELECT * FROM category WHERE idCategory = @idCategory";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@idCategory", idCategory);
@@ -114,8 +114,8 @@ namespace DataAccess.DAL
                     {
                         Category category = new Category
                         {
-                            idCategory = Convert.ToInt32(dataReader["idCategory"]),
-                            name = Convert.ToString(dataReader["name"])
+                            IdCategory = Convert.ToInt32(dataReader["idCategory"]),
+                            Name = Convert.ToString(dataReader["name"])
                         };
                         return category;
                     }
@@ -129,11 +129,11 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Category SET name = @name WHERE idCategory = @idCategory";
+                    "UPDATE category SET name = @name WHERE idCategory = @idCategory";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@name", category.name);
-                    command.Parameters.AddWithValue("@idCategory", category.idCategory);
+                    command.Parameters.AddWithValue("@name", category.Name);
+                    command.Parameters.AddWithValue("@idCategory", category.IdCategory);
                     command.ExecuteNonQuery();
                 }
             }
@@ -144,7 +144,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "DELETE FROM Category WHERE idCategory = @idCategory";
+                const string sqlQuery = "DELETE FROM category WHERE idCategory = @idCategory";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@idCategory", idCategory);

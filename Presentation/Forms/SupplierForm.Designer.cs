@@ -43,7 +43,7 @@ namespace Presentation.Forms
             this.btnSave.Location = new System.Drawing.Point(256, 175);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 7;
+            this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Cargar";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -72,14 +72,14 @@ namespace Presentation.Forms
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
             this.txtId.Size = new System.Drawing.Size(172, 20);
-            this.txtId.TabIndex = 3;
+            this.txtId.TabIndex = 2;
             // 
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(159, 91);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(172, 20);
-            this.txtName.TabIndex = 4;
+            this.txtName.TabIndex = 3;
             // 
             // lblNeedInvoice
             // 
@@ -101,7 +101,7 @@ namespace Presentation.Forms
             this.txtNeedInvoice.Location = new System.Drawing.Point(159, 131);
             this.txtNeedInvoice.Name = "txtNeedInvoice";
             this.txtNeedInvoice.Size = new System.Drawing.Size(172, 21);
-            this.txtNeedInvoice.TabIndex = 9;
+            this.txtNeedInvoice.TabIndex = 4;
             // 
             // SupplierForm
             // 

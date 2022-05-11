@@ -29,10 +29,10 @@ namespace Presentation.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblEmployee = new System.Windows.Forms.Label();
             this.btnBuy = new System.Windows.Forms.Button();
             this.txtQuantityCart = new System.Windows.Forms.TextBox();
@@ -50,17 +50,24 @@ namespace Presentation.Forms
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.dvgProducts = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnChange = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnAddToCart = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.lblSupplier = new System.Windows.Forms.Label();
             this.txtSupplier = new System.Windows.Forms.ComboBox();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblBrandFilter = new System.Windows.Forms.Label();
+            this.lblSupplierFilter = new System.Windows.Forms.Label();
+            this.lblCategoryFilter = new System.Windows.Forms.Label();
+            this.txtBrandFilter = new System.Windows.Forms.ComboBox();
+            this.txtSupplierFilter = new System.Windows.Forms.ComboBox();
+            this.txtCategoryFilter = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dvgCart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dvgProducts)).BeginInit();
             this.SuspendLayout();
@@ -68,7 +75,7 @@ namespace Presentation.Forms
             // lblEmployee
             // 
             this.lblEmployee.AutoSize = true;
-            this.lblEmployee.Location = new System.Drawing.Point(13, 326);
+            this.lblEmployee.Location = new System.Drawing.Point(12, 324);
             this.lblEmployee.Name = "lblEmployee";
             this.lblEmployee.Size = new System.Drawing.Size(35, 13);
             this.lblEmployee.TabIndex = 46;
@@ -76,50 +83,53 @@ namespace Presentation.Forms
             // 
             // btnBuy
             // 
-            this.btnBuy.Location = new System.Drawing.Point(762, 350);
+            this.btnBuy.Location = new System.Drawing.Point(925, 347);
             this.btnBuy.Name = "btnBuy";
             this.btnBuy.Size = new System.Drawing.Size(75, 23);
-            this.btnBuy.TabIndex = 44;
+            this.btnBuy.TabIndex = 5;
             this.btnBuy.Text = "Confirmar";
             this.btnBuy.UseVisualStyleBackColor = true;
             this.btnBuy.Click += new System.EventHandler(this.btnBuy_Click);
             // 
             // txtQuantityCart
             // 
-            this.txtQuantityCart.Location = new System.Drawing.Point(872, 15);
+            this.txtQuantityCart.Location = new System.Drawing.Point(873, 49);
             this.txtQuantityCart.Name = "txtQuantityCart";
             this.txtQuantityCart.Size = new System.Drawing.Size(50, 20);
             this.txtQuantityCart.TabIndex = 43;
             this.txtQuantityCart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtQuantityCart.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
             // 
             // txtPriceCart
             // 
-            this.txtPriceCart.Location = new System.Drawing.Point(821, 15);
+            this.txtPriceCart.Location = new System.Drawing.Point(821, 49);
             this.txtPriceCart.Name = "txtPriceCart";
             this.txtPriceCart.Size = new System.Drawing.Size(50, 20);
             this.txtPriceCart.TabIndex = 42;
             this.txtPriceCart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtPriceCart.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(479, 286);
+            this.txtQuantity.Location = new System.Drawing.Point(479, 321);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(100, 20);
-            this.txtQuantity.TabIndex = 33;
-            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInt_KeyPress);
+            this.txtQuantity.TabIndex = 2;
+            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
             // 
             // txtTotal
             // 
-            this.txtTotal.Location = new System.Drawing.Point(900, 283);
+            this.txtTotal.Location = new System.Drawing.Point(900, 318);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(100, 20);
             this.txtTotal.TabIndex = 41;
+            this.txtTotal.TabStop = false;
             // 
             // lblQuantity
             // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(424, 289);
+            this.lblQuantity.Location = new System.Drawing.Point(424, 324);
             this.lblQuantity.Name = "lblQuantity";
             this.lblQuantity.Size = new System.Drawing.Size(49, 13);
             this.lblQuantity.TabIndex = 39;
@@ -128,7 +138,7 @@ namespace Presentation.Forms
             // lblCart
             // 
             this.lblCart.AutoSize = true;
-            this.lblCart.Location = new System.Drawing.Point(627, 15);
+            this.lblCart.Location = new System.Drawing.Point(606, 54);
             this.lblCart.Name = "lblCart";
             this.lblCart.Size = new System.Drawing.Size(37, 13);
             this.lblCart.TabIndex = 40;
@@ -137,7 +147,7 @@ namespace Presentation.Forms
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(863, 286);
+            this.lblTotal.Location = new System.Drawing.Point(863, 321);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(31, 13);
             this.lblTotal.TabIndex = 38;
@@ -156,22 +166,23 @@ namespace Presentation.Forms
             this.Column8,
             this.Column9,
             this.Column10});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dvgCart.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dvgCart.Location = new System.Drawing.Point(630, 39);
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dvgCart.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dvgCart.Location = new System.Drawing.Point(601, 74);
             this.dvgCart.MultiSelect = false;
             this.dvgCart.Name = "dvgCart";
             this.dvgCart.ReadOnly = true;
             this.dvgCart.RowHeadersVisible = false;
             this.dvgCart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgCart.Size = new System.Drawing.Size(370, 236);
-            this.dvgCart.TabIndex = 37;
+            this.dvgCart.Size = new System.Drawing.Size(399, 236);
+            this.dvgCart.TabIndex = 0;
+            this.dvgCart.TabStop = false;
             this.dvgCart.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgCart_CellClick);
             // 
             // Column6
@@ -183,12 +194,12 @@ namespace Presentation.Forms
             // 
             // Column7
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column7.HeaderText = "Descripcion";
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
-            this.Column7.Width = 140;
+            this.Column7.Width = 170;
             // 
             // Column8
             // 
@@ -216,7 +227,7 @@ namespace Presentation.Forms
             this.txtSearch.Location = new System.Drawing.Point(12, 12);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(486, 20);
-            this.txtSearch.TabIndex = 31;
+            this.txtSearch.TabIndex = 1;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // dvgProducts
@@ -229,85 +240,28 @@ namespace Presentation.Forms
             this.dvgProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
+            this.Column11,
             this.Column5,
             this.Column3,
             this.Column4});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dvgProducts.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dvgProducts.Location = new System.Drawing.Point(12, 39);
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dvgProducts.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dvgProducts.Location = new System.Drawing.Point(12, 74);
             this.dvgProducts.MultiSelect = false;
             this.dvgProducts.Name = "dvgProducts";
             this.dvgProducts.ReadOnly = true;
             this.dvgProducts.RowHeadersVisible = false;
             this.dvgProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dvgProducts.Size = new System.Drawing.Size(567, 236);
-            this.dvgProducts.TabIndex = 30;
+            this.dvgProducts.TabIndex = 0;
+            this.dvgProducts.TabStop = false;
             this.dvgProducts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgProducts_CellClick);
-            // 
-            // btnChange
-            // 
-            this.btnChange.Location = new System.Drawing.Point(1006, 67);
-            this.btnChange.Name = "btnChange";
-            this.btnChange.Size = new System.Drawing.Size(62, 22);
-            this.btnChange.TabIndex = 35;
-            this.btnChange.Text = "Cambiar";
-            this.btnChange.UseVisualStyleBackColor = true;
-            this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
-            // 
-            // btnRemove
-            // 
-            this.btnRemove.Location = new System.Drawing.Point(1006, 39);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(62, 22);
-            this.btnRemove.TabIndex = 34;
-            this.btnRemove.Text = "Quitar";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-            // 
-            // btnAddToCart
-            // 
-            this.btnAddToCart.Location = new System.Drawing.Point(479, 312);
-            this.btnAddToCart.Name = "btnAddToCart";
-            this.btnAddToCart.Size = new System.Drawing.Size(100, 22);
-            this.btnAddToCart.TabIndex = 36;
-            this.btnAddToCart.Text = "Agregar";
-            this.btnAddToCart.UseVisualStyleBackColor = true;
-            this.btnAddToCart.Click += new System.EventHandler(this.btnAddToCart_Click);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Location = new System.Drawing.Point(504, 13);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 22);
-            this.btnSearch.TabIndex = 32;
-            this.btnSearch.Text = "Buscar";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // lblSupplier
-            // 
-            this.lblSupplier.AutoSize = true;
-            this.lblSupplier.Location = new System.Drawing.Point(627, 286);
-            this.lblSupplier.Name = "lblSupplier";
-            this.lblSupplier.Size = new System.Drawing.Size(56, 13);
-            this.lblSupplier.TabIndex = 47;
-            this.lblSupplier.Text = "Proveedor";
-            // 
-            // txtSupplier
-            // 
-            this.txtSupplier.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.txtSupplier.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.txtSupplier.FormattingEnabled = true;
-            this.txtSupplier.Location = new System.Drawing.Point(630, 302);
-            this.txtSupplier.Name = "txtSupplier";
-            this.txtSupplier.Size = new System.Drawing.Size(162, 21);
-            this.txtSupplier.TabIndex = 48;
             // 
             // Column1
             // 
@@ -319,12 +273,20 @@ namespace Presentation.Forms
             // 
             // Column2
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column2.HeaderText = "Descripcion";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            this.Column2.Width = 290;
+            this.Column2.Width = 228;
+            // 
+            // Column11
+            // 
+            this.Column11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column11.HeaderText = "Marca";
+            this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
+            this.Column11.Width = 62;
             // 
             // Column5
             // 
@@ -350,11 +312,137 @@ namespace Presentation.Forms
             this.Column4.ReadOnly = true;
             this.Column4.Width = 74;
             // 
+            // btnChange
+            // 
+            this.btnChange.Location = new System.Drawing.Point(1006, 131);
+            this.btnChange.Name = "btnChange";
+            this.btnChange.Size = new System.Drawing.Size(62, 22);
+            this.btnChange.TabIndex = 35;
+            this.btnChange.Text = "Cambiar";
+            this.btnChange.UseVisualStyleBackColor = true;
+            this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(1006, 103);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(62, 22);
+            this.btnRemove.TabIndex = 34;
+            this.btnRemove.Text = "Quitar";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // btnAddToCart
+            // 
+            this.btnAddToCart.Location = new System.Drawing.Point(479, 347);
+            this.btnAddToCart.Name = "btnAddToCart";
+            this.btnAddToCart.Size = new System.Drawing.Size(100, 22);
+            this.btnAddToCart.TabIndex = 3;
+            this.btnAddToCart.Text = "Agregar";
+            this.btnAddToCart.UseVisualStyleBackColor = true;
+            this.btnAddToCart.Click += new System.EventHandler(this.btnAddToCart_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(504, 10);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 22);
+            this.btnSearch.TabIndex = 0;
+            this.btnSearch.TabStop = false;
+            this.btnSearch.Text = "Buscar";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // lblSupplier
+            // 
+            this.lblSupplier.AutoSize = true;
+            this.lblSupplier.Location = new System.Drawing.Point(605, 321);
+            this.lblSupplier.Name = "lblSupplier";
+            this.lblSupplier.Size = new System.Drawing.Size(56, 13);
+            this.lblSupplier.TabIndex = 47;
+            this.lblSupplier.Text = "Proveedor";
+            // 
+            // txtSupplier
+            // 
+            this.txtSupplier.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtSupplier.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.txtSupplier.FormattingEnabled = true;
+            this.txtSupplier.Location = new System.Drawing.Point(608, 337);
+            this.txtSupplier.Name = "txtSupplier";
+            this.txtSupplier.Size = new System.Drawing.Size(162, 21);
+            this.txtSupplier.TabIndex = 4;
+            // 
+            // lblBrandFilter
+            // 
+            this.lblBrandFilter.AutoSize = true;
+            this.lblBrandFilter.Location = new System.Drawing.Point(345, 34);
+            this.lblBrandFilter.Name = "lblBrandFilter";
+            this.lblBrandFilter.Size = new System.Drawing.Size(37, 13);
+            this.lblBrandFilter.TabIndex = 49;
+            this.lblBrandFilter.Text = "Marca";
+            // 
+            // lblSupplierFilter
+            // 
+            this.lblSupplierFilter.AutoSize = true;
+            this.lblSupplierFilter.Location = new System.Drawing.Point(177, 35);
+            this.lblSupplierFilter.Name = "lblSupplierFilter";
+            this.lblSupplierFilter.Size = new System.Drawing.Size(56, 13);
+            this.lblSupplierFilter.TabIndex = 50;
+            this.lblSupplierFilter.Text = "Proveedor";
+            // 
+            // lblCategoryFilter
+            // 
+            this.lblCategoryFilter.AutoSize = true;
+            this.lblCategoryFilter.Location = new System.Drawing.Point(12, 35);
+            this.lblCategoryFilter.Name = "lblCategoryFilter";
+            this.lblCategoryFilter.Size = new System.Drawing.Size(52, 13);
+            this.lblCategoryFilter.TabIndex = 51;
+            this.lblCategoryFilter.Text = "Categoria";
+            // 
+            // txtBrandFilter
+            // 
+            this.txtBrandFilter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtBrandFilter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.txtBrandFilter.FormattingEnabled = true;
+            this.txtBrandFilter.Location = new System.Drawing.Point(348, 50);
+            this.txtBrandFilter.Name = "txtBrandFilter";
+            this.txtBrandFilter.Size = new System.Drawing.Size(162, 21);
+            this.txtBrandFilter.TabIndex = 0;
+            this.txtBrandFilter.TabStop = false;
+            // 
+            // txtSupplierFilter
+            // 
+            this.txtSupplierFilter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtSupplierFilter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.txtSupplierFilter.FormattingEnabled = true;
+            this.txtSupplierFilter.Location = new System.Drawing.Point(180, 50);
+            this.txtSupplierFilter.Name = "txtSupplierFilter";
+            this.txtSupplierFilter.Size = new System.Drawing.Size(162, 21);
+            this.txtSupplierFilter.TabIndex = 0;
+            this.txtSupplierFilter.TabStop = false;
+            // 
+            // txtCategoryFilter
+            // 
+            this.txtCategoryFilter.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtCategoryFilter.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.txtCategoryFilter.FormattingEnabled = true;
+            this.txtCategoryFilter.Location = new System.Drawing.Point(12, 50);
+            this.txtCategoryFilter.Name = "txtCategoryFilter";
+            this.txtCategoryFilter.Size = new System.Drawing.Size(162, 21);
+            this.txtCategoryFilter.TabIndex = 0;
+            this.txtCategoryFilter.TabStop = false;
+            // 
             // PurchaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(913, 401);
+            this.ClientSize = new System.Drawing.Size(1077, 375);
+            this.Controls.Add(this.lblBrandFilter);
+            this.Controls.Add(this.lblSupplierFilter);
+            this.Controls.Add(this.lblCategoryFilter);
+            this.Controls.Add(this.txtBrandFilter);
+            this.Controls.Add(this.txtSupplierFilter);
+            this.Controls.Add(this.txtCategoryFilter);
             this.Controls.Add(this.lblSupplier);
             this.Controls.Add(this.txtSupplier);
             this.Controls.Add(this.lblEmployee);
@@ -394,11 +482,6 @@ namespace Presentation.Forms
         private System.Windows.Forms.Label lblCart;
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.DataGridView dvgCart;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.DataGridView dvgProducts;
         private System.Windows.Forms.Button btnChange;
@@ -409,8 +492,20 @@ namespace Presentation.Forms
         private System.Windows.Forms.ComboBox txtSupplier;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.Label lblBrandFilter;
+        private System.Windows.Forms.Label lblSupplierFilter;
+        private System.Windows.Forms.Label lblCategoryFilter;
+        private System.Windows.Forms.ComboBox txtBrandFilter;
+        private System.Windows.Forms.ComboBox txtSupplierFilter;
+        private System.Windows.Forms.ComboBox txtCategoryFilter;
     }
 }

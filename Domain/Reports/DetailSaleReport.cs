@@ -3,8 +3,8 @@
     public class DetailSaleReport
     {
         public string description { get; set; }
-        public decimal price { get; set; }
-        public decimal quantity { get; set; }
-        public decimal total { get; set; }
+        public double price { get; set; }
+        public double quantity { get; set; }
+        public double total { get; set; }
     }
 }

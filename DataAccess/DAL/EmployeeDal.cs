@@ -16,18 +16,18 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Employee (dniEmployee, firstName, lastName, user, pass, email, position, active) " +
+                    "INSERT INTO employee (dniEmployee, firstName, lastName, user, pass, email, position, active) " +
                     "VALUES (@dniEmployee, @firstName, @lastName, @user, @pass, @email, @position, @active)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@dniEmployee", employee.idEmployee);
-                    command.Parameters.AddWithValue("@firstName", employee.firstName);
-                    command.Parameters.AddWithValue("@lastName", employee.lastName);
-                    command.Parameters.AddWithValue("@user", employee.user);
-                    command.Parameters.AddWithValue("@pass", employee.pass);
-                    command.Parameters.AddWithValue("@email", employee.email);
-                    command.Parameters.AddWithValue("@position", employee.position);
-                    command.Parameters.AddWithValue("@active", employee.active);
+                    command.Parameters.AddWithValue("@dniEmployee", employee.IdEmployee);
+                    command.Parameters.AddWithValue("@firstName", employee.FirstName);
+                    command.Parameters.AddWithValue("@lastName", employee.LastName);
+                    command.Parameters.AddWithValue("@user", employee.User);
+                    command.Parameters.AddWithValue("@pass", employee.Pass);
+                    command.Parameters.AddWithValue("@email", employee.Email);
+                    command.Parameters.AddWithValue("@position", employee.Position);
+                    command.Parameters.AddWithValue("@active", employee.Active);
                     command.ExecuteNonQuery();
                 }
             }
@@ -40,7 +40,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Employee ORDER BY dniClient ASC";
+                const string sqlQuery = "SELECT * FROM employee ORDER BY dniClient ASC";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -48,14 +48,14 @@ namespace DataAccess.DAL
                     {
                         Employee employee = new Employee
                         {
-                            idEmployee = Convert.ToInt32(dataReader["dniEmployee"]),
-                            firstName = Convert.ToString(dataReader["firstName"]),
-                            lastName = Convert.ToString(dataReader["lastName"]),
-                            user = Convert.ToString(dataReader["user"]),
-                            pass = Convert.ToString(dataReader["pass"]),
-                            email = Convert.ToString(dataReader["email"]),
-                            position = Convert.ToString(dataReader["position"]),
-                            active = Convert.ToBoolean(dataReader["active"])
+                            IdEmployee = Convert.ToInt32(dataReader["dniEmployee"]),
+                            FirstName = Convert.ToString(dataReader["firstName"]),
+                            LastName = Convert.ToString(dataReader["lastName"]),
+                            User = Convert.ToString(dataReader["user"]),
+                            Pass = Convert.ToString(dataReader["pass"]),
+                            Email = Convert.ToString(dataReader["email"]),
+                            Position = Convert.ToString(dataReader["position"]),
+                            Active = Convert.ToBoolean(dataReader["active"]),
                         };
                         employees.Add(employee);
                     }
@@ -71,7 +71,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Employee WHERE firstName like @Name";
+                const string sqlQuery = "SELECT * FROM employee WHERE firstName like @Name";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@Name", "%" + name + "%");
@@ -80,14 +80,14 @@ namespace DataAccess.DAL
                     {
                         Employee employee = new Employee
                         {
-                            idEmployee = Convert.ToInt32(dataReader["dniEmployee"]),
-                            firstName = Convert.ToString(dataReader["firstName"]),
-                            lastName = Convert.ToString(dataReader["lastName"]),
-                            user = Convert.ToString(dataReader["user"]),
-                            pass = Convert.ToString(dataReader["pass"]),
-                            email = Convert.ToString(dataReader["email"]),
-                            position = Convert.ToString(dataReader["position"]),
-                            active = Convert.ToBoolean(dataReader["active"])
+                            IdEmployee = Convert.ToInt32(dataReader["dniEmployee"]),
+                            FirstName = Convert.ToString(dataReader["firstName"]),
+                            LastName = Convert.ToString(dataReader["lastName"]),
+                            User = Convert.ToString(dataReader["user"]),
+                            Pass = Convert.ToString(dataReader["pass"]),
+                            Email = Convert.ToString(dataReader["email"]),
+                            Position = Convert.ToString(dataReader["position"]),
+                            Active = Convert.ToBoolean(dataReader["active"]),
                         };
                         employees.Add(employee);
                     }
@@ -101,7 +101,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Employee WHERE dniEmployee = @idEmployee";
+                const string sqlGetById = "SELECT * FROM employee WHERE dniEmployee = @idEmployee";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@idEmployee", idEmployee);
@@ -110,14 +110,14 @@ namespace DataAccess.DAL
                     {
                         Employee employee = new Employee
                         {
-                            idEmployee = Convert.ToInt32(dataReader["dniEmployee"]),
-                            firstName = Convert.ToString(dataReader["firstName"]),
-                            lastName = Convert.ToString(dataReader["lastName"]),
-                            user = Convert.ToString(dataReader["user"]),
-                            pass = Convert.ToString(dataReader["pass"]),
-                            email = Convert.ToString(dataReader["email"]),
-                            position = Convert.ToString(dataReader["position"]),
-                            active = Convert.ToBoolean(dataReader["active"])
+                            IdEmployee = Convert.ToInt32(dataReader["dniEmployee"]),
+                            FirstName = Convert.ToString(dataReader["firstName"]),
+                            LastName = Convert.ToString(dataReader["lastName"]),
+                            User = Convert.ToString(dataReader["user"]),
+                            Pass = Convert.ToString(dataReader["pass"]),
+                            Email = Convert.ToString(dataReader["email"]),
+                            Position = Convert.ToString(dataReader["position"]),
+                            Active = Convert.ToBoolean(dataReader["active"]),
                         };
                         return employee;
                     }
@@ -131,20 +131,20 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Employee SET dniEmployee = @dniEmployee, firstName = @firstName, " +
+                    "UPDATE employee SET dniEmployee = @dniEmployee, firstName = @firstName, " +
                     "lastName = @lastName, user = @user, pass = @pass, " +
                     "email = @email, position = @position, active = @active " +
                     "WHERE dniEmployee = @dniEmployee";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@dniEmployee", employee.idEmployee);
-                    command.Parameters.AddWithValue("@firstName", employee.firstName);
-                    command.Parameters.AddWithValue("@lastName", employee.lastName);
-                    command.Parameters.AddWithValue("@user", employee.user);
-                    command.Parameters.AddWithValue("@pass", employee.pass);
-                    command.Parameters.AddWithValue("@email", employee.email);
-                    command.Parameters.AddWithValue("@position", employee.position);
-                    command.Parameters.AddWithValue("@active", employee.active);
+                    command.Parameters.AddWithValue("@dniEmployee", employee.IdEmployee);
+                    command.Parameters.AddWithValue("@firstName", employee.FirstName);
+                    command.Parameters.AddWithValue("@lastName", employee.LastName);
+                    command.Parameters.AddWithValue("@user", employee.User);
+                    command.Parameters.AddWithValue("@pass", employee.Pass);
+                    command.Parameters.AddWithValue("@email", employee.Email);
+                    command.Parameters.AddWithValue("@position", employee.Position);
+                    command.Parameters.AddWithValue("@active", employee.Active);
                     command.ExecuteNonQuery();
                 }
             }
@@ -155,7 +155,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "DELETE FROM Employee WHERE dniEmployee = @dniEmployee";
+                const string sqlQuery = "DELETE FROM employee WHERE dniEmployee = @dniEmployee";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@dniEmployee", dniEmployee);

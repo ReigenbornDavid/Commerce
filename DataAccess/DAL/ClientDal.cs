@@ -16,14 +16,16 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Client (dniClient, firstName, lastName, address) " +
-                    "VALUES (@dniClient, @firstName, @lastName, @address)";
+                    "INSERT INTO client (dniClient, firstName, lastName, address, balance) " +
+                    "VALUES (@dniClient, @firstName, @lastName, @address, @balance)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@dniClient", client.idClient);
-                    command.Parameters.AddWithValue("@firstName", client.firstName);
-                    command.Parameters.AddWithValue("@lastName", client.lastName);
-                    command.Parameters.AddWithValue("@address", client.address);
+                    command.Parameters.AddWithValue("@dniClient", client.IdClient);
+                    command.Parameters.AddWithValue("@firstName", client.FirstName);
+                    command.Parameters.AddWithValue("@lastName", client.LastName);
+                    command.Parameters.AddWithValue("@address", client.Address);
+                    command.Parameters.AddWithValue("@tel", client.Tel);
+                    command.Parameters.AddWithValue("@balance", client.Balance);
                     command.ExecuteNonQuery();
                 }
             }
@@ -36,7 +38,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Client ORDER BY dniClient ASC";
+                const string sqlQuery = "SELECT * FROM client ORDER BY dniClient ASC";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -44,11 +46,12 @@ namespace DataAccess.DAL
                     {
                         Client client = new Client
                         {
-                            idClient = Convert.ToInt64(dataReader["dniClient"]),
-                            firstName = Convert.ToString(dataReader["firstName"]),
-                            lastName = Convert.ToString(dataReader["lastName"]),
-                            address = Convert.ToString(dataReader["address"]),
-                            tel = Convert.ToString(dataReader["tel"])
+                            IdClient = Convert.ToInt64(dataReader["dniClient"]),
+                            FirstName = Convert.ToString(dataReader["firstName"]),
+                            LastName = Convert.ToString(dataReader["lastName"]),
+                            Address = Convert.ToString(dataReader["address"]),
+                            Tel = Convert.ToString(dataReader["tel"]),
+                            Balance = Convert.ToDouble(dataReader["balance"]),
                         };
                         clients.Add(client);
                     }
@@ -64,7 +67,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Client WHERE firstName like @Name";
+                const string sqlQuery = "SELECT * FROM client WHERE firstName like @Name";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@Name", "%" + name + "%");
@@ -73,11 +76,12 @@ namespace DataAccess.DAL
                     {
                         Client client = new Client
                         {
-                            idClient = Convert.ToInt64(dataReader["dniClient"]),
-                            firstName = Convert.ToString(dataReader["firstName"]),
-                            lastName = Convert.ToString(dataReader["lastName"]),
-                            address = Convert.ToString(dataReader["address"]),
-                            tel = Convert.ToString(dataReader["tel"])
+                            IdClient = Convert.ToInt64(dataReader["dniClient"]),
+                            FirstName = Convert.ToString(dataReader["firstName"]),
+                            LastName = Convert.ToString(dataReader["lastName"]),
+                            Address = Convert.ToString(dataReader["address"]),
+                            Tel = Convert.ToString(dataReader["tel"]),
+                            Balance = Convert.ToDouble(dataReader["balance"]),
                         };
                         clients.Add(client);
                     }
@@ -91,7 +95,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Client WHERE dniClient = @idClient";
+                const string sqlGetById = "SELECT * FROM client WHERE dniClient = @idClient";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@idClient", idClient);
@@ -100,11 +104,12 @@ namespace DataAccess.DAL
                     {
                         Client client = new Client
                         {
-                            idClient = Convert.ToInt64(dataReader["dniClient"]),
-                            firstName = Convert.ToString(dataReader["firstName"]),
-                            lastName = Convert.ToString(dataReader["lastName"]),
-                            address = Convert.ToString(dataReader["address"]),
-                            tel = Convert.ToString(dataReader["tel"])
+                            IdClient = Convert.ToInt64(dataReader["dniClient"]),
+                            FirstName = Convert.ToString(dataReader["firstName"]),
+                            LastName = Convert.ToString(dataReader["lastName"]),
+                            Address = Convert.ToString(dataReader["address"]),
+                            Tel = Convert.ToString(dataReader["tel"]),
+                            Balance = Convert.ToDouble(dataReader["balance"]),
                         };
                         return client;
                     }
@@ -118,15 +123,17 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Client SET dniClient = @dniClient, firstName = @firstName, " +
-                    "lastName = @lastName, address = @address " +
+                    "UPDATE client SET dniClient = @dniClient, firstName = @firstName, " +
+                    "lastName = @lastName, address = @address, tel = @tel, balance = @balance " +
                     "WHERE dniClient = @dniClient";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@dniClient", client.idClient);
-                    command.Parameters.AddWithValue("@firstName", client.firstName);
-                    command.Parameters.AddWithValue("@lastName", client.lastName);
-                    command.Parameters.AddWithValue("@address", client.address);
+                    command.Parameters.AddWithValue("@dniClient", client.IdClient);
+                    command.Parameters.AddWithValue("@firstName", client.FirstName);
+                    command.Parameters.AddWithValue("@lastName", client.LastName);
+                    command.Parameters.AddWithValue("@address", client.Address);
+                    command.Parameters.AddWithValue("@tel", client.Tel);
+                    command.Parameters.AddWithValue("@balance", client.Balance);
                     command.ExecuteNonQuery();
                 }
             }
@@ -137,7 +144,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "DELETE FROM Client WHERE dniClient = @dniClient";
+                const string sqlQuery = "DELETE FROM client WHERE dniClient = @dniClient";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@dniClient", dniClient);

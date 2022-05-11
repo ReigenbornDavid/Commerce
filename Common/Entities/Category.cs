@@ -8,7 +8,10 @@ namespace Common.Entities
 {
     public class Category
     {
-        public int idCategory { get; set; }
-        public string name { get; set; }
+        private int idCategory;
+        private string name;
+
+        public int IdCategory { get => idCategory; set => idCategory = value; }
+        public string Name { get => name; set => name = value; }
     }
 }

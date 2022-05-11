@@ -20,10 +20,10 @@ namespace DataAccess.DAL
                     "VALUES (@dniEmployee, @date, @idSupplier, @total)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@dniEmployee", purchase.employee.idEmployee);
-                    command.Parameters.AddWithValue("@date", purchase.date);
-                    command.Parameters.AddWithValue("@total", purchase.total);
-                    command.Parameters.AddWithValue("@idSupplier", purchase.supplier.idSupplier);
+                    command.Parameters.AddWithValue("@dniEmployee", purchase.Employee.IdEmployee);
+                    command.Parameters.AddWithValue("@date", purchase.Date);
+                    command.Parameters.AddWithValue("@total", purchase.Total);
+                    command.Parameters.AddWithValue("@idSupplier", purchase.Supplier.IdSupplier);
                     command.ExecuteNonQuery();
                 }
             }
@@ -44,12 +44,12 @@ namespace DataAccess.DAL
                     {
                         Purchase purchase = new Purchase
                         {
-                            idPurchase = Convert.ToInt32(dataReader["idPurchase"]),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
-                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
-                            date = Convert.ToDateTime(dataReader["date"]),
-                            total = Convert.ToDecimal(dataReader["total"]),
-                            detailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
+                            IdPurchase = Convert.ToInt32(dataReader["idPurchase"]),
+                            Employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
+                            Supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
+                            Date = Convert.ToDateTime(dataReader["date"]),
+                            Total = Convert.ToDouble(dataReader["total"]),
+                            DetailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
                         };
                         purchases.Add(purchase);
                     }
@@ -91,12 +91,12 @@ namespace DataAccess.DAL
                     {
                         Purchase purchase = new Purchase
                         {
-                            idPurchase = Convert.ToInt32(dataReader["idPurchase"]),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
-                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
-                            date = Convert.ToDateTime(dataReader["date"]),
-                            total = Convert.ToDecimal(dataReader["total"]),
-                            detailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
+                            IdPurchase = Convert.ToInt32(dataReader["idPurchase"]),
+                            Employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
+                            Supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
+                            Date = Convert.ToDateTime(dataReader["date"]),
+                            Total = Convert.ToDouble(dataReader["total"]),
+                            DetailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
                         };
                         return purchase;
                     }
@@ -119,12 +119,12 @@ namespace DataAccess.DAL
                     {
                         Purchase purchase = new Purchase
                         {
-                            idPurchase = Convert.ToInt32(dataReader["idPurchase"]),
-                            employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
-                            date = Convert.ToDateTime(dataReader["date"]),
-                            total = Convert.ToDecimal(dataReader["total"]),
-                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
-                            detailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
+                            IdPurchase = Convert.ToInt32(dataReader["idPurchase"]),
+                            Employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
+                            Supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
+                            Date = Convert.ToDateTime(dataReader["date"]),
+                            Total = Convert.ToDouble(dataReader["total"]),
+                            DetailPurchases = new DetailPurchaseDal().GetByPurchase(Convert.ToInt32(dataReader["idPurchase"]))
                         };
                         return purchase;
                     }
@@ -142,11 +142,11 @@ namespace DataAccess.DAL
                     "WHERE idPurchase = @idPurchase";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@idPurchase", purchase.idPurchase);
-                    command.Parameters.AddWithValue("@dniEmployee", purchase.employee.idEmployee);
-                    command.Parameters.AddWithValue("@date", purchase.date);
-                    command.Parameters.AddWithValue("@total", purchase.total);
-                    command.Parameters.AddWithValue("@idSupplier", purchase.supplier.idSupplier);
+                    command.Parameters.AddWithValue("@idPurchase", purchase.IdPurchase);
+                    command.Parameters.AddWithValue("@dniEmployee", purchase.Employee.IdEmployee);
+                    command.Parameters.AddWithValue("@date", purchase.Date);
+                    command.Parameters.AddWithValue("@total", purchase.Total);
+                    command.Parameters.AddWithValue("@idSupplier", purchase.Supplier.IdSupplier);
                     command.ExecuteNonQuery();
                 }
             }

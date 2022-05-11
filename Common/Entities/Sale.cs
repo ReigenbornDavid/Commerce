@@ -8,11 +8,18 @@ namespace Common.Entities
 {
     public class Sale
     {
-        public int idSale { get; set; }
-        public DateTime date { get; set; }
-        public decimal total { get; set; }
-        public Client client { get; set; }
-        public Employee employee { get; set; }
-        public List<DetailSale> detailSales { get; set; }
+        private int idSale;
+        private DateTime date;
+        private double total;
+        private Client client;
+        private Employee employee;
+        private List<DetailSale> detailSales;
+
+        public int IdSale { get => idSale; set => idSale = value; }
+        public DateTime Date { get => date; set => date = value; }
+        public double Total { get => total; set => total = value; }
+        public Client Client { get => client; set => client = value; }
+        public Employee Employee { get => employee; set => employee = value; }
+        public List<DetailSale> DetailSales { get => detailSales; set => detailSales = value; }
     }
 }

@@ -19,7 +19,7 @@ namespace Domain.BOL
         {
             if (ValidateEmployee(employee))
             {
-                if (_employeeDal.GetByid(employee.idEmployee) == null)
+                if (_employeeDal.GetByid(employee.IdEmployee) == null)
                 {
                     _employeeDal.Insert(employee);
                 }
@@ -68,12 +68,12 @@ namespace Domain.BOL
         private bool ValidateEmployee(Employee employee)
         {
             stringBuilder.Clear();
-            if (string.IsNullOrEmpty(employee.idEmployee.ToString())) stringBuilder.Append("El campo Dni es obligatorio");
-            if (string.IsNullOrEmpty(employee.firstName)) stringBuilder.Append(Environment.NewLine + "El campo Apellido es obligatorio");
-            if (string.IsNullOrEmpty(employee.lastName)) stringBuilder.Append(Environment.NewLine + "El campo Nombre es obligatorio");
-            if (string.IsNullOrEmpty(employee.user)) stringBuilder.Append(Environment.NewLine + "El campo Usuario es obligatorio");
-            if (string.IsNullOrEmpty(employee.pass)) stringBuilder.Append(Environment.NewLine + "El campo Clave es obligatorio");
-            if (string.IsNullOrEmpty(employee.active.ToString())) stringBuilder.Append(Environment.NewLine + "El campo Activo es obligatorio");
+            if (string.IsNullOrEmpty(employee.IdEmployee.ToString())) stringBuilder.Append("El campo Dni es obligatorio");
+            if (string.IsNullOrEmpty(employee.FirstName)) stringBuilder.Append(Environment.NewLine + "El campo Apellido es obligatorio");
+            if (string.IsNullOrEmpty(employee.LastName)) stringBuilder.Append(Environment.NewLine + "El campo Nombre es obligatorio");
+            if (string.IsNullOrEmpty(employee.User)) stringBuilder.Append(Environment.NewLine + "El campo Usuario es obligatorio");
+            if (string.IsNullOrEmpty(employee.Pass)) stringBuilder.Append(Environment.NewLine + "El campo Clave es obligatorio");
+            if (string.IsNullOrEmpty(employee.Active.ToString())) stringBuilder.Append(Environment.NewLine + "El campo Activo es obligatorio");
             return stringBuilder.Length == 0;
         }
     }

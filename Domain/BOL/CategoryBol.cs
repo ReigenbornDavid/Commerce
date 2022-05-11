@@ -18,7 +18,7 @@ namespace Domain.BOL
         {
             if (ValidateCategory(category))
             {
-                if (_categoryDal.GetByid(category.idCategory) == null)
+                if (_categoryDal.GetByid(category.IdCategory) == null)
                 {
                     _categoryDal.Insert(category);
                 }
@@ -88,7 +88,7 @@ namespace Domain.BOL
         {
             stringBuilder.Clear();
 
-            if (string.IsNullOrEmpty(category.name)) stringBuilder.Append("El campo Descripción es obligatorio");
+            if (string.IsNullOrEmpty(category.Name)) stringBuilder.Append("El campo Descripción es obligatorio");
             return stringBuilder.Length == 0;
         }
     }

@@ -20,9 +20,9 @@ namespace DataAccess.DAL
                     "VALUES (@description, @price, @date)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@description", expense.description);
-                    command.Parameters.AddWithValue("@price", expense.price);
-                    command.Parameters.AddWithValue("@date", expense.date);
+                    command.Parameters.AddWithValue("@description", expense.Description);
+                    command.Parameters.AddWithValue("@price", expense.Price);
+                    command.Parameters.AddWithValue("@date", expense.Date);
                     command.ExecuteNonQuery();
                 }
             }
@@ -43,10 +43,10 @@ namespace DataAccess.DAL
                     {
                         Expense expense = new Expense
                         {
-                            idExpense = Convert.ToInt32(dataReader["idExpense"]),
-                            description = dataReader["description"].ToString(),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            date = Convert.ToDateTime(dataReader["date"])
+                            IdExpense = Convert.ToInt32(dataReader["idExpense"]),
+                            Description = dataReader["description"].ToString(),
+                            Price = Convert.ToDecimal(dataReader["price"]),
+                            Date = Convert.ToDateTime(dataReader["date"]),
                         };
                         expenses.Add(expense);
                     }
@@ -88,10 +88,10 @@ namespace DataAccess.DAL
                     {
                         Expense expense = new Expense
                         {
-                            idExpense = Convert.ToInt32(dataReader["idExpense"]),
-                            description = dataReader["description"].ToString(),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            date = Convert.ToDateTime(dataReader["date"])
+                            IdExpense = Convert.ToInt32(dataReader["idExpense"]),
+                            Description = dataReader["description"].ToString(),
+                            Price = Convert.ToDecimal(dataReader["price"]),
+                            Date = Convert.ToDateTime(dataReader["date"]),
                         };
                         return expense;
                     }
@@ -114,10 +114,10 @@ namespace DataAccess.DAL
                     {
                         Expense expense = new Expense
                         {
-                            idExpense = Convert.ToInt32(dataReader["idExpense"]),
-                            description = dataReader["description"].ToString(),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            date = Convert.ToDateTime(dataReader["date"])
+                            IdExpense = Convert.ToInt32(dataReader["idExpense"]),
+                            Description = dataReader["description"].ToString(),
+                            Price = Convert.ToDecimal(dataReader["price"]),
+                            Date = Convert.ToDateTime(dataReader["date"]),
                         };
                         return expense;
                     }
@@ -136,10 +136,10 @@ namespace DataAccess.DAL
                     "WHERE idExpense = @idExpense";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@idExpense", expense.idExpense);
-                    command.Parameters.AddWithValue("@description", expense.description);
-                    command.Parameters.AddWithValue("@price", expense.price);
-                    command.Parameters.AddWithValue("@date", expense.date);
+                    command.Parameters.AddWithValue("@idExpense", expense.IdExpense);
+                    command.Parameters.AddWithValue("@description", expense.Description);
+                    command.Parameters.AddWithValue("@price", expense.Price);
+                    command.Parameters.AddWithValue("@date", expense.Date);
                     command.ExecuteNonQuery();
                 }
             }

@@ -18,7 +18,7 @@ namespace Domain.BOL
         {
             if (ValidateSupplier(supplier))
             {
-                if (_supplierDal.GetByid(supplier.idSupplier) == null)
+                if (_supplierDal.GetByid(supplier.IdSupplier) == null)
                 {
                     _supplierDal.Insert(supplier);
                 }
@@ -26,6 +26,19 @@ namespace Domain.BOL
                     _supplierDal.Update(supplier);
 
             }
+        }
+
+        public List<Supplier> GetAllByName(string name)
+        {
+            stringBuilder.Clear();
+
+            if (string.IsNullOrEmpty(name)) stringBuilder.Append("Por favor proporcione un valor de Nombre valido");
+
+            if (stringBuilder.Length == 0)
+            {
+                return _supplierDal.GetAllByName(name);
+            }
+            return null;
         }
 
         public List<Supplier> All()
@@ -75,7 +88,7 @@ namespace Domain.BOL
         {
             stringBuilder.Clear();
 
-            if (string.IsNullOrEmpty(supplier.name)) stringBuilder.Append("El campo Nombre es obligatorio");
+            if (string.IsNullOrEmpty(supplier.Name)) stringBuilder.Append("El campo Nombre es obligatorio");
             return stringBuilder.Length == 0;
         }
     }

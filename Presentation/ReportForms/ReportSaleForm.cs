@@ -35,11 +35,10 @@ namespace Presentation.ReportForms
                 this.reportViewer1.LocalReport.DataSources.Clear();
                 ReportDataSource rds = new ReportDataSource("DetailSale", GetSaleReport(_sale));
                 this.reportViewer1.LocalReport.DataSources.Add(rds);
-                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("date", _sale.date.ToString()));
-                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("dniClient", _sale.client.idClient.ToString()));
-                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("dniEmployee", _sale.employee.idEmployee.ToString()));
+                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("date", _sale.DetailSales.ToString()));
+                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("dniClient", _sale.Client.IdClient.ToString()));
                 string type;
-                if (_sale.idSale != 0)
+                if (_sale.IdSale != 0)
                 {
                     type = "Comprobante";
                 }
@@ -48,8 +47,8 @@ namespace Presentation.ReportForms
                     type = "Presupuesto";
                 }
                 this.reportViewer1.LocalReport.SetParameters(new ReportParameter("type", type));
-                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("idSale", _sale.idSale.ToString()));
-                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("total", _sale.total.ToString()));
+                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("idSale", _sale.IdSale.ToString()));
+                this.reportViewer1.LocalReport.SetParameters(new ReportParameter("total", _sale.Total.ToString()));
                 this.reportViewer1.RefreshReport();
             }
             catch (Exception ex)
@@ -62,12 +61,13 @@ namespace Presentation.ReportForms
         {
             DetailSaleReport _detailSaleReport = new DetailSaleReport();
             List<DetailSaleReport> detailSaleList = new List<DetailSaleReport>();
-            foreach (var item in _sale.detailSales)
+            foreach (var item in _sale.DetailSales)
             {
-                _detailSaleReport.description = item.product.description;
-                _detailSaleReport.price = item.price;
-                _detailSaleReport.quantity = item.quantity;
-                _detailSaleReport.total = item.price * item.quantity;
+                _detailSaleReport = new DetailSaleReport();
+                _detailSaleReport.description = item.Product.Description;
+                _detailSaleReport.price = item.Price;
+                _detailSaleReport.quantity = item.Quantity;
+                _detailSaleReport.total = item.Price * item.Quantity;
                 detailSaleList.Add(_detailSaleReport);
             }
             return detailSaleList;

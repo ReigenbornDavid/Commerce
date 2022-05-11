@@ -16,17 +16,21 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Product (code, description, cost, price, quantity, idCategory, idSupplier) " +
-                    "VALUES (@code, @description, @cost, @price, @quantity, @idCategory, @idSupplier)";
+                    "INSERT INTO product (code, description, cost, price, quantity, " +
+                    "idCategory, idSupplier, idBrand, usd) " +
+                    "VALUES (@code, @description, @cost, @price, @quantity, @idCategory, " +
+                    "@idSupplier, @idBrand, @usd)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@code", product.code);
-                    command.Parameters.AddWithValue("@description", product.description);
-                    command.Parameters.AddWithValue("@cost", product.cost);
-                    command.Parameters.AddWithValue("@price", product.price);
-                    command.Parameters.AddWithValue("@quantity", product.quantity);
-                    command.Parameters.AddWithValue("@idCategory", product.category.idCategory);
-                    command.Parameters.AddWithValue("@idSupplier", product.supplier.idSupplier);
+                    command.Parameters.AddWithValue("@code", product.Code);
+                    command.Parameters.AddWithValue("@description", product.Description);
+                    command.Parameters.AddWithValue("@cost", product.Code);
+                    command.Parameters.AddWithValue("@price", product.Price);
+                    command.Parameters.AddWithValue("@quantity", product.Quantity);
+                    command.Parameters.AddWithValue("@idCategory", product.Category.IdCategory);
+                    command.Parameters.AddWithValue("@idSupplier", product.Supplier.IdSupplier);
+                    command.Parameters.AddWithValue("@idBrand", product.Brand.IdBrand);
+                    command.Parameters.AddWithValue("@usd", product.Usd);
                     command.ExecuteNonQuery();
                 }
             }
@@ -40,7 +44,7 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "SELECT * FROM Product p ORDER BY idProduct ASC";
+                    "SELECT * FROM product p ORDER BY p.description ASC";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -48,14 +52,16 @@ namespace DataAccess.DAL
                     {
                         Product product = new Product
                         {
-                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
-                            code = Convert.ToString(dataReader["code"]),
-                            description = Convert.ToString(dataReader["description"]),
-                            cost = Convert.ToDecimal(dataReader["cost"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToDecimal(dataReader["quantity"]),
-                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
-                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"]))
+                            IdProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            Code = Convert.ToString(dataReader["code"]),
+                            Description = Convert.ToString(dataReader["description"]),
+                            Cost = Convert.ToDouble(dataReader["cost"]),
+                            Price = Convert.ToDouble(dataReader["price"]),
+                            Quantity = Convert.ToDouble(dataReader["quantity"]),
+                            Category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
+                            Supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
+                            Brand = new BrandDal().GetByid(Convert.ToInt32(dataReader["idBrand"])),
+                            Usd = Convert.ToBoolean(dataReader["usd"])
                         };
                         products.Add(product);
                     }
@@ -64,31 +70,84 @@ namespace DataAccess.DAL
             return products;
         }
 
-        public List<Product> GetByName(string description)
+        public List<Product> GetByP(string query, Category category, Brand brand, Supplier supplier)
         {
             List<Product> products = new List<Product>();
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById =
-                "SELECT * FROM Product WHERE description like @Description";
+                string sqlGetById = query;
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
-                    command.Parameters.AddWithValue("@Description", "%" + description + "%");
+                    if (category != null)
+                    {
+                        command.Parameters.AddWithValue("@idCategory", category.IdCategory);
+                    }
+                    if (brand != null)
+                    {
+                        command.Parameters.AddWithValue("@idBrand", brand.IdBrand);
+                    }
+                    if (supplier != null)
+                    {
+                        command.Parameters.AddWithValue("@idSupplier", supplier.IdSupplier);
+                    }
                     MySqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
                     {
                         Product product = new Product
                         {
-                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
-                            code = Convert.ToString(dataReader["code"]),
-                            description = Convert.ToString(dataReader["description"]),
-                            cost = Convert.ToDecimal(dataReader["cost"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToDecimal(dataReader["quantity"]),
-                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
-                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"]))
+                            IdProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            //code = Convert.ToString(dataReader["code"]),
+                            Description = Convert.ToString(dataReader["description"]),
+                            Cost = Convert.ToDouble(dataReader["cost"]),
+                            Price = Convert.ToDouble(dataReader["price"]),
+                            Quantity = Convert.ToDouble(dataReader["quantity"]),
+                            Category = new Category(),
+                            Supplier = new Supplier(),
+                            Brand = new Brand(),
+                            Usd = Convert.ToBoolean(dataReader["usd"])
                         };
+                        product.Category.Name = Convert.ToString(dataReader["category"]);
+                        product.Supplier.Name = Convert.ToString(dataReader["supplier"]);
+                        product.Brand.Name = Convert.ToString(dataReader["brand"]);
+                        products.Add(product);
+                    }
+                }
+            }
+            return products;
+        }
+
+        public List<Product> GetByName(string description, string query, string categoryFilter, string supplierFilter, string brandFilter)
+        {
+            List<Product> products = new List<Product>();
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Description", description + "%");
+                    command.Parameters.AddWithValue("@CategoryFilter", categoryFilter);
+                    command.Parameters.AddWithValue("@BrandFilter", brandFilter);
+                    command.Parameters.AddWithValue("@SupplierFilter", supplierFilter);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        Product product = new Product
+                        {
+                            IdProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            //code = Convert.ToString(dataReader["code"]),
+                            Description = Convert.ToString(dataReader["description"]),
+                            Cost = Convert.ToDouble(dataReader["cost"]),
+                            Price = Convert.ToDouble(dataReader["price"]),
+                            Quantity = Convert.ToDouble(dataReader["quantity"]),
+                            Category = new Category(),
+                            Supplier = new Supplier(),
+                            Brand = new Brand(),
+                            Usd = Convert.ToBoolean(dataReader["usd"])
+                        };
+                        product.Category.Name = Convert.ToString(dataReader["category"]);
+                        product.Supplier.Name = Convert.ToString(dataReader["supplier"]);
+                        product.Brand.Name = Convert.ToString(dataReader["brand"]);
                         products.Add(product);
                     }
                 }
@@ -101,7 +160,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Product WHERE idProduct = @idProduct";
+                const string sqlGetById = "SELECT * FROM product WHERE idProduct = @idProduct";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@idProduct", idProduct);
@@ -110,14 +169,16 @@ namespace DataAccess.DAL
                     {
                         Product product = new Product
                         {
-                            idProduct = Convert.ToInt32(dataReader["idProduct"]),
-                            code = Convert.ToString(dataReader["code"]),
-                            description = Convert.ToString(dataReader["description"]),
-                            cost = Convert.ToDecimal(dataReader["cost"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToDecimal(dataReader["quantity"]),
-                            category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
-                            supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"]))
+                            IdProduct = Convert.ToInt32(dataReader["idProduct"]),
+                            Code = Convert.ToString(dataReader["code"]),
+                            Description = Convert.ToString(dataReader["description"]),
+                            Cost = Convert.ToDouble(dataReader["cost"]),
+                            Price = Convert.ToDouble(dataReader["price"]),
+                            Quantity = Convert.ToDouble(dataReader["quantity"]),
+                            Category = new CategoryDal().GetByid(Convert.ToInt32(dataReader["idCategory"])),
+                            Supplier = new SupplierDal().GetByid(Convert.ToInt32(dataReader["idSupplier"])),
+                            Brand = new BrandDal().GetByid(Convert.ToInt32(dataReader["idBrand"])),
+                            Usd = Convert.ToBoolean(dataReader["usd"])
                         };
                         return product;
                     }
@@ -132,17 +193,22 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Product SET code = @code, description = @description, cost = @cost, price = @price, quantity = @quantity, idCategory = @idCategory, idSupplier = @idSupplier WHERE idProduct = @idProduct";
+                    "UPDATE product SET code = @code, description = @description, cost = @cost, " +
+                    "price = @price, quantity = @quantity, idCategory = @idCategory, " +
+                    "idSupplier = @idSupplier, idBrand = @idBrand, usd = @usd " +
+                    "WHERE idProduct = @idProduct";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@code", product.code);
-                    command.Parameters.AddWithValue("@description", product.description);
-                    command.Parameters.AddWithValue("@cost", product.cost);
-                    command.Parameters.AddWithValue("@price", product.price);
-                    command.Parameters.AddWithValue("@quantity", product.quantity);
-                    command.Parameters.AddWithValue("@idCategory", product.category.idCategory);
-                    command.Parameters.AddWithValue("@idSupplier", product.supplier.idSupplier);
-                    command.Parameters.AddWithValue("@idProduct", product.idProduct);
+                    command.Parameters.AddWithValue("@code", product.Code);
+                    command.Parameters.AddWithValue("@description", product.Description);
+                    command.Parameters.AddWithValue("@cost", product.Cost);
+                    command.Parameters.AddWithValue("@price", product.Price);
+                    command.Parameters.AddWithValue("@quantity", product.Quantity);
+                    command.Parameters.AddWithValue("@idCategory", product.Category.IdCategory);
+                    command.Parameters.AddWithValue("@idSupplier", product.Supplier.IdSupplier);
+                    command.Parameters.AddWithValue("@idBrand", product.Brand.IdBrand);
+                    command.Parameters.AddWithValue("@usd", product.Usd);
+                    command.Parameters.AddWithValue("@idProduct", product.IdProduct);
                     command.ExecuteNonQuery();
                 }
             }
@@ -153,7 +219,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "DELETE FROM Product WHERE idProduct = @idProduct";
+                const string sqlQuery = "DELETE FROM product WHERE idProduct = @idProduct";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@idProduct", idProduct);

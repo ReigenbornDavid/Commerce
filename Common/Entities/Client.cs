@@ -8,10 +8,20 @@ namespace Common.Entities
 {
     public class Client
     {
-        public Int64 idClient { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string address { get; set; }
-        public string tel { get; set; }
+        private Int64 idClient;
+        private string firstName;
+        private string lastName;
+        private string address;
+        private string tel;
+        private double balance;
+        private List<Transaction> transactions;
+
+        public long IdClient { get => idClient; set => idClient = value; }
+        public string FirstName { get => firstName; set => firstName = value; }
+        public string LastName { get => lastName; set => lastName = value; }
+        public string Address { get => address; set => address = value; }
+        public string Tel { get => tel; set => tel = value; }
+        public double Balance { get => balance; set => balance = value; }
+        public List<Transaction> Transactions { get => transactions; set => transactions = value; }
     }
 }

@@ -8,8 +8,12 @@ namespace Common.Entities
 {
     public class Supplier
     {
-        public int idSupplier { get; set; }
-        public string name { get; set; }
-        public bool needInvoice { get; set; }
+        private int idSupplier;
+        private string name;
+        private bool needInvoice;
+
+        public int IdSupplier { get => idSupplier; set => idSupplier = value; }
+        public string Name { get => name; set => name = value; }
+        public bool NeedInvoice { get => needInvoice; set => needInvoice = value; }
     }
 }

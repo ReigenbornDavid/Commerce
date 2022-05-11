@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\BrandDal.cs" />
     <Compile Include="DAL\CategoryDal.cs" />
     <Compile Include="DAL\ClientDal.cs" />
     <Compile Include="DAL\DetailPurchaseDal.cs" />

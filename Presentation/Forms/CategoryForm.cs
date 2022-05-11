@@ -33,7 +33,7 @@ namespace Presentation.Forms
             {
                 if (_category == null) _category = new Category();
 
-                _category.name = txtName.Text;
+                _category.Name = txtName.Text;
 
                 _categoryBol.Registrate(_category);
 
@@ -56,7 +56,8 @@ namespace Presentation.Forms
         {
             if (_category != null)
             {
-                _categoryBol.Delete(_category.idCategory);
+                _categoryBol.Delete(_category.IdCategory);
+                MessageBox.Show("Categoria eliminada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -87,9 +88,9 @@ namespace Presentation.Forms
         {
             try
             {
-                _category = _categoryBol.GetById(_category.idCategory);
-                txtId.Text = _category.idCategory.ToString();
-                txtName.Text = _category.name;
+                _category = _categoryBol.GetById(_category.IdCategory);
+                txtId.Text = _category.IdCategory.ToString();
+                txtName.Text = _category.Name;
             }
             catch (Exception ex)
             {
@@ -111,7 +112,7 @@ namespace Presentation.Forms
             if (dvgCategories.Rows.Count > 0)
             {
                 _category = new Category();
-                _category.idCategory = Convert.ToInt32(dvgCategories.CurrentRow.Cells[0].Value);
+                _category.IdCategory = Convert.ToInt32(dvgCategories.CurrentRow.Cells[0].Value);
                 FillFields();
                 ViewModify();
             }
@@ -129,16 +130,12 @@ namespace Presentation.Forms
                     foreach (var item in categories)
                     {
                         dvgCategories.Rows.Add(
-                            item.idCategory,
-                            item.name
+                            item.IdCategory,
+                            item.Name
                             );
                     }
                     RemoveSelection(dvgCategories);
                     ViewAdd();
-                }
-                else
-                {
-                    MessageBox.Show("No existen categorias registradas", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

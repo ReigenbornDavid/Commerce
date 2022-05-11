@@ -13,6 +13,7 @@ namespace Presentation.Forms
 {
     public partial class MainForm : Form
     {
+        private Button currentButton;
         public MainForm()
         {
             InitializeComponent();
@@ -68,39 +69,63 @@ namespace Presentation.Forms
         //Buttons in lateral panel
         private void btnProduct_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.ProductForm>();
         }
         private void btnCategory_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.CategoryForm>();
         }
         private void btnSales_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.SalesForm>();
         }
         private void btnClients_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.ClientForm>();
         }
         private void btnEmployee_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.EmployeeForm>();
         }
         private void btnPurchase_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.PurchaseForm>();
         }
         private void btnExpense_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.ExpenseForm>();
+        }
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            AbrirFormEnPanel<Forms.ConfigForm>();
         }
         private void btnService_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.ServiceForm>();
         }
         private void btnSupplier_Click(object sender, EventArgs e)
         {
+            ActivateButton(sender);
             AbrirFormEnPanel<Forms.SupplierForm>();
+        }
+        private void btnBrand_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            AbrirFormEnPanel<Forms.BrandForm>();
+        }
+        private void btnIncreases_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            AbrirFormEnPanel<Forms.IncreasesForm>();
         }
         //------------------------------------------------------------------------------
         private void btnClose_Click(object sender, EventArgs e)
@@ -111,6 +136,29 @@ namespace Presentation.Forms
         private void btnMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void ActivateButton(object btnSender)
+        {
+            if (btnSender != null)
+            {
+                if (currentButton != (Button)btnSender)
+                {
+                    DisableButton();
+                    currentButton = (Button)btnSender;
+                    currentButton.BackColor = Color.DodgerBlue;
+                }
+            }
+        }
+        private void DisableButton()
+        {
+            foreach (Control previousBtn in leftPanel.Controls)
+            {
+                if (previousBtn.GetType() == typeof(Button))
+                {
+                    previousBtn.BackColor = Color.LightGray;
+                }
+            }
         }
     }
 }

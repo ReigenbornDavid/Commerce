@@ -30,7 +30,8 @@ namespace Presentation.Forms
         {
             if (_client != null)
             {
-                _clientBol.Delete(_client.idClient);
+                _clientBol.Delete(_client.IdClient);
+                MessageBox.Show("Cliente eliminado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -62,12 +63,13 @@ namespace Presentation.Forms
         {
             try
             {
-                _client = _clientBol.GetById(_client.idClient);
-                txtId.Text = _client.idClient.ToString();
-                txtFirstName.Text = _client.firstName;
-                txtLastName.Text = _client.lastName;
-                txtAddress.Text = _client.address;
-                txtTel.Text = _client.tel;
+                _client = _clientBol.GetById(_client.IdClient);
+                txtId.Text = _client.IdClient.ToString();
+                txtFirstName.Text = _client.FirstName;
+                txtLastName.Text = _client.LastName;
+                txtAddress.Text = _client.Address;
+                txtTel.Text = _client.Tel;
+                txtBalance.Text = _client.Balance.ToString();
             }
             catch (Exception ex)
             {
@@ -89,7 +91,7 @@ namespace Presentation.Forms
             if (dvgClients.Rows.Count > 0)
             {
                 _client = new Client();
-                _client.idClient = Convert.ToInt64(dvgClients.CurrentRow.Cells[0].Value);
+                _client.IdClient = Convert.ToInt64(dvgClients.CurrentRow.Cells[0].Value);
                 FillFields();
                 ViewModify();
             }
@@ -102,11 +104,12 @@ namespace Presentation.Forms
                 {
                     _client = new Client();
                 }
-                _client.idClient = Convert.ToInt64(txtId.Text);
-                _client.firstName = txtFirstName.Text;
-                _client.lastName = txtLastName.Text;
-                _client.address = txtAddress.Text;
-                _client.tel = txtTel.Text;
+                _client.IdClient = Convert.ToInt64(txtId.Text);
+                _client.FirstName = txtFirstName.Text;
+                _client.LastName = txtLastName.Text;
+                _client.Address = txtAddress.Text;
+                _client.Tel = txtTel.Text;
+                _client.Balance = 0;
 
                 _clientBol.Registrate(_client);
 
@@ -129,28 +132,21 @@ namespace Presentation.Forms
 
         private void Search()
         {
-            if (txtSearch.Text != "")
+            List<Client> clients = _clientBol.GetByName(txtSearch.Text);
+            if (clients.Count > 0 && clients != null)
             {
-                List<Client> clients = _clientBol.GetByName(txtSearch.Text);
-                if (clients.Count > 0 && clients != null)
+                dvgClients.Rows.Clear();
+                dvgClients.AutoGenerateColumns = false;
+                foreach (var item in clients)
                 {
-                    dvgClients.Rows.Clear();
-                    dvgClients.AutoGenerateColumns = false;
-                    foreach (var item in clients)
-                    {
-                        dvgClients.Rows.Add(
-                            item.idClient,
-                            item.lastName,
-                            item.firstName
-                            );
-                    }
-                    RemoveSelection(dvgClients);
-                    ViewAdd();
+                    dvgClients.Rows.Add(
+                        item.IdClient,
+                        item.LastName,
+                        item.FirstName
+                        );
                 }
-                else
-                {
-                    MessageBox.Show("No existen clientes registrados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                RemoveSelection(dvgClients);
+                ViewAdd();
             }
         }
         //Buttons

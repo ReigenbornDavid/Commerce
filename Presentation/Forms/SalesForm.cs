@@ -4,10 +4,15 @@ using Presentation.ReportForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,7 +27,12 @@ namespace Presentation.Forms
         private readonly SaleBol _saleBol = new SaleBol();
         private readonly ClientBol _clientBol = new ClientBol();
         private readonly EmployeeBol _employeeBol = new EmployeeBol();
-        private decimal _total = 0;
+        private readonly CategoryBol _categoryBol = new CategoryBol();
+        private readonly SupplierBol _supplierBol = new SupplierBol();
+        private readonly BrandBol _brandBol = new BrandBol();
+        private double _total = 0;
+        private double usdValue = Convert.ToDouble(ConfigurationManager.AppSettings["usd"]);
+
         public SalesForm()
         {
             InitializeComponent();
@@ -34,13 +44,42 @@ namespace Presentation.Forms
             ViewChange(false);
             lblEmployee.Text = "40500077";
             AddClientsToComboBox();
+            AddCategoriesToCombobox();
+            AddSuppliersToCombobox();
+            AddBrandsToCombobox();
+            txtQuantity.Text = "1";
+            chkPayment.Checked = true;
+        }
+
+        private void AddBrandsToCombobox()
+        {
+            foreach (var brand in _brandBol.All())
+            {
+                txtBrandFilter.Items.Add(brand.Name);
+            }
+        }
+
+        private void AddSuppliersToCombobox()
+        {
+            foreach (var supplier in _supplierBol.All())
+            {
+                txtSupplierFilter.Items.Add(supplier.Name);
+            }
+        }
+
+        private void AddCategoriesToCombobox()
+        {
+            foreach (var category in _categoryBol.All())
+            {
+                txtCategoryFilter.Items.Add(category.Name);
+            }
         }
 
         private void AddClientsToComboBox()
         {
             foreach (var client in _clientBol.GetClients())
             {
-                txtClient.Items.Add(client.idClient);
+                txtClient.Items.Add(client.IdClient);
             }
         }
 
@@ -59,48 +98,54 @@ namespace Presentation.Forms
             }
         }
 
+        public static string PadNumbers(string input)
+        {
+            var result = Regex.Replace(input, "[0-9]+", match => match.Value.PadLeft(10, '0'));
+            return result;
+        }
+
         private void Search()
         {
-            if (txtSearch.Text != "")
+            List<Product> products = _productBol.GetByName(txtSearch.Text, txtCategoryFilter.Text, txtSupplierFilter.Text, txtBrandFilter.Text);
+            if (products.Count > 0 && products != null)
             {
-                List<Product> products = _productBol.GetByName(txtSearch.Text);
-                if (products.Count > 0 && products != null)
+                products.Where(x => x.Usd).Select(x => { x.Cost *= usdValue; x.Price *= usdValue; return x; }).ToList();
+                products = products.OrderBy(x => PadNumbers(x.Description)).ToList();
+                dvgProducts.Rows.Clear();
+                dvgProducts.AutoGenerateColumns = false;
+                foreach (var item in products)
                 {
-                    dvgProducts.Rows.Clear();
-                    dvgProducts.AutoGenerateColumns = false;
-                    foreach (var item in products)
-                    { 
-                        dvgProducts.Rows.Add(
-                            item.idProduct,
-                            item.description,
-                            item.price,
-                            item.quantity
-                            );
-                    }
-                    foreach (DataGridViewRow row in dvgProducts.Rows)
+                    dvgProducts.Rows.Add(
+                        item.IdProduct,
+                        item.Description,
+                        item.Brand.Name,
+                        item.Price,
+                        item.Quantity
+                        );
+                }
+                foreach (DataGridViewRow row in dvgProducts.Rows)
+                {
+                    if (Convert.ToDecimal(row.Cells[4].Value) == 0)
                     {
-                        if (Convert.ToDecimal(row.Cells[3].Value) == 0)
+                        row.Cells[4].Style.BackColor = Color.Red;
+                    }
+                    else
+                    {
+                        if (Convert.ToDecimal(row.Cells[4].Value) <= 5)
                         {
-                            row.Cells[3].Style.BackColor = Color.Red;
+                            row.Cells[4].Style.BackColor = Color.Orange;
                         }
                         else
                         {
-                            if (Convert.ToDecimal(row.Cells[3].Value) <= 5)
-                            {
-                                row.Cells[3].Style.BackColor = Color.Orange;
-                            }
-                            else
-                            {
-                                row.Cells[3].Style.BackColor = Color.LimeGreen;
-                            }
+                            row.Cells[4].Style.BackColor = Color.LimeGreen;
                         }
                     }
-                    RemoveSelection(dvgProducts);
                 }
-                else
-                {
-                    MessageBox.Show("No existen producto Registrado");
-                }
+                RemoveSelection(dvgProducts);
+            }
+            else
+            {
+                dvgProducts.Rows.Clear();
             }
         }
 
@@ -109,40 +154,66 @@ namespace Presentation.Forms
             try
             {
                 _sale = new Sale();
-                _sale.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
-                _sale.client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
-                _sale.date = DateTime.Now;
-                _sale.total = Convert.ToDecimal(txtTotal.Text);
-                _sale.detailSales = new List<DetailSale>();
+                _sale.IdSale = _saleBol.GetLastId() + 1;
+                _sale.Employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
+                _sale.Client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
+                _sale.Date = DateTime.Now;
+                _sale.Total = Convert.ToDouble(txtTotal.Text);
+                _sale.DetailSales = new List<DetailSale>();
                 foreach (DataGridViewRow row in dvgCart.Rows)
                 {
                     _detailSale = new DetailSale();
-                    _detailSale.product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
-                    _detailSale.price = Convert.ToDecimal(row.Cells[2].Value);
-                    _detailSale.quantity = Convert.ToDecimal(row.Cells[3].Value);
-                    _sale.detailSales.Add(_detailSale);
+                    _detailSale.Product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
+                    _detailSale.Price = Convert.ToDouble(row.Cells[2].Value);
+                    _detailSale.Quantity = Convert.ToDouble(row.Cells[3].Value);
+                    _sale.DetailSales.Add(_detailSale);
                 }
-                _sale.idSale = _saleBol.Registrate(_sale);
+                if (!chkPayment.Checked)
+                {
+                    if (txtPayment.Text == "")
+                    {
+                        _sale.Client.Balance -= _sale.Total;
+                    }
+                    else
+                    {
+                        Transaction transaction = new Transaction();
+                        transaction.IdClient = _sale.Client.IdClient;
+                        transaction.Date = _sale.Date;
+                        transaction.Amount = _sale.Total * -1;
+                        _sale.Client.Transactions = new List<Transaction>();
+                        _sale.Client.Transactions.Add(transaction);
+                        transaction = new Transaction();
+                        transaction.IdClient = _sale.Client.IdClient;
+                        transaction.Date = _sale.Date;
+                        transaction.Amount = Convert.ToDouble(txtPayment.Text);
+                        _sale.Client.Transactions.Add(transaction);
+                        _sale.Client.Balance -= (_sale.Total - transaction.Amount);
+                    }
+                }
+                _sale.IdSale = _saleBol.Registrate2(_sale);
                 if (_saleBol.stringBuilder.Length != 0 )
                 {
-                    _saleBol.Delete(_sale.idSale);
+                    //_saleBol.Delete(_sale.IdSale);
                     MessageBox.Show(_saleBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
+                    //PrintTicket();
                     MessageBox.Show("Venta registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
                     dvgCart.Rows.Clear();
                     dvgProducts.Rows.Clear();
                     txtSearch.Clear();
                     txtTotal.Clear();
                     _total = 0;
                     _sale = null;
+                    ViewChange(false);
                     _detailSale = null;
                 }
             }
             catch (Exception ex)
             {
-                _saleBol.Delete(_sale.idSale);
+                //_saleBol.Delete(_sale.IdSale);
                 MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -158,25 +229,30 @@ namespace Presentation.Forms
             {
                 if (_product != null)
                 {
-                    _product = _productBol.GetById(_product.idProduct);
-                    if (_product.quantity >= Convert.ToDecimal(txtQuantity.Text))
+                    _product = _productBol.GetById(_product.IdProduct);
+                    if (_product.Usd)
+                    {
+                        _product.Cost *= usdValue;
+                        _product.Price *= usdValue;
+                    }
+                    if (_product.Quantity >= Convert.ToDouble(txtQuantity.Text))
                     {
                         bool exists = false;
                         if (dvgCart.Rows.Count > 0)
                         {
                             foreach (DataGridViewRow row in dvgCart.Rows)
                             {
-                                if (Convert.ToInt32(row.Cells[0].Value) == _product.idProduct)
+                                if (Convert.ToInt32(row.Cells[0].Value) == _product.IdProduct)
                                 {
                                     exists = true;
-                                    if ((Convert.ToDecimal(row.Cells[3].Value) +
-                                        Convert.ToDecimal(txtQuantity.Text)) <= _product.quantity)
+                                    if ((Convert.ToDouble(row.Cells[3].Value) +
+                                        Convert.ToDouble(txtQuantity.Text)) <= _product.Quantity)
                                     {
-                                        _total -= Convert.ToDecimal(row.Cells[4].Value);
+                                        _total -= Convert.ToDouble(row.Cells[4].Value);
                                         row.Cells[3].Value = Convert.ToDecimal(row.Cells[3].Value) + Convert.ToDecimal(txtQuantity.Text);
                                         row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
                                             * Convert.ToDecimal(row.Cells[3].Value);
-                                        _total += Convert.ToDecimal(row.Cells[4].Value);
+                                        _total += Convert.ToDouble(row.Cells[4].Value);
                                     }
                                     else
                                     {
@@ -187,11 +263,11 @@ namespace Presentation.Forms
                         }
                         if (exists == false)
                         {
-                            decimal subTotal = _product.price * Convert.ToDecimal(txtQuantity.Text);
+                            double subTotal = _product.Price * Convert.ToDouble(txtQuantity.Text);
                             dvgCart.Rows.Add(
-                                _product.idProduct,
-                                _product.description,
-                                _product.price,
+                                _product.IdProduct,
+                                _product.Description,
+                                _product.Price,
                                 txtQuantity.Text,
                                 subTotal
                                 );
@@ -222,12 +298,12 @@ namespace Presentation.Forms
         {
             if (dvgCart.Rows.Count > 0)
             {
-                _total -= Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
+                _total -= Convert.ToDouble(dvgCart.CurrentRow.Cells[4].Value);
                 dvgCart.CurrentRow.Cells[2].Value = txtPriceCart.Text;
                 dvgCart.CurrentRow.Cells[3].Value = txtQuantityCart.Text;
                 dvgCart.CurrentRow.Cells[4].Value = Convert.ToDecimal(txtPriceCart.Text)
                     * Convert.ToDecimal(txtQuantityCart.Text);
-                _total += Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
+                _total += Convert.ToDouble(dvgCart.CurrentRow.Cells[4].Value);
                 UpdateTotal();
                 RemoveSelection(dvgCart);
                 ViewChange(false);
@@ -238,7 +314,7 @@ namespace Presentation.Forms
         {
             if (dvgCart.Rows.Count > 0)
             {
-                _total -= Convert.ToDecimal(dvgCart.CurrentRow.Cells[4].Value);
+                _total -= Convert.ToDouble(dvgCart.CurrentRow.Cells[4].Value);
                 UpdateTotal();
                 dvgCart.Rows.RemoveAt(dvgCart.CurrentRow.Index);
                 RemoveSelection(dvgCart);
@@ -247,46 +323,47 @@ namespace Presentation.Forms
         }
         private void btnBudget_Click(object sender, EventArgs e)
         {
-            if (true)
+            
+            if (txtClient.Text != "" && dvgCart.Rows.Count > 0)
             {
-
-            }
-            try
-            {
-                ReportSaleForm formR = new ReportSaleForm();
-                _sale = new Sale();
-                _sale.idSale = 0;
-                _sale.employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
-                _sale.client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
-                _sale.date = DateTime.Now;
-                _sale.detailSales = new List<DetailSale>();
-                foreach (DataGridViewRow row in dvgCart.Rows)
+                try
                 {
-                    _detailSale = new DetailSale();
-                    _detailSale.product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
-                    _detailSale.price = Convert.ToDecimal(row.Cells[2].Value);
-                    _detailSale.quantity = Convert.ToInt32(row.Cells[3].Value);
-                    _sale.detailSales.Add(_detailSale);
+                    ReportSaleForm formR = new ReportSaleForm();
+                    _sale = new Sale();
+                    _sale.IdSale = 0;
+                    _sale.Employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
+                    _sale.Client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
+                    _sale.Date = DateTime.Now;
+                    _sale.DetailSales = new List<DetailSale>();
+                    foreach (DataGridViewRow row in dvgCart.Rows)
+                    {
+                        _detailSale = new DetailSale();
+                        _detailSale.Product = _productBol.GetById(Convert.ToInt32(row.Cells[0].Value));
+                        _detailSale.Price = Convert.ToDouble(row.Cells[2].Value);
+                        _detailSale.Quantity = Convert.ToInt32(row.Cells[3].Value);
+                        _sale.DetailSales.Add(_detailSale);
+                    }
+                    _sale.Total = _total;
+                    formR._sale = _sale;
+                    _sale = null;
+                    _detailSale = null;
+                    formR.ShowDialog();
+
                 }
-                _sale.total = _total;
-                formR._sale = _sale;
-                
-                _sale = null;
-                _detailSale = null;
-                formR.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error", ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error", ex.Message);
+                }
             }
         }
         private void btnReport_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 ReportSaleForm formR = new ReportSaleForm();
                 var sale = _saleBol.GetById(_saleBol.GetLastId());
-                sale.detailSales = _saleBol.GetDetailBySale(sale.idSale);
+                sale.DetailSales = _saleBol.GetDetailBySale(sale.IdSale);
                 formR._sale = sale;
                 formR.ShowDialog();
             }
@@ -294,12 +371,20 @@ namespace Presentation.Forms
             {
                 MessageBox.Show("Error", ex.Message);
             }
+
         }
         private void btnSell_Click(object sender, EventArgs e)
         {
             Sell();
         }
-        //Events
+
+        private void input_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                Search();
+            }
+        }
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             Search();
@@ -310,13 +395,28 @@ namespace Presentation.Forms
             if (dvgProducts.Rows.Count > 0)
             {
                 _product = new Product();
-                _product.idProduct = Convert.ToInt32(dvgProducts.CurrentRow.Cells[0].Value);
+                _product.IdProduct = Convert.ToInt32(dvgProducts.CurrentRow.Cells[0].Value);
+            }
+        }
+        private void textBoxDecimal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == '.'))
+            {
+                e.KeyChar = ',';
+            }
+            else if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+            if ((e.KeyChar == ',' || e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
             }
         }
         private void textBoxInt_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != ','))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
             }
@@ -340,6 +440,36 @@ namespace Presentation.Forms
             txtQuantityCart.Visible = view;
         }
 
-        
+        private void txtClient_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtClient.Text.Length >= 7)
+                {
+                    Client client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
+                    if (client != null)
+                    {
+                        txtNameClient.Text = client.FirstName + " " + client.LastName;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void chkPayment_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkPayment.Checked)
+            {
+                lblPayment.Visible = false;
+                txtPayment.Visible = false;
+            }
+            else
+            {
+                lblPayment.Visible = true;
+                txtPayment.Visible = true;
+            }
+        }
     }
 }

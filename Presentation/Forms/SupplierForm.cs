@@ -32,8 +32,8 @@ namespace Presentation.Forms
             {
                 if (_supplier == null) _supplier = new Supplier();
 
-                _supplier.name = txtName.Text;
-                _supplier.needInvoice = ConvertStringToBoolean(txtNeedInvoice.Text);
+                _supplier.Name = txtName.Text;
+                _supplier.NeedInvoice = ConvertStringToBoolean(txtNeedInvoice.Text);
 
                 _supplierBol.Registrate(_supplier);
 

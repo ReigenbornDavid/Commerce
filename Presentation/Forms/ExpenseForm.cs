@@ -31,8 +31,8 @@ namespace Presentation.Forms
             try
             {
                 if (_expense == null) _expense = new Expense();
-                _expense.description = txtDescripcion.Text;
-                _expense.price = Convert.ToDecimal(txtPrice.Text);
+                _expense.Description = txtDescripcion.Text;
+                _expense.Price = Convert.ToDecimal(txtPrice.Text);
                 _expenseBol.Registrate(_expense);
                 if (_expenseBol.stringBuilder.Length != 0)
                 {

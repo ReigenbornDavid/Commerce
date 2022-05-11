@@ -20,10 +20,10 @@ namespace DataAccess.DAL
                     "VALUES (@idPurchase, @price, @quantity, @idProduct)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@idPurchase", detailPurchase.purchase.idPurchase);
-                    command.Parameters.AddWithValue("@price", detailPurchase.price);
-                    command.Parameters.AddWithValue("@quantity", detailPurchase.quantity);
-                    command.Parameters.AddWithValue("@idProduct", detailPurchase.product.idProduct);
+                    command.Parameters.AddWithValue("@idPurchase", detailPurchase.Purchase.IdPurchase);
+                    command.Parameters.AddWithValue("@price", detailPurchase.Price);
+                    command.Parameters.AddWithValue("@quantity", detailPurchase.Quantity);
+                    command.Parameters.AddWithValue("@idProduct", detailPurchase.Product.IdProduct);
                     command.ExecuteNonQuery();
                 }
             }
@@ -44,11 +44,11 @@ namespace DataAccess.DAL
                     {
                         DetailPurchase detailPurchase = new DetailPurchase
                         {
-                            idDetailPurchase = Convert.ToInt32(dataReader["idDetailPurchase"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
-                            product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
-                            purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
+                            IdDetailPurchase = Convert.ToInt32(dataReader["idDetailPurchase"]),
+                            Price = Convert.ToDouble(dataReader["price"]),
+                            Quantity = Convert.ToInt32(dataReader["quantity"]),
+                            Product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
+                            Purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
                         };
                         detailPurchases.Add(detailPurchase);
                     }
@@ -73,11 +73,11 @@ namespace DataAccess.DAL
                     {
                         DetailPurchase detailPurchase = new DetailPurchase
                         {
-                            idDetailPurchase = Convert.ToInt32(dataReader["idDetailPurchase"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
-                            product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
-                            purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
+                            IdDetailPurchase = Convert.ToInt32(dataReader["idDetailPurchase"]),
+                            Price = Convert.ToDouble(dataReader["price"]),
+                            Quantity = Convert.ToInt32(dataReader["quantity"]),
+                            Product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
+                            Purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
                         };
                         detailPurchases.Add(detailPurchase);
                     }
@@ -100,11 +100,11 @@ namespace DataAccess.DAL
                     {
                         DetailPurchase detailPurchase = new DetailPurchase
                         {
-                            idDetailPurchase = Convert.ToInt32(dataReader["idDetailPurchase"]),
-                            price = Convert.ToDecimal(dataReader["price"]),
-                            quantity = Convert.ToInt32(dataReader["quantity"]),
-                            product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
-                            purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
+                            IdDetailPurchase = Convert.ToInt32(dataReader["idDetailPurchase"]),
+                            Price = Convert.ToDouble(dataReader["price"]),
+                            Quantity = Convert.ToInt32(dataReader["quantity"]),
+                            Product = new ProductDal().GetByid(Convert.ToInt32(dataReader["idproduct"])),
+                            Purchase = new PurchaseDal().GetByid(Convert.ToInt32(dataReader["idPurchase"])),
                         };
                         return detailPurchase;
                     }
@@ -124,11 +124,11 @@ namespace DataAccess.DAL
                     "WHERE idDetailPurchase = @idDetailPurchase";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@idDetailPurchase", detailPurchase.idDetailPurchase);
-                    command.Parameters.AddWithValue("@idPurchase", detailPurchase.purchase.idPurchase);
-                    command.Parameters.AddWithValue("@price", detailPurchase.price);
-                    command.Parameters.AddWithValue("@quantity", detailPurchase.quantity);
-                    command.Parameters.AddWithValue("@idProduct", detailPurchase.product.idProduct);
+                    command.Parameters.AddWithValue("@idDetailPurchase", detailPurchase.IdDetailPurchase);
+                    command.Parameters.AddWithValue("@idPurchase", detailPurchase.Purchase.IdPurchase);
+                    command.Parameters.AddWithValue("@price", detailPurchase.Price);
+                    command.Parameters.AddWithValue("@quantity", detailPurchase.Quantity);
+                    command.Parameters.AddWithValue("@idProduct", detailPurchase.Product.IdProduct);
                     command.ExecuteNonQuery();
                 }
             }

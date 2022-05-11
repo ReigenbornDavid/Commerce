@@ -31,7 +31,8 @@ namespace Presentation.Forms
         {
             if (_employee != null)
             {
-                _employeeBol.Delete(_employee.idEmployee);
+                _employeeBol.Delete(_employee.IdEmployee);
+                MessageBox.Show("Empleado eliminado con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -66,15 +67,15 @@ namespace Presentation.Forms
         {
             try
             {
-                _employee = _employeeBol.GetById(_employee.idEmployee);
-                txtId.Text = _employee.idEmployee.ToString();
-                txtFirstName.Text = _employee.firstName;
-                txtLastName.Text = _employee.lastName;
-                txtUser.Text = _employee.user;
-                txtPass.Text = _employee.pass;
-                txtEmail.Text = _employee.email;
-                txtPosition.Text = _employee.position;
-                txtActive.Text = ConvertBooleanToString(_employee.active);
+                _employee = _employeeBol.GetById(_employee.IdEmployee);
+                txtId.Text = _employee.IdEmployee.ToString();
+                txtFirstName.Text = _employee.FirstName;
+                txtLastName.Text = _employee.LastName;
+                txtUser.Text = _employee.User;
+                txtPass.Text = _employee.Pass;
+                txtEmail.Text = _employee.Email;
+                txtPosition.Text = _employee.Position;
+                txtActive.Text = ConvertBooleanToString(_employee.Active);
             }
             catch (Exception ex)
             {
@@ -96,7 +97,7 @@ namespace Presentation.Forms
             if (dvgEmployees.Rows.Count > 0)
             {
                 _employee = new Employee();
-                _employee.idEmployee = Convert.ToInt32(dvgEmployees.CurrentRow.Cells[0].Value);
+                _employee.IdEmployee = Convert.ToInt32(dvgEmployees.CurrentRow.Cells[0].Value);
                 FillFields();
                 ViewModify();
             }
@@ -133,14 +134,14 @@ namespace Presentation.Forms
                 {
                     _employee = new Employee();
                 }
-                _employee.idEmployee = Convert.ToInt32(txtId.Text);
-                _employee.firstName = txtFirstName.Text;
-                _employee.lastName = txtLastName.Text;
-                _employee.user = txtUser.Text;
-                _employee.pass = txtPass.Text;
-                _employee.email = txtEmail.Text;
-                _employee.position = txtPosition.Text;
-                _employee.active = ConvertStringToBoolean(txtActive.Text);
+                _employee.IdEmployee = Convert.ToInt32(txtId.Text);
+                _employee.FirstName = txtFirstName.Text;
+                _employee.LastName = txtLastName.Text;
+                _employee.User = txtUser.Text;
+                _employee.Pass = txtPass.Text;
+                _employee.Email = txtEmail.Text;
+                _employee.Position = txtPosition.Text;
+                _employee.Active = ConvertStringToBoolean(txtActive.Text);
 
                 _employeeBol.Registrate(_employee);
 
@@ -173,17 +174,13 @@ namespace Presentation.Forms
                     foreach (var item in employees)
                     {
                         dvgEmployees.Rows.Add(
-                            item.idEmployee,
-                            item.firstName,
-                            item.lastName
+                            item.IdEmployee,
+                            item.FirstName,
+                            item.LastName
                             );
                     }
                     RemoveSelection(dvgEmployees);
                     ViewAdd();
-                }
-                else
-                {
-                    MessageBox.Show("No existen empleados registrados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

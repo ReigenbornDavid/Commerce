@@ -16,11 +16,11 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "INSERT INTO Supplier (name, needInvoice) VALUES (@name, @needInvoice)";
+                    "INSERT INTO supplier (name, needInvoice) VALUES (@name, @needInvoice)";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@name", supplier.name);
-                    command.Parameters.AddWithValue("@needInvoice", supplier.needInvoice);
+                    command.Parameters.AddWithValue("@name", supplier.Name);
+                    command.Parameters.AddWithValue("@needInvoice", supplier.NeedInvoice);
                     command.ExecuteNonQuery();
                 }
             }
@@ -33,7 +33,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "SELECT * FROM Supplier ORDER BY idSupplier ASC";
+                const string sqlQuery = "SELECT * FROM supplier s ORDER BY s.name ASC";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     MySqlDataReader dataReader = command.ExecuteReader();
@@ -41,9 +41,36 @@ namespace DataAccess.DAL
                     {
                         Supplier supplier = new Supplier
                         {
-                            idSupplier = Convert.ToInt32(dataReader["idSupplier"]),
-                            name = Convert.ToString(dataReader["name"]),
-                            needInvoice = Convert.ToBoolean(dataReader["needInvoice"])
+                            IdSupplier = Convert.ToInt32(dataReader["idSupplier"]),
+                            Name = Convert.ToString(dataReader["name"]),
+                            NeedInvoice = Convert.ToBoolean(dataReader["needInvoice"]),
+                        };
+                        suppliers.Add(supplier);
+                    }
+                }
+            }
+            return suppliers;
+        }
+
+        public List<Supplier> GetAllByName(string name)
+        {
+            List<Supplier> suppliers = new List<Supplier>();
+
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                const string sqlQuery = "SELECT * FROM supplier s WHERE s.name like @name order by s.name";
+                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@name", name + "%");
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        Supplier supplier = new Supplier
+                        {
+                            IdSupplier = Convert.ToInt32(dataReader["idSupplier"]),
+                            Name = Convert.ToString(dataReader["name"]),
+                            NeedInvoice = Convert.ToBoolean(dataReader["needInvoice"]),
                         };
                         suppliers.Add(supplier);
                     }
@@ -57,7 +84,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Supplier WHERE name = @name";
+                const string sqlGetById = "SELECT * FROM supplier WHERE name = @name";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@name", name);
@@ -66,9 +93,9 @@ namespace DataAccess.DAL
                     {
                         Supplier supplier = new Supplier
                         {
-                            idSupplier = Convert.ToInt32(dataReader["idSupplier"]),
-                            name = Convert.ToString(dataReader["name"]),
-                            needInvoice = Convert.ToBoolean(dataReader["needInvoice"])
+                            IdSupplier = Convert.ToInt32(dataReader["idSupplier"]),
+                            Name = Convert.ToString(dataReader["name"]),
+                            NeedInvoice = Convert.ToBoolean(dataReader["needInvoice"]),
                         };
                         return supplier;
                     }
@@ -82,7 +109,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlGetById = "SELECT * FROM Supplier WHERE idSupplier = @idSupplier";
+                const string sqlGetById = "SELECT * FROM supplier WHERE idSupplier = @idSupplier";
                 using (MySqlCommand command = new MySqlCommand(sqlGetById, connection))
                 {
                     command.Parameters.AddWithValue("@idSupplier", idSupplier);
@@ -91,9 +118,9 @@ namespace DataAccess.DAL
                     {
                         Supplier supplier = new Supplier
                         {
-                            idSupplier = Convert.ToInt32(dataReader["idSupplier"]),
-                            name = Convert.ToString(dataReader["name"]),
-                            needInvoice = Convert.ToBoolean(dataReader["needInvoice"])
+                            IdSupplier = Convert.ToInt32(dataReader["idSupplier"]),
+                            Name = Convert.ToString(dataReader["name"]),
+                            NeedInvoice = Convert.ToBoolean(dataReader["needInvoice"]),
                         };
                         return supplier;
                     }
@@ -107,12 +134,12 @@ namespace DataAccess.DAL
             {
                 connection.Open();
                 const string sqlQuery =
-                    "UPDATE Supplier SET name = @name, needInvoice = @needInvoice WHERE idSupplier = @idSUpplier";
+                    "UPDATE supplier SET name = @name, needInvoice = @needInvoice WHERE idSupplier = @idSUpplier";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@name", supplier.name);
-                    command.Parameters.AddWithValue("@needInvoice", supplier.needInvoice);
-                    command.Parameters.AddWithValue("@idSupplier", supplier.idSupplier);
+                    command.Parameters.AddWithValue("@name", supplier.Name);
+                    command.Parameters.AddWithValue("@needInvoice", supplier.NeedInvoice);
+                    command.Parameters.AddWithValue("@idSupplier", supplier.IdSupplier);
                     command.ExecuteNonQuery();
                 }
             }
@@ -123,7 +150,7 @@ namespace DataAccess.DAL
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "DELETE FROM Supplier WHERE idSupplier = @idSupplier";
+                const string sqlQuery = "DELETE FROM supplier WHERE idSupplier = @idSupplier";
                 using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
                 {
                     command.Parameters.AddWithValue("@idSupplier", idSupplier);

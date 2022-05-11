@@ -82,6 +82,7 @@ namespace Presentation.Forms
             this.dvgEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dvgEmployees.Size = new System.Drawing.Size(430, 236);
             this.dvgEmployees.TabIndex = 0;
+            this.dvgEmployees.TabStop = false;
             this.dvgEmployees.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgClients_CellClick);
             // 
             // Column1
@@ -109,28 +110,28 @@ namespace Presentation.Forms
             this.txtLastName.Location = new System.Drawing.Point(516, 88);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(162, 20);
-            this.txtLastName.TabIndex = 5;
+            this.txtLastName.TabIndex = 4;
             // 
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(516, 166);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(162, 20);
-            this.txtEmail.TabIndex = 8;
+            this.txtEmail.TabIndex = 7;
             // 
             // txtFirstName
             // 
             this.txtFirstName.Location = new System.Drawing.Point(516, 62);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(162, 20);
-            this.txtFirstName.TabIndex = 4;
+            this.txtFirstName.TabIndex = 3;
             // 
             // txtId
             // 
             this.txtId.Location = new System.Drawing.Point(516, 36);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(162, 20);
-            this.txtId.TabIndex = 3;
+            this.txtId.TabIndex = 2;
             this.txtId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInt_KeyPress);
             // 
             // lblLastName
@@ -175,6 +176,7 @@ namespace Presentation.Forms
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 2;
+            this.btnSearch.TabStop = false;
             this.btnSearch.Text = "Buscar";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -185,6 +187,7 @@ namespace Presentation.Forms
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 14;
+            this.btnRemove.TabStop = false;
             this.btnRemove.Text = "Eliminar";
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
@@ -195,6 +198,7 @@ namespace Presentation.Forms
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 13;
+            this.btnClear.TabStop = false;
             this.btnClear.Text = "Limpiar";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -204,7 +208,7 @@ namespace Presentation.Forms
             this.btnModify.Location = new System.Drawing.Point(603, 245);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(75, 23);
-            this.btnModify.TabIndex = 12;
+            this.btnModify.TabIndex = 10;
             this.btnModify.Text = "Modificar";
             this.btnModify.UseVisualStyleBackColor = true;
             this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
@@ -233,7 +237,7 @@ namespace Presentation.Forms
             this.txtPosition.Location = new System.Drawing.Point(516, 192);
             this.txtPosition.Name = "txtPosition";
             this.txtPosition.Size = new System.Drawing.Size(162, 20);
-            this.txtPosition.TabIndex = 9;
+            this.txtPosition.TabIndex = 8;
             // 
             // lblActive
             // 
@@ -249,7 +253,7 @@ namespace Presentation.Forms
             this.txtUser.Location = new System.Drawing.Point(516, 114);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(162, 20);
-            this.txtUser.TabIndex = 6;
+            this.txtUser.TabIndex = 5;
             // 
             // lblUser
             // 
@@ -266,7 +270,7 @@ namespace Presentation.Forms
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(162, 20);
-            this.txtPass.TabIndex = 7;
+            this.txtPass.TabIndex = 6;
             // 
             // lblPass
             // 
@@ -287,7 +291,7 @@ namespace Presentation.Forms
             this.txtActive.Location = new System.Drawing.Point(516, 218);
             this.txtActive.Name = "txtActive";
             this.txtActive.Size = new System.Drawing.Size(162, 21);
-            this.txtActive.TabIndex = 10;
+            this.txtActive.TabIndex = 9;
             // 
             // EmployeeForm
             // 
