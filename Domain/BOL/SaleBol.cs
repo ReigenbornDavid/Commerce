@@ -24,31 +24,10 @@ namespace Domain.BOL
                 if (_saleDal.GetByid(sale.IdSale) == null)
                 {
                     _saleDal.Insert(sale);
-                    lastSale = _saleDal.GetLastId();
-                    foreach (var item in sale.DetailSales)
+                    if (_saleDal.GetByid(sale.IdSale) == null)
                     {
-                        item.Sale = new Sale();
-                        item.Sale.IdSale = lastSale;
-                        _detailSaleDal.Insert(item);
-                        item.Product.Quantity = item.Product.Quantity - item.Quantity; 
-                        _productDal.Update(item.Product);
+                        stringBuilder.Append("No se pudo registrar la venta");
                     }
-                    return lastSale;
-                }
-                else
-                    _saleDal.Update(sale);
-                return 0;
-            }
-            return 0;
-        }
-
-        public int Registrate2(Sale sale)
-        {
-            if (ValidateSale(sale))
-            {
-                if (_saleDal.GetByid(sale.IdSale) == null)
-                {
-                    _saleDal.Insert2(sale);
                 }
                 else
                     _saleDal.Update(sale);
@@ -62,9 +41,9 @@ namespace Domain.BOL
             return _saleDal.GetAll();
         }
 
-        public int GetLastId()
+        public int GetLastIdSale()
         {
-            return _saleDal.GetLastId();
+            return _saleDal.GetLastIdSale();
         }
 
         public List<DetailSale> GetDetailBySale(int idSale)

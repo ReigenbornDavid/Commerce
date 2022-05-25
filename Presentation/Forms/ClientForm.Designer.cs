@@ -240,9 +240,9 @@ namespace Presentation.Forms
             this.lblBalance.AutoSize = true;
             this.lblBalance.Location = new System.Drawing.Point(448, 169);
             this.lblBalance.Name = "lblBalance";
-            this.lblBalance.Size = new System.Drawing.Size(46, 13);
+            this.lblBalance.Size = new System.Drawing.Size(51, 13);
             this.lblBalance.TabIndex = 32;
-            this.lblBalance.Text = "Balance";
+            this.lblBalance.Text = "Balances";
             // 
             // txtBalance
             // 

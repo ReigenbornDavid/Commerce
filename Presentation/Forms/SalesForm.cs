@@ -49,6 +49,7 @@ namespace Presentation.Forms
             AddBrandsToCombobox();
             txtQuantity.Text = "1";
             chkPayment.Checked = true;
+            chkClient.Checked = true;
         }
 
         private void AddBrandsToCombobox()
@@ -79,7 +80,10 @@ namespace Presentation.Forms
         {
             foreach (var client in _clientBol.GetClients())
             {
-                txtClient.Items.Add(client.IdClient);
+                if (client.IdClient != 20111111112)
+                {
+                    txtClient.Items.Add(client.IdClient);
+                }
             }
         }
 
@@ -154,7 +158,7 @@ namespace Presentation.Forms
             try
             {
                 _sale = new Sale();
-                _sale.IdSale = _saleBol.GetLastId() + 1;
+                //_sale.IdSale = _saleBol.GetLastId() + 1;
                 _sale.Employee = _employeeBol.GetById(Convert.ToInt32(lblEmployee.Text));
                 _sale.Client = _clientBol.GetById(Convert.ToInt64(txtClient.Text));
                 _sale.Date = DateTime.Now;
@@ -170,31 +174,31 @@ namespace Presentation.Forms
                 }
                 if (!chkPayment.Checked)
                 {
-                    if (txtPayment.Text == "")
+                    _sale.Client.Transactions = new List<Transaction>();
+                    Transaction transaction = new Transaction();
+                    transaction.IdClient = _sale.Client.IdClient;
+                    transaction.Date = _sale.Date;
+                    transaction.Amount = _sale.Total * -1;
+                    _sale.Client.Transactions.Add(transaction);
+                    _sale.Client.Balance -= _sale.Total;
+                    if (txtPayment.Text != "")
                     {
-                        _sale.Client.Balance -= _sale.Total;
-                    }
-                    else
-                    {
-                        Transaction transaction = new Transaction();
-                        transaction.IdClient = _sale.Client.IdClient;
-                        transaction.Date = _sale.Date;
-                        transaction.Amount = _sale.Total * -1;
-                        _sale.Client.Transactions = new List<Transaction>();
-                        _sale.Client.Transactions.Add(transaction);
-                        transaction = new Transaction();
-                        transaction.IdClient = _sale.Client.IdClient;
-                        transaction.Date = _sale.Date;
-                        transaction.Amount = Convert.ToDouble(txtPayment.Text);
-                        _sale.Client.Transactions.Add(transaction);
-                        _sale.Client.Balance -= (_sale.Total - transaction.Amount);
+                        if (Convert.ToDouble(txtPayment.Text) > 0)
+                        {
+                            transaction = new Transaction();
+                            transaction.IdClient = _sale.Client.IdClient;
+                            transaction.Date = _sale.Date;
+                            transaction.Amount = Convert.ToDouble(txtPayment.Text);
+                            _sale.Client.Transactions.Add(transaction);
+                            _sale.Client.Balance += transaction.Amount;
+                        }
                     }
                 }
-                _sale.IdSale = _saleBol.Registrate2(_sale);
+                _sale.IdSale = _saleBol.Registrate(_sale);
                 if (_saleBol.stringBuilder.Length != 0 )
                 {
                     //_saleBol.Delete(_sale.IdSale);
-                    MessageBox.Show(_saleBol.stringBuilder.ToString(), "Para continuar:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_saleBol.stringBuilder.ToString(), "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -362,7 +366,7 @@ namespace Presentation.Forms
             try
             {
                 ReportSaleForm formR = new ReportSaleForm();
-                var sale = _saleBol.GetById(_saleBol.GetLastId());
+                var sale = _saleBol.GetById(_saleBol.GetLastIdSale());
                 sale.DetailSales = _saleBol.GetDetailBySale(sale.IdSale);
                 formR._sale = sale;
                 formR.ShowDialog();
@@ -469,6 +473,26 @@ namespace Presentation.Forms
             {
                 lblPayment.Visible = true;
                 txtPayment.Visible = true;
+            }
+        }
+
+        private void chkClient_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkClient.Checked)
+            {
+                txtClient.Text = "20111111112";
+                txtClient.Enabled = false;
+                txtNameClient.Enabled = false;
+                chkPayment.Checked = true;
+                chkPayment.Enabled = false;
+            }
+            else
+            {
+                txtClient.Text = "";
+                txtNameClient.Text = "";
+                txtClient.Enabled = true;
+                txtNameClient.Enabled = true;
+                chkPayment.Enabled = true;
             }
         }
     }

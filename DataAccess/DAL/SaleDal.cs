@@ -10,26 +10,8 @@ namespace DataAccess.DAL
 {
     public class SaleDal:ConnectionToSql
     {
-        public void Insert(Sale sale)
-        {
-            using (MySqlConnection connection = GetConnection())
-            {
-                connection.Open();
-                const string sqlQuery =
-                    "INSERT INTO sale (dniClient, dniEmployee, date, total) " +
-                    "VALUES (@dniClient, @dniEmployee, @date, @total)";
-                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@dniClient", sale.Client.IdClient);
-                    command.Parameters.AddWithValue("@dniEmployee", sale.Employee.IdEmployee);
-                    command.Parameters.AddWithValue("@date", sale.Date);
-                    command.Parameters.AddWithValue("@total", sale.Total);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
 
-        public string Insert2(Sale sale)
+        public bool Insert(Sale sale)
         {
             using (MySqlConnection connection = GetConnection())
             {
@@ -44,19 +26,14 @@ namespace DataAccess.DAL
                             //Insert New Sale
                             InsertSale(command, sale);
                             //Get Last IdSale
-
-                            //sale.IdSale = GetLastId();
-
-                            /*
-                            command.CommandText = "SELECT s.idSale as last FROM Sale s " +
-                            "ORDER BY s.idSale DESC LIMIT 1";
+                            command.CommandText = "SELECT LAST_INSERT_ID() as last;";
                             MySqlDataReader dataReader = command.ExecuteReader();
                             if (dataReader.Read())
                             {
                                 sale.IdSale = Convert.ToInt32(dataReader["last"]);
                             }
                             dataReader.Close();
-                            */
+                            
                             //Insert All DetailSales
                             foreach (var item in sale.DetailSales)
                             {
@@ -75,14 +52,17 @@ namespace DataAccess.DAL
                             }
                             //Commit Transaction
                             transaction.Commit();
-                            return "Correct";
+                            return true;
                         }
                         catch (Exception ex)
                         {
                             transaction.Rollback();
+                            return false;
+                        }
+                        finally
+                        {
                             connection.Close();
-                            return "Error: " + ex.Message;
-                            throw;
+                            command.Parameters.Clear();
                         }
                     }
                 }
@@ -119,8 +99,10 @@ namespace DataAccess.DAL
             item.Sale = sale;
             command.Parameters.AddWithValue("@idSale", item.Sale.IdSale);
             command.Parameters.AddWithValue("@price", item.Price);
+            //command.Parameters.AddWithValue("@price", "H");
             command.Parameters.AddWithValue("@quantity", item.Quantity);
             command.Parameters.AddWithValue("@idProduct", item.Product.IdProduct);
+            string a = command.CommandText;
             command.ExecuteNonQuery();
             command.Parameters.Clear();
         }
@@ -171,8 +153,7 @@ namespace DataAccess.DAL
             }
             return sales;
         }
-
-        public int GetLastId()
+        public int GetLastIdSale()
         {
             using (MySqlConnection connection = GetConnection())
             {
