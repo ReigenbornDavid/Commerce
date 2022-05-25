@@ -33,7 +33,6 @@ namespace DataAccess.DAL
                                 sale.IdSale = Convert.ToInt32(dataReader["last"]);
                             }
                             dataReader.Close();
-                            
                             //Insert All DetailSales
                             foreach (var item in sale.DetailSales)
                             {

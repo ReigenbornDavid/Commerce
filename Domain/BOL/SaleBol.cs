@@ -23,8 +23,8 @@ namespace Domain.BOL
             {
                 if (_saleDal.GetByid(sale.IdSale) == null)
                 {
-                    _saleDal.Insert(sale);
-                    if (_saleDal.GetByid(sale.IdSale) == null)
+                    //_saleDal.Insert(sale);
+                    if (!_saleDal.Insert(sale))
                     {
                         stringBuilder.Append("No se pudo registrar la venta");
                     }

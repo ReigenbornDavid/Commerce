@@ -197,14 +197,12 @@ namespace Presentation.Forms
                 _sale.IdSale = _saleBol.Registrate(_sale);
                 if (_saleBol.stringBuilder.Length != 0 )
                 {
-                    //_saleBol.Delete(_sale.IdSale);
                     MessageBox.Show(_saleBol.stringBuilder.ToString(), "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
                     //PrintTicket();
                     MessageBox.Show("Venta registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
                     dvgCart.Rows.Clear();
                     dvgProducts.Rows.Clear();
                     txtSearch.Clear();
@@ -217,7 +215,6 @@ namespace Presentation.Forms
             }
             catch (Exception ex)
             {
-                //_saleBol.Delete(_sale.IdSale);
                 MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -229,58 +226,100 @@ namespace Presentation.Forms
         }
         private void btnAddToCart_Click(object sender, EventArgs e)
         {
-            if (txtQuantity.Text != "")
+            try
             {
-                if (_product != null)
+                if (txtQuantity.Text != "")
                 {
-                    _product = _productBol.GetById(_product.IdProduct);
-                    if (_product.Usd)
+                    if (_product != null)
                     {
-                        _product.Cost *= usdValue;
-                        _product.Price *= usdValue;
-                    }
-                    if (_product.Quantity >= Convert.ToDouble(txtQuantity.Text))
-                    {
-                        bool exists = false;
-                        if (dvgCart.Rows.Count > 0)
+                        _product = _productBol.GetById(_product.IdProduct);
+                        if (_product.Usd)
                         {
-                            foreach (DataGridViewRow row in dvgCart.Rows)
+                            _product.Cost *= usdValue;
+                            _product.Price *= usdValue;
+                        }
+                        if (_product.Quantity >= Convert.ToDouble(txtQuantity.Text))
+                        {
+                            bool exists = false;
+                            if (dvgCart.Rows.Count > 0)
                             {
-                                if (Convert.ToInt32(row.Cells[0].Value) == _product.IdProduct)
+                                foreach (DataGridViewRow row in dvgCart.Rows)
                                 {
-                                    exists = true;
-                                    if ((Convert.ToDouble(row.Cells[3].Value) +
-                                        Convert.ToDouble(txtQuantity.Text)) <= _product.Quantity)
+                                    if (Convert.ToInt32(row.Cells[0].Value) == _product.IdProduct)
                                     {
-                                        _total -= Convert.ToDouble(row.Cells[4].Value);
-                                        row.Cells[3].Value = Convert.ToDecimal(row.Cells[3].Value) + Convert.ToDecimal(txtQuantity.Text);
-                                        row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
-                                            * Convert.ToDecimal(row.Cells[3].Value);
-                                        _total += Convert.ToDouble(row.Cells[4].Value);
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        exists = true;
+                                        if ((Convert.ToDouble(row.Cells[3].Value) +
+                                            Convert.ToDouble(txtQuantity.Text)) <= _product.Quantity)
+                                        {
+                                            _total -= Convert.ToDouble(row.Cells[4].Value);
+                                            row.Cells[3].Value = Convert.ToDecimal(row.Cells[3].Value) + Convert.ToDecimal(txtQuantity.Text);
+                                            row.Cells[4].Value = Convert.ToDecimal(row.Cells[2].Value)
+                                                * Convert.ToDecimal(row.Cells[3].Value);
+                                            _total += Convert.ToDouble(row.Cells[4].Value);
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
                                     }
                                 }
                             }
+                            if (exists == false)
+                            {
+                                double subTotal = _product.Price * Convert.ToDouble(txtQuantity.Text);
+                                dvgCart.Rows.Add(
+                                    _product.IdProduct,
+                                    _product.Description,
+                                    _product.Price,
+                                    txtQuantity.Text,
+                                    subTotal
+                                    );
+                                _total += subTotal;
+                            }
+                            UpdateTotal();
+                            RemoveSelection(dvgProducts);
+                            RemoveSelection(dvgCart);
+                            _product = null;
                         }
-                        if (exists == false)
+                        else
                         {
-                            double subTotal = _product.Price * Convert.ToDouble(txtQuantity.Text);
-                            dvgCart.Rows.Add(
-                                _product.IdProduct,
-                                _product.Description,
-                                _product.Price,
-                                txtQuantity.Text,
-                                subTotal
-                                );
-                            _total += subTotal;
+                            MessageBox.Show("Error: La cantidad que intenta agregar no esta disponible", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: Ningun producto seleccionado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error: Ingrese la cantidad que desea agregar al carrito", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnChange_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Product product = _productBol.GetById(Convert.ToInt32(dvgCart.CurrentRow.Cells[0].Value));
+                if (dvgCart.Rows.Count > 0)
+                {
+                    if (Convert.ToDouble(txtQuantityCart.Text) <= product.Quantity)
+                    {
+                        _total -= Convert.ToDouble(dvgCart.CurrentRow.Cells[4].Value);
+                        dvgCart.CurrentRow.Cells[2].Value = txtPriceCart.Text;
+                        dvgCart.CurrentRow.Cells[3].Value = txtQuantityCart.Text;
+                        dvgCart.CurrentRow.Cells[4].Value = Convert.ToDecimal(txtPriceCart.Text)
+                            * Convert.ToDecimal(txtQuantityCart.Text);
+                        _total += Convert.ToDouble(dvgCart.CurrentRow.Cells[4].Value);
                         UpdateTotal();
-                        RemoveSelection(dvgProducts);
                         RemoveSelection(dvgCart);
-                        _product = null;
+                        ViewChange(false);
                     }
                     else
                     {
@@ -289,28 +328,12 @@ namespace Presentation.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Error: Ningun producto seleccionado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: No hay productos en el Carrito", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error: Ingrese la cantidad que desea agregar al carrito", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnChange_Click(object sender, EventArgs e)
-        {
-            if (dvgCart.Rows.Count > 0)
-            {
-                _total -= Convert.ToDouble(dvgCart.CurrentRow.Cells[4].Value);
-                dvgCart.CurrentRow.Cells[2].Value = txtPriceCart.Text;
-                dvgCart.CurrentRow.Cells[3].Value = txtQuantityCart.Text;
-                dvgCart.CurrentRow.Cells[4].Value = Convert.ToDecimal(txtPriceCart.Text)
-                    * Convert.ToDecimal(txtQuantityCart.Text);
-                _total += Convert.ToDouble(dvgCart.CurrentRow.Cells[4].Value);
-                UpdateTotal();
-                RemoveSelection(dvgCart);
-                ViewChange(false);
+                MessageBox.Show("Error: "+ ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
