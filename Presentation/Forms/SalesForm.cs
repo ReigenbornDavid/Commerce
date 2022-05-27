@@ -1,5 +1,7 @@
 ﻿using Common.Entities;
 using Domain.BOL;
+using Domain.Reports;
+using Microsoft.Reporting.WinForms;
 using Presentation.ReportForms;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,6 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -201,10 +202,9 @@ namespace Presentation.Forms
                 }
                 else
                 {
-                    //PrintTicket();
+                    PrintTicket();
                     MessageBox.Show("Venta registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dvgCart.Rows.Clear();
-                    dvgProducts.Rows.Clear();
                     txtSearch.Clear();
                     txtTotal.Clear();
                     _total = 0;
@@ -219,6 +219,53 @@ namespace Presentation.Forms
             }
         }
 
+        private void PrintTicket()
+        {
+            try
+            {
+                _sale.IdSale =_saleBol.GetLastIdSale();
+                LocalReport localReport = new LocalReport();
+                localReport.ReportPath = Application.StartupPath + "\\Reports\\ReportSale.rdlc";
+                localReport.DataSources.Clear();
+                ReportDataSource rds = new ReportDataSource("DetailSale", GetSaleReport(_sale));
+                localReport.DataSources.Add(rds);
+                localReport.SetParameters(new ReportParameter("date", _sale.Date.ToString()));
+                localReport.SetParameters(new ReportParameter("dniClient", _sale.Client.IdClient.ToString()));
+                string type;
+                if (_sale.IdSale != 0)
+                {
+                    type = "Comprobante";
+                }
+                else
+                {
+                    type = "Presupuesto";
+                }
+                localReport.SetParameters(new ReportParameter("type", type));
+                localReport.SetParameters(new ReportParameter("idSale", _sale.IdSale.ToString()));
+                localReport.SetParameters(new ReportParameter("total", _sale.Total.ToString()));
+                localReport.PrintToPrinter(_sale.IdSale);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private List<DetailSaleReport> GetSaleReport(Sale _sale)
+        {
+            DetailSaleReport _detailSaleReport = new DetailSaleReport();
+            List<DetailSaleReport> detailSaleList = new List<DetailSaleReport>();
+            foreach (var item in _sale.DetailSales)
+            {
+                _detailSaleReport = new DetailSaleReport();
+                _detailSaleReport.description = item.Product.Description + " " + item.Product.Brand.Name;
+                _detailSaleReport.price = item.Price;
+                _detailSaleReport.quantity = item.Quantity;
+                _detailSaleReport.total = item.Price * item.Quantity;
+                detailSaleList.Add(_detailSaleReport);
+            }
+            return detailSaleList;
+        }
         //Buttons
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -371,10 +418,7 @@ namespace Presentation.Forms
                         _sale.DetailSales.Add(_detailSale);
                     }
                     _sale.Total = _total;
-                    formR._sale = _sale;
-                    _sale = null;
-                    _detailSale = null;
-                    formR.ShowDialog();
+                    PrintTicket();
 
                 }
                 catch (Exception ex)
@@ -385,21 +429,9 @@ namespace Presentation.Forms
         }
         private void btnReport_Click(object sender, EventArgs e)
         {
-            
-            try
-            {
-                ReportSaleForm formR = new ReportSaleForm();
-                var sale = _saleBol.GetById(_saleBol.GetLastIdSale());
-                sale.DetailSales = _saleBol.GetDetailBySale(sale.IdSale);
-                formR._sale = sale;
-                formR.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error", ex.Message);
-            }
-
+            PrintTicket();
         }
+
         private void btnSell_Click(object sender, EventArgs e)
         {
             Sell();

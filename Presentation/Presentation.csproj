@@ -136,6 +136,7 @@
     <Compile Include="Forms\SupplierForm.Designer.cs">
       <DependentUpon>SupplierForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportForms\LocalReportExtensions.cs" />
     <Compile Include="ReportForms\ReportConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,7 +218,9 @@
     <EmbeddedResource Include="Forms\SalesForm.resx">
       <DependentUpon>SalesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ReportSale.rdlc" />
+    <EmbeddedResource Include="Reports\ReportSale.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Common.Entities.DetailSale.datasource" />
     <None Include="Properties\DataSources\Common.Entities.Sale.datasource" />
