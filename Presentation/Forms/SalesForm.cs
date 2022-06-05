@@ -195,13 +195,14 @@ namespace Presentation.Forms
                         }
                     }
                 }
-                _sale.IdSale = _saleBol.Registrate(_sale);
+                _saleBol.Registrate(_sale);
                 if (_saleBol.stringBuilder.Length != 0 )
                 {
                     MessageBox.Show(_saleBol.stringBuilder.ToString(), "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
+                    _sale.IdSale = -1;
                     PrintTicket();
                     MessageBox.Show("Venta registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dvgCart.Rows.Clear();
@@ -223,7 +224,11 @@ namespace Presentation.Forms
         {
             try
             {
-                _sale.IdSale =_saleBol.GetLastIdSale();
+                if (_sale == null || _sale.IdSale != 0)
+                {
+                    _sale = _saleBol.GetById(_saleBol.GetLastIdSale());
+                    _sale.DetailSales = _saleBol.GetDetailBySale(_sale.IdSale);
+                }
                 LocalReport localReport = new LocalReport();
                 localReport.ReportPath = Application.StartupPath + "\\Reports\\ReportSale.rdlc";
                 localReport.DataSources.Clear();
@@ -231,14 +236,17 @@ namespace Presentation.Forms
                 localReport.DataSources.Add(rds);
                 localReport.SetParameters(new ReportParameter("date", _sale.Date.ToString()));
                 localReport.SetParameters(new ReportParameter("dniClient", _sale.Client.IdClient.ToString()));
+                string nameClient = _sale.Client.FirstName.ToString() + " " + _sale.Client.LastName.ToString();
+                localReport.SetParameters(new ReportParameter("nameClient", nameClient));
+                localReport.SetParameters(new ReportParameter("addressClient", _sale.Client.Address));
                 string type;
                 if (_sale.IdSale != 0)
                 {
-                    type = "Comprobante";
+                    type = "Comprobante Nº";
                 }
                 else
                 {
-                    type = "Presupuesto";
+                    type = "Presupuesto Nº";
                 }
                 localReport.SetParameters(new ReportParameter("type", type));
                 localReport.SetParameters(new ReportParameter("idSale", _sale.IdSale.ToString()));

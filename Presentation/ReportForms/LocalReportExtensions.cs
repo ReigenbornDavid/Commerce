@@ -49,7 +49,14 @@ namespace Presentation.ReportForms
             using (PrintDocument printDocument = new PrintDocument())
             {
                 printDocument.DefaultPageSettings = pageSettings;
-                printDocument.DocumentName = "ReportSale_" + idSale.ToString();
+                if (idSale != 0)
+                {
+                    printDocument.DocumentName = "Factura_" + idSale.ToString();
+                }
+                else
+                {
+                    printDocument.DocumentName = "Presupuesto_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
+                }
                 if (!printDocument.PrinterSettings.IsValid)
                     throw new Exception("Can't find the default printer.");
                 else
@@ -74,6 +81,7 @@ namespace Presentation.ReportForms
                         }
                     };
                     printDocument.Print();
+
                 }
             }
         }
