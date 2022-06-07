@@ -19,5 +19,17 @@ namespace Common.Entities
         public double Amount { get => amount; set => amount = value; }
         public DateTime Date { get => date; set => date = value; }
         public Client Client { get => client; set => client = value; }
+
+        public Transaction()
+        {
+
+        }
+
+        public Transaction(long idClient, double amount, DateTime date)
+        {
+            this.idClient = idClient;
+            this.amount = amount;
+            this.date = date;
+        }
     }
 }

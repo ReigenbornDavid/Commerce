@@ -110,6 +110,7 @@ namespace DataAccess.DAL
                             Address = Convert.ToString(dataReader["address"]),
                             Tel = Convert.ToString(dataReader["tel"]),
                             Balance = Convert.ToDouble(dataReader["balance"]),
+                            Transactions = new TransactionDal().GetTransactionById(Convert.ToInt64(dataReader["dniClient"])),
                         };
                         return client;
                     }

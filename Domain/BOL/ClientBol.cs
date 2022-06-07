@@ -12,6 +12,7 @@ namespace Domain.BOL
     {
         //Instances
         private ClientDal _clientDal = new ClientDal();
+        private TransactionDal _transactionDal = new TransactionDal();
         public readonly StringBuilder stringBuilder = new StringBuilder();
         //Methods
 
@@ -49,6 +50,22 @@ namespace Domain.BOL
             if (stringBuilder.Length == 0)
             {
                 return _clientDal.GetByid(idClient);
+            }
+            return null;
+        }
+        public void AddTransaction(Transaction transaction)
+        {
+            _transactionDal.Insert(transaction);
+        }
+        public List<Transaction> GetTransactionById(Int64 idClient)
+        {
+            stringBuilder.Clear();
+
+            if (idClient == 0) stringBuilder.Append("Por favor proporcione un valor de Id valido");
+
+            if (stringBuilder.Length == 0)
+            {
+                return _transactionDal.GetTransactionById(idClient);
             }
             return null;
         }

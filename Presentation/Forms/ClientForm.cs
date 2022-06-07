@@ -24,6 +24,7 @@ namespace Presentation.Forms
         private void ClientForm_Load(object sender, EventArgs e)
         {
             ViewAdd();
+            dvgTransactions.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             txtSearch.Focus();
         }
         private void Remove()
@@ -47,6 +48,7 @@ namespace Presentation.Forms
             txtTel.Clear();
             ViewAdd();
             RemoveSelection(dvgClients);
+            dvgTransactions.Rows.Clear();
         }
         private void ViewModify()
         {
@@ -70,6 +72,14 @@ namespace Presentation.Forms
                 txtAddress.Text = _client.Address;
                 txtTel.Text = _client.Tel;
                 txtBalance.Text = _client.Balance.ToString();
+                foreach (var item in _client.Transactions)
+                {
+                    dvgTransactions.Rows.Add(
+                        item.IdTransaction,
+                        item.Date,
+                        item.Amount
+                    );
+                }
             }
             catch (Exception ex)
             {
@@ -149,6 +159,19 @@ namespace Presentation.Forms
                 ViewAdd();
             }
         }
+        private void AddTransaction()
+        {
+            if (_client != null)
+            {
+                _clientBol.AddTransaction(
+                new Transaction(
+                    _client.IdClient,
+                    Convert.ToDouble(txtAddTransaction.Text),
+                    DateTime.Now));
+                Clear();
+                CellClick();
+            }
+        }
         //Buttons
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -176,6 +199,10 @@ namespace Presentation.Forms
         {
             Clear();
         }
+        private void btnAddTransaction_Click(object sender, EventArgs e)
+        {
+            AddTransaction();
+        }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -183,8 +210,20 @@ namespace Presentation.Forms
         }
         private void textBoxInt_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                (e.KeyChar != '.'))
+
+        }
+        private void textBoxDecimal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == '.'))
+            {
+                e.KeyChar = ',';
+            }
+            else if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+            if ((e.KeyChar == ',' || e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf(',') > -1))
             {
                 e.Handled = true;
             }

@@ -51,7 +51,16 @@ namespace Presentation.Forms
             this.lblTel = new System.Windows.Forms.Label();
             this.lblBalance = new System.Windows.Forms.Label();
             this.txtBalance = new System.Windows.Forms.TextBox();
+            this.dvgTransactions = new System.Windows.Forms.DataGridView();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblTransactions = new System.Windows.Forms.Label();
+            this.btnAddTransaction = new System.Windows.Forms.Button();
+            this.lblAddTransaction = new System.Windows.Forms.Label();
+            this.txtAddTransaction = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dvgClients)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dvgTransactions)).BeginInit();
             this.SuspendLayout();
             // 
             // txtSearch
@@ -128,7 +137,7 @@ namespace Presentation.Forms
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(162, 20);
             this.txtId.TabIndex = 2;
-            this.txtId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInt_KeyPress);
+            this.txtId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
             // 
             // lblFirstName
             // 
@@ -240,9 +249,9 @@ namespace Presentation.Forms
             this.lblBalance.AutoSize = true;
             this.lblBalance.Location = new System.Drawing.Point(448, 169);
             this.lblBalance.Name = "lblBalance";
-            this.lblBalance.Size = new System.Drawing.Size(51, 13);
+            this.lblBalance.Size = new System.Drawing.Size(46, 13);
             this.lblBalance.TabIndex = 32;
-            this.lblBalance.Text = "Balances";
+            this.lblBalance.Text = "Balance";
             // 
             // txtBalance
             // 
@@ -253,12 +262,95 @@ namespace Presentation.Forms
             this.txtBalance.TabIndex = 6;
             this.txtBalance.TabStop = false;
             // 
+            // dvgTransactions
+            // 
+            this.dvgTransactions.AllowUserToAddRows = false;
+            this.dvgTransactions.AllowUserToDeleteRows = false;
+            this.dvgTransactions.AllowUserToResizeColumns = false;
+            this.dvgTransactions.AllowUserToResizeRows = false;
+            this.dvgTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dvgTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dvgTransactions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column4,
+            this.Column5,
+            this.Column6});
+            this.dvgTransactions.Location = new System.Drawing.Point(684, 36);
+            this.dvgTransactions.MultiSelect = false;
+            this.dvgTransactions.Name = "dvgTransactions";
+            this.dvgTransactions.ReadOnly = true;
+            this.dvgTransactions.RowHeadersVisible = false;
+            this.dvgTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dvgTransactions.Size = new System.Drawing.Size(244, 239);
+            this.dvgTransactions.TabIndex = 33;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Id";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 41;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Fecha";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 62;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Monto";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 62;
+            // 
+            // lblTransactions
+            // 
+            this.lblTransactions.AutoSize = true;
+            this.lblTransactions.Location = new System.Drawing.Point(681, 15);
+            this.lblTransactions.Name = "lblTransactions";
+            this.lblTransactions.Size = new System.Drawing.Size(66, 13);
+            this.lblTransactions.TabIndex = 32;
+            this.lblTransactions.Text = "Movimientos";
+            // 
+            // btnAddTransaction
+            // 
+            this.btnAddTransaction.Location = new System.Drawing.Point(828, 309);
+            this.btnAddTransaction.Name = "btnAddTransaction";
+            this.btnAddTransaction.Size = new System.Drawing.Size(100, 29);
+            this.btnAddTransaction.TabIndex = 34;
+            this.btnAddTransaction.Text = "Guardar";
+            this.btnAddTransaction.UseVisualStyleBackColor = true;
+            this.btnAddTransaction.Click += new System.EventHandler(this.btnAddTransaction_Click);
+            // 
+            // lblAddTransaction
+            // 
+            this.lblAddTransaction.AutoSize = true;
+            this.lblAddTransaction.Location = new System.Drawing.Point(778, 286);
+            this.lblAddTransaction.Name = "lblAddTransaction";
+            this.lblAddTransaction.Size = new System.Drawing.Size(44, 13);
+            this.lblAddTransaction.TabIndex = 35;
+            this.lblAddTransaction.Text = "Entrega";
+            // 
+            // txtAddTransaction
+            // 
+            this.txtAddTransaction.Location = new System.Drawing.Point(828, 283);
+            this.txtAddTransaction.Name = "txtAddTransaction";
+            this.txtAddTransaction.Size = new System.Drawing.Size(100, 20);
+            this.txtAddTransaction.TabIndex = 36;
+            this.txtAddTransaction.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 340);
+            this.ClientSize = new System.Drawing.Size(940, 423);
+            this.Controls.Add(this.txtAddTransaction);
+            this.Controls.Add(this.lblAddTransaction);
+            this.Controls.Add(this.btnAddTransaction);
+            this.Controls.Add(this.dvgTransactions);
             this.Controls.Add(this.txtBalance);
+            this.Controls.Add(this.lblTransactions);
             this.Controls.Add(this.lblBalance);
             this.Controls.Add(this.txtTel);
             this.Controls.Add(this.lblTel);
@@ -281,6 +373,7 @@ namespace Presentation.Forms
             this.Text = "ClientForm";
             this.Load += new System.EventHandler(this.ClientForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dvgClients)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dvgTransactions)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,5 +403,13 @@ namespace Presentation.Forms
         private System.Windows.Forms.Label lblTel;
         private System.Windows.Forms.Label lblBalance;
         private System.Windows.Forms.TextBox txtBalance;
+        private System.Windows.Forms.DataGridView dvgTransactions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.Label lblTransactions;
+        private System.Windows.Forms.Button btnAddTransaction;
+        private System.Windows.Forms.Label lblAddTransaction;
+        private System.Windows.Forms.TextBox txtAddTransaction;
     }
 }
