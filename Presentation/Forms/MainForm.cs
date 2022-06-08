@@ -107,6 +107,11 @@ namespace Presentation.Forms
             ActivateButton(sender);
             AbrirFormEnPanel<Forms.ConfigForm>();
         }
+        private void btnHistory_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+            AbrirFormEnPanel<Forms.HistoryForm>();
+        }
         private void btnService_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);

@@ -49,6 +49,7 @@ namespace Presentation.Forms
             ViewAdd();
             RemoveSelection(dvgClients);
             dvgTransactions.Rows.Clear();
+            txtAddTransaction.Clear();
         }
         private void ViewModify()
         {
@@ -161,15 +162,35 @@ namespace Presentation.Forms
         }
         private void AddTransaction()
         {
-            if (_client != null)
+            try
             {
-                _clientBol.AddTransaction(
-                new Transaction(
-                    _client.IdClient,
-                    Convert.ToDouble(txtAddTransaction.Text),
-                    DateTime.Now));
-                Clear();
-                CellClick();
+                if (txtAddTransaction.Text != "")
+                {
+                    if (_client != null)
+                    {
+                        _client.Balance += Convert.ToDouble(txtAddTransaction.Text);
+                        _clientBol.AddTransaction(
+                        new Transaction(
+                            _client.IdClient,
+                            Convert.ToDouble(txtAddTransaction.Text),
+                            DateTime.Now),
+                        _client);
+                    }
+                    if (_clientBol.stringBuilder.Length != 0)
+                    {
+                        MessageBox.Show(_clientBol.stringBuilder.ToString(), "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Entrega registrada con éxito", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Clear();
+                        CellClick();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: "+ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         //Buttons

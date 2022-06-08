@@ -53,9 +53,9 @@ namespace Domain.BOL
             }
             return null;
         }
-        public void AddTransaction(Transaction transaction)
+        public void AddTransaction(Transaction transaction, Client client)
         {
-            _transactionDal.Insert(transaction);
+            _transactionDal.Insert(transaction, client);
         }
         public List<Transaction> GetTransactionById(Int64 idClient)
         {

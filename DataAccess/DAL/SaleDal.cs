@@ -39,6 +39,7 @@ namespace DataAccess.DAL
                                 //Insert New DetailSale
                                 InsertDetailSale(command, item, sale);
                                 //Update Quantity Product
+                                item.Product.Quantity -= item.Quantity;
                                 UpdateQuantityProduct(command, item);
                             }
                             UpdateClientBalance(command, sale);
@@ -109,7 +110,6 @@ namespace DataAccess.DAL
         private void UpdateQuantityProduct(MySqlCommand command, DetailSale item)
         {
             command.CommandText = "UPDATE product SET quantity = @quantity WHERE idProduct = @idProduct";
-            item.Product.Quantity -= item.Quantity;
             command.Parameters.AddWithValue("@quantity", item.Product.Quantity);
             command.Parameters.AddWithValue("@idProduct", item.Product.IdProduct);
             command.ExecuteNonQuery();
@@ -144,7 +144,8 @@ namespace DataAccess.DAL
                             Client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             Employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             Date = Convert.ToDateTime(dataReader["date"]),
-                            Total = Convert.ToDouble(dataReader["total"])
+                            Total = Convert.ToDouble(dataReader["total"]),
+                            DetailSales = new DetailSaleDal().GetBySale(Convert.ToInt32(dataReader["idSale"])),
                         };
                         sales.Add(sale);
                     }
@@ -216,7 +217,7 @@ namespace DataAccess.DAL
                             Client = new ClientDal().GetByid(Convert.ToInt64(dataReader["dniClient"])),
                             Employee = new EmployeeDal().GetByid(Convert.ToInt32(dataReader["dniEmployee"])),
                             Date = Convert.ToDateTime(dataReader["date"]),
-                            Total = Convert.ToDouble(dataReader["total"])
+                            Total = Convert.ToDouble(dataReader["total"]),
                         };
                         return sale;
                     }
@@ -245,18 +246,50 @@ namespace DataAccess.DAL
             }
         }
 
-        public void Delete(int idSale)
+        public bool Delete(Sale sale)
         {
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                const string sqlQuery = "DELETE FROM Sale WHERE idSale = @idSale";
-                using (MySqlCommand command = new MySqlCommand(sqlQuery, connection))
+                using (MySqlTransaction transaction = connection.BeginTransaction())
                 {
-                    command.Parameters.AddWithValue("@idSale", idSale);
-                    command.ExecuteNonQuery();
+                    using (MySqlCommand command = new MySqlCommand())
+                    {
+                        command.Connection = connection;
+                        try
+                        {
+                            DeleteSale(command, sale);
+
+                            foreach (var item in sale.DetailSales)
+                            {
+                                //Update Quantity Product
+                                item.Product.Quantity += item.Quantity;
+                                UpdateQuantityProduct(command, item);
+                            }
+                            //Commit Transaction
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            return false;
+                        }
+                        finally
+                        {
+                            connection.Close();
+                            command.Parameters.Clear();
+                        }
+                    }
                 }
             }
+        }
+        private void DeleteSale(MySqlCommand command, Sale sale)
+        {
+            command.CommandText = "DELETE FROM Sale WHERE idSale = @idSale";
+            command.Parameters.AddWithValue("@idSale", sale.IdSale);
+            command.ExecuteNonQuery();
+            command.Parameters.Clear();
         }
     }
 }

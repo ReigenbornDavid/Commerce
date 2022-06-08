@@ -72,15 +72,13 @@ namespace Domain.BOL
             return null;
         }
 
-        public void Delete(int idSale)
+        public void Delete(Sale sale)
         {
             stringBuilder.Clear();
-
-            if (idSale == 0) stringBuilder.Append("Por favor proporcione un valor de Id valido");
-
-            if (stringBuilder.Length == 0)
+            sale.DetailSales = GetDetailBySale(sale.IdSale);
+            if (!_saleDal.Delete(sale))
             {
-                _saleDal.Delete(idSale);
+                stringBuilder.Append("No se pudo eliminar la venta");
             }
         }
 

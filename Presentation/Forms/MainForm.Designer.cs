@@ -31,6 +31,7 @@ namespace Presentation.Forms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.leftPanel = new System.Windows.Forms.Panel();
+            this.btnConfig = new System.Windows.Forms.Button();
             this.btnExpense = new System.Windows.Forms.Button();
             this.btnEmployee = new System.Windows.Forms.Button();
             this.btnClients = new System.Windows.Forms.Button();
@@ -49,7 +50,7 @@ namespace Presentation.Forms
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.midPanel = new System.Windows.Forms.Panel();
-            this.btnConfig = new System.Windows.Forms.Button();
+            this.btnHistory = new System.Windows.Forms.Button();
             this.leftPanel.SuspendLayout();
             this.userPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -59,6 +60,7 @@ namespace Presentation.Forms
             // leftPanel
             // 
             this.leftPanel.BackColor = System.Drawing.Color.DarkGray;
+            this.leftPanel.Controls.Add(this.btnHistory);
             this.leftPanel.Controls.Add(this.btnConfig);
             this.leftPanel.Controls.Add(this.btnExpense);
             this.leftPanel.Controls.Add(this.btnEmployee);
@@ -75,8 +77,20 @@ namespace Presentation.Forms
             this.leftPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.leftPanel.Location = new System.Drawing.Point(0, 0);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(178, 655);
+            this.leftPanel.Size = new System.Drawing.Size(178, 680);
             this.leftPanel.TabIndex = 0;
+            // 
+            // btnConfig
+            // 
+            this.btnConfig.BackColor = System.Drawing.Color.LightGray;
+            this.btnConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfig.Location = new System.Drawing.Point(12, 584);
+            this.btnConfig.Name = "btnConfig";
+            this.btnConfig.Size = new System.Drawing.Size(100, 38);
+            this.btnConfig.TabIndex = 1;
+            this.btnConfig.Text = "Configuracion";
+            this.btnConfig.UseVisualStyleBackColor = false;
+            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
             // 
             // btnExpense
             // 
@@ -284,26 +298,26 @@ namespace Presentation.Forms
             this.midPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.midPanel.Location = new System.Drawing.Point(178, 50);
             this.midPanel.Name = "midPanel";
-            this.midPanel.Size = new System.Drawing.Size(717, 605);
+            this.midPanel.Size = new System.Drawing.Size(717, 630);
             this.midPanel.TabIndex = 2;
             // 
-            // btnConfig
+            // btnHistory
             // 
-            this.btnConfig.BackColor = System.Drawing.Color.LightGray;
-            this.btnConfig.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfig.Location = new System.Drawing.Point(12, 584);
-            this.btnConfig.Name = "btnConfig";
-            this.btnConfig.Size = new System.Drawing.Size(100, 38);
-            this.btnConfig.TabIndex = 1;
-            this.btnConfig.Text = "Configuracion";
-            this.btnConfig.UseVisualStyleBackColor = false;
-            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+            this.btnHistory.BackColor = System.Drawing.Color.LightGray;
+            this.btnHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistory.Location = new System.Drawing.Point(12, 628);
+            this.btnHistory.Name = "btnHistory";
+            this.btnHistory.Size = new System.Drawing.Size(138, 38);
+            this.btnHistory.TabIndex = 1;
+            this.btnHistory.Text = "Historial de Ventas";
+            this.btnHistory.UseVisualStyleBackColor = false;
+            this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 655);
+            this.ClientSize = new System.Drawing.Size(895, 680);
             this.Controls.Add(this.midPanel);
             this.Controls.Add(this.topPpanel);
             this.Controls.Add(this.leftPanel);
@@ -342,5 +356,6 @@ namespace Presentation.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnConfig;
+        private System.Windows.Forms.Button btnHistory;
     }
 }
