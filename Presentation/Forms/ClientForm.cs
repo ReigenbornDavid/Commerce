@@ -24,7 +24,7 @@ namespace Presentation.Forms
         private void ClientForm_Load(object sender, EventArgs e)
         {
             ViewAdd();
-            dvgTransactions.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //dvgTransactions.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             txtSearch.Focus();
         }
         private void Remove()
@@ -48,8 +48,9 @@ namespace Presentation.Forms
             txtTel.Clear();
             ViewAdd();
             RemoveSelection(dvgClients);
-            dvgTransactions.Rows.Clear();
-            txtAddTransaction.Clear();
+            txtBalance.Text = "0";
+            //dvgTransactions.Rows.Clear();
+            //txtAddTransaction.Clear();
         }
         private void ViewModify()
         {
@@ -59,6 +60,7 @@ namespace Presentation.Forms
         private void ViewAdd()
         {
             _client = null;
+            txtBalance.Text = "0";
             btnModify.Visible = false;
             btnSave.Visible = true;
         }
@@ -73,6 +75,7 @@ namespace Presentation.Forms
                 txtAddress.Text = _client.Address;
                 txtTel.Text = _client.Tel;
                 txtBalance.Text = _client.Balance.ToString();
+                /*
                 foreach (var item in _client.Transactions)
                 {
                     dvgTransactions.Rows.Add(
@@ -81,6 +84,7 @@ namespace Presentation.Forms
                         item.Amount
                     );
                 }
+                */
             }
             catch (Exception ex)
             {
@@ -120,7 +124,7 @@ namespace Presentation.Forms
                 _client.LastName = txtLastName.Text;
                 _client.Address = txtAddress.Text;
                 _client.Tel = txtTel.Text;
-                _client.Balance = 0;
+                _client.Balance = Convert.ToDouble(txtBalance.Text);
 
                 _clientBol.Registrate(_client);
 
@@ -228,10 +232,6 @@ namespace Presentation.Forms
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             Search();
-        }
-        private void textBoxInt_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
         }
         private void textBoxDecimal_KeyPress(object sender, KeyPressEventArgs e)
         {

@@ -282,6 +282,7 @@ namespace Presentation.Forms
             this.dvgTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dvgTransactions.Size = new System.Drawing.Size(244, 239);
             this.dvgTransactions.TabIndex = 33;
+            this.dvgTransactions.Visible = false;
             // 
             // Column4
             // 
@@ -312,6 +313,7 @@ namespace Presentation.Forms
             this.lblTransactions.Size = new System.Drawing.Size(66, 13);
             this.lblTransactions.TabIndex = 32;
             this.lblTransactions.Text = "Movimientos";
+            this.lblTransactions.Visible = false;
             // 
             // btnAddTransaction
             // 
@@ -321,6 +323,7 @@ namespace Presentation.Forms
             this.btnAddTransaction.TabIndex = 34;
             this.btnAddTransaction.Text = "Guardar";
             this.btnAddTransaction.UseVisualStyleBackColor = true;
+            this.btnAddTransaction.Visible = false;
             this.btnAddTransaction.Click += new System.EventHandler(this.btnAddTransaction_Click);
             // 
             // lblAddTransaction
@@ -331,6 +334,7 @@ namespace Presentation.Forms
             this.lblAddTransaction.Size = new System.Drawing.Size(44, 13);
             this.lblAddTransaction.TabIndex = 35;
             this.lblAddTransaction.Text = "Entrega";
+            this.lblAddTransaction.Visible = false;
             // 
             // txtAddTransaction
             // 
@@ -338,6 +342,7 @@ namespace Presentation.Forms
             this.txtAddTransaction.Name = "txtAddTransaction";
             this.txtAddTransaction.Size = new System.Drawing.Size(100, 20);
             this.txtAddTransaction.TabIndex = 36;
+            this.txtAddTransaction.Visible = false;
             this.txtAddTransaction.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxDecimal_KeyPress);
             // 
             // ClientForm

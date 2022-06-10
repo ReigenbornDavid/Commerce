@@ -547,7 +547,7 @@ namespace Presentation.Forms
                 txtClient.Enabled = false;
                 txtNameClient.Enabled = false;
                 chkPayment.Checked = true;
-                chkPayment.Enabled = false;
+                //chkPayment.Enabled = false;
             }
             else
             {
@@ -555,7 +555,7 @@ namespace Presentation.Forms
                 txtNameClient.Text = "";
                 txtClient.Enabled = true;
                 txtNameClient.Enabled = true;
-                chkPayment.Enabled = true;
+                //chkPayment.Enabled = true;
             }
         }
     }

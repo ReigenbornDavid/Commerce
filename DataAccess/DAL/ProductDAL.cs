@@ -125,7 +125,7 @@ namespace DataAccess.DAL
                 connection.Open();
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Description", description + "%");
+                    command.Parameters.AddWithValue("@Description", "%"+ description + "%");
                     command.Parameters.AddWithValue("@CategoryFilter", categoryFilter);
                     command.Parameters.AddWithValue("@BrandFilter", brandFilter);
                     command.Parameters.AddWithValue("@SupplierFilter", supplierFilter);

@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,6 +33,7 @@ namespace Presentation.Forms
             AddSuppliersToCombobox();
             AddBrandsToCombobox();
             txtSearch.Focus();
+            txtUsd.Text = "NO";
         }
 
         private void AddBrandsToCombobox()
@@ -84,6 +86,7 @@ namespace Presentation.Forms
             txtCategory.Text = "";
             txtSupplier.Text = "";
             txtBrand.Text = "";
+            txtUsd.Text = "NO";
             ViewAdd();
             RemoveSelection(dvgProducts);
         }
@@ -201,12 +204,17 @@ namespace Presentation.Forms
                 MessageBox.Show(string.Format("Error: {0}", ex.Message), "Error inesperado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        public static string PadNumbers(string input)
+        {
+            var result = Regex.Replace(input, "[0-9]+", match => match.Value.PadLeft(10, '0'));
+            return result;
+        }
         private void Search()
         {
             List<Product> products = _productBol.GetByName(txtSearch.Text, txtCategoryFilter.Text, txtSupplierFilter.Text, txtBrandFilter.Text);
             if (products.Count > 0 && products != null)
             {
+                products = products.OrderBy(x => PadNumbers(x.Description)).ToList();
                 dvgProducts.Rows.Clear();
                 dvgProducts.AutoGenerateColumns = false;
                 foreach (var item in products)

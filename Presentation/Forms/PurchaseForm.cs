@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -83,13 +84,18 @@ namespace Presentation.Forms
                 table.Rows[Index].Selected = false;
             }
         }
-
+        public static string PadNumbers(string input)
+        {
+            var result = Regex.Replace(input, "[0-9]+", match => match.Value.PadLeft(10, '0'));
+            return result;
+        }
         private void Search()
         {
             List<Product> products = _productBol.GetByName(txtSearch.Text, txtCategoryFilter.Text, txtSupplierFilter.Text, txtBrandFilter.Text);
             if (products.Count > 0 && products != null)
             {
                 products.Where(x => x.Usd).Select(x => { x.Cost *= usdValue; x.Price *= usdValue; return x; }).ToList();
+                products = products.OrderBy(x => PadNumbers(x.Description)).ToList();
                 dvgProducts.Rows.Clear();
                 dvgProducts.AutoGenerateColumns = false;
                 foreach (var item in products)
