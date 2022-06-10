@@ -36,6 +36,7 @@ namespace Presentation.Forms
                     dvgSales.Rows.Add(
                         sale.IdSale,
                         sale.Date,
+                        sale.Client.FirstName+ " "+sale.Client.LastName,
                         detail.Product.Description + " "+ detail.Product.Brand.Name,
                         detail.Price,
                         detail.Quantity,

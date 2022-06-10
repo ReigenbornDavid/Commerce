@@ -30,14 +30,15 @@ namespace Presentation.Forms
         private void InitializeComponent()
         {
             this.dvgSales = new System.Windows.Forms.DataGridView();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnRemove = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvgSales)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,6 +55,7 @@ namespace Presentation.Forms
             this.dvgSales.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
+            this.Column8,
             this.Column3,
             this.Column4,
             this.Column5,
@@ -65,9 +67,21 @@ namespace Presentation.Forms
             this.dvgSales.ReadOnly = true;
             this.dvgSales.RowHeadersVisible = false;
             this.dvgSales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dvgSales.Size = new System.Drawing.Size(844, 288);
+            this.dvgSales.Size = new System.Drawing.Size(844, 299);
             this.dvgSales.TabIndex = 0;
             this.dvgSales.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dvgSales_CellClick);
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemove.Location = new System.Drawing.Point(781, 339);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 30);
+            this.btnRemove.TabIndex = 1;
+            this.btnRemove.Text = "Eliminar";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // Column1
             // 
@@ -82,6 +96,13 @@ namespace Presentation.Forms
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             this.Column2.Width = 62;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Cliente";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 64;
             // 
             // Column3
             // 
@@ -118,18 +139,6 @@ namespace Presentation.Forms
             this.Column7.ReadOnly = true;
             this.Column7.Width = 56;
             // 
-            // btnRemove
-            // 
-            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemove.Location = new System.Drawing.Point(781, 328);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(75, 30);
-            this.btnRemove.TabIndex = 1;
-            this.btnRemove.Text = "Eliminar";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-            // 
             // HistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,13 +157,14 @@ namespace Presentation.Forms
         #endregion
 
         private System.Windows.Forms.DataGridView dvgSales;
+        private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.Button btnRemove;
     }
 }
