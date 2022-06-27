@@ -24,7 +24,7 @@ namespace DataAccess.DAL
                 {
                     command.Parameters.AddWithValue("@code", product.Code);
                     command.Parameters.AddWithValue("@description", product.Description);
-                    command.Parameters.AddWithValue("@cost", product.Code);
+                    command.Parameters.AddWithValue("@cost", product.Cost);
                     command.Parameters.AddWithValue("@price", product.Price);
                     command.Parameters.AddWithValue("@quantity", product.Quantity);
                     command.Parameters.AddWithValue("@idCategory", product.Category.IdCategory);
